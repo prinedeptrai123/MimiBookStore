@@ -1,0 +1,1374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BookStoreDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bill_Type" Type="int" Nullable="false" />
+          <Property Name="Discount_Code" Type="varchar" MaxLength="20" />
+          <Property Name="Sum_Money" Type="float" Nullable="false" />
+          <Property Name="Total_Money" Type="float" Nullable="false" />
+          <Property Name="Excess_Cash" Type="float" Nullable="false" />
+          <Property Name="Customer_Cash" Type="float" Nullable="false" />
+          <Property Name="Customer_ID" Type="int" Nullable="false" />
+          <Property Name="Employee_ID" Type="int" Nullable="false" />
+          <Property Name="Bill_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bill_Detail">
+          <Key>
+            <PropertyRef Name="Detail_ID" />
+          </Key>
+          <Property Name="Detail_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bill_ID" Type="int" Nullable="false" />
+          <Property Name="Book_ID" Type="int" Nullable="false" />
+          <Property Name="Warehouse_ID" Type="int" Nullable="false" />
+          <Property Name="Book_Count" Type="int" Nullable="false" />
+          <Property Name="Book_Price" Type="float" Nullable="false" />
+          <Property Name="Book_Promotion" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bill_Type">
+          <Key>
+            <PropertyRef Name="Type_IDs" />
+          </Key>
+          <Property Name="Type_IDs" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type_Names" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Book_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Book_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Book_Author" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Book_Type" Type="int" Nullable="false" />
+          <Property Name="Book_Theme" Type="int" Nullable="false" />
+          <Property Name="Book_Company" Type="int" Nullable="false" />
+          <Property Name="Book_Price" Type="float" Nullable="false" />
+          <Property Name="Book_Promotion" Type="float" Nullable="false" />
+          <Property Name="Book_Image" Type="image" Nullable="false" />
+          <Property Name="Book_Count" Type="int" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book_Inventory">
+          <Key>
+            <PropertyRef Name="Book_ID" />
+            <PropertyRef Name="Warehouse_ID" />
+          </Key>
+          <Property Name="Book_ID" Type="int" Nullable="false" />
+          <Property Name="Warehouse_ID" Type="int" Nullable="false" />
+          <Property Name="Book_Count" Type="int" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book_Theme">
+          <Key>
+            <PropertyRef Name="Theme_ID" />
+            <PropertyRef Name="Type_IDs" />
+          </Key>
+          <Property Name="Theme_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type_IDs" Type="int" Nullable="false" />
+          <Property Name="Theme_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book_Type">
+          <Key>
+            <PropertyRef Name="Type_IDs" />
+          </Key>
+          <Property Name="Type_IDs" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type_Names" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Customer_Gender" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Customer_Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Customer_Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Customer_Phone" Type="varchar" MaxLength="20" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="Decentralization_ID" />
+          </Key>
+          <Property Name="Decentralization_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Decentralization_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Discount_Code">
+          <Key>
+            <PropertyRef Name="Code_ID" />
+          </Key>
+          <Property Name="Code_ID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Code_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Code_Type" Type="int" Nullable="false" />
+          <Property Name="Date_Begin" Type="datetime" Nullable="false" />
+          <Property Name="Date_End" Type="datetime" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Employee_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Employee_Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Employee_Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Employee_DOB" Type="datetime" Nullable="false" />
+          <Property Name="Employee_Gender" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Employee_Role" Type="int" Nullable="false" />
+          <Property Name="Employee_Image" Type="image" Nullable="false" />
+          <Property Name="Employee_FirstDate" Type="datetime" Nullable="false" />
+          <Property Name="Employee_Sum_Date" Type="int" Nullable="false" />
+          <Property Name="Employee_Date_Work" Type="int" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+          <Property Name="Employee_Phone" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee_Account">
+          <Key>
+            <PropertyRef Name="Account_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="int" Nullable="false" />
+          <Property Name="Account_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account_User" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Account_Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Account_LastLogin" Type="datetime" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee_Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Role_Decentralization" Type="int" Nullable="false" />
+          <Property Name="Role_Salary" Type="float" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pay_Wage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee_ID" Type="int" Nullable="false" />
+          <Property Name="Salary" Type="float" Nullable="false" />
+          <Property Name="PayWage_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Promotion_Type">
+          <Key>
+            <PropertyRef Name="Type_IDs" />
+          </Key>
+          <Property Name="Type_IDs" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type_Names" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Book_Count" Type="int" />
+          <Property Name="Type_Promotion" Type="float" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Publishing_Company">
+          <Key>
+            <PropertyRef Name="Company_ID" />
+          </Key>
+          <Property Name="Company_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Company_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Exist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Warehouse_ID" />
+          </Key>
+          <Property Name="Warehouse_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Warehouse_Type" Type="bit" Nullable="false" />
+          <Property Name="Warehouse_Toltal_Money" Type="float" Nullable="false" />
+          <Property Name="Warehouse_Date" Type="datetime" Nullable="false" />
+          <Property Name="Employee_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Warehouse_Detail">
+          <Key>
+            <PropertyRef Name="Detail_ID" />
+          </Key>
+          <Property Name="Detail_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Warehouse_ID" Type="int" Nullable="false" />
+          <Property Name="Book_ID" Type="int" Nullable="false" />
+          <Property Name="Book_Count" Type="int" Nullable="false" />
+          <Property Name="Book_Price" Type="float" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bill_Bill_Type">
+          <End Role="Bill_Type" Type="Self.Bill_Type" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill_Type">
+              <PropertyRef Name="Type_IDs" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Bill_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Detail_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="Bill_Detail" Type="Self.Bill_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="Bill_ID" />
+            </Principal>
+            <Dependent Role="Bill_Detail">
+              <PropertyRef Name="Bill_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Detail_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Bill_Detail" Type="Self.Bill_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="Bill_Detail">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Detail_Book_Inventory">
+          <End Role="Book_Inventory" Type="Self.Book_Inventory" Multiplicity="1" />
+          <End Role="Bill_Detail" Type="Self.Bill_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book_Inventory">
+              <PropertyRef Name="Book_ID" />
+              <PropertyRef Name="Warehouse_ID" />
+            </Principal>
+            <Dependent Role="Bill_Detail">
+              <PropertyRef Name="Book_ID" />
+              <PropertyRef Name="Warehouse_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Discount_Code">
+          <End Role="Discount_Code" Type="Self.Discount_Code" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discount_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Discount_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Book_Theme">
+          <End Role="Book_Theme" Type="Self.Book_Theme" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book_Theme">
+              <PropertyRef Name="Type_IDs" />
+              <PropertyRef Name="Theme_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Book_Type" />
+              <PropertyRef Name="Book_Theme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Inventory_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Book_Inventory" Type="Self.Book_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="Book_Inventory">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Inventory_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="Book_Inventory" Type="Self.Book_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Warehouse_ID" />
+            </Principal>
+            <Dependent Role="Book_Inventory">
+              <PropertyRef Name="Warehouse_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Publishing_Company">
+          <End Role="Publishing_Company" Type="Self.Publishing_Company" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publishing_Company">
+              <PropertyRef Name="Company_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Book_Company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Theme_Book_Type">
+          <End Role="Book_Type" Type="Self.Book_Type" Multiplicity="1" />
+          <End Role="Book_Theme" Type="Self.Book_Theme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book_Type">
+              <PropertyRef Name="Type_IDs" />
+            </Principal>
+            <Dependent Role="Book_Theme">
+              <PropertyRef Name="Type_IDs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Discount_Code_Promotion_Type">
+          <End Role="Promotion_Type" Type="Self.Promotion_Type" Multiplicity="1" />
+          <End Role="Discount_Code" Type="Self.Discount_Code" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promotion_Type">
+              <PropertyRef Name="Type_IDs" />
+            </Principal>
+            <Dependent Role="Discount_Code">
+              <PropertyRef Name="Code_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Account_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee_Account" Type="Self.Employee_Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Employee_Account">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Employee_Role">
+          <End Role="Employee_Role" Type="Self.Employee_Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Employee_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role_Decentralization">
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="1" />
+          <End Role="Employee_Role" Type="Self.Employee_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Decentralization">
+              <PropertyRef Name="Decentralization_ID" />
+            </Principal>
+            <Dependent Role="Employee_Role">
+              <PropertyRef Name="Role_Decentralization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pay_Wage_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Pay_Wage" Type="Self.Pay_Wage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Pay_Wage">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehouse_Detail_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Warehouse_Detail" Type="Self.Warehouse_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="Warehouse_Detail">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehouse_Detail_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="Warehouse_Detail" Type="Self.Warehouse_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Warehouse_ID" />
+            </Principal>
+            <Dependent Role="Warehouse_Detail">
+              <PropertyRef Name="Warehouse_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehouse_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookStoreDataModelStoreContainer">
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bill_Detail" EntityType="Self.Bill_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bill_Type" EntityType="Self.Bill_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book_Inventory" EntityType="Self.Book_Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book_Theme" EntityType="Self.Book_Theme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book_Type" EntityType="Self.Book_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Decentralization" EntityType="Self.Decentralization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Discount_Code" EntityType="Self.Discount_Code" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Account" EntityType="Self.Employee_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Role" EntityType="Self.Employee_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pay_Wage" EntityType="Self.Pay_Wage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Promotion_Type" EntityType="Self.Promotion_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publishing_Company" EntityType="Self.Publishing_Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse_Detail" EntityType="Self.Warehouse_Detail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bill_Bill_Type" Association="Self.FK_Bill_Bill_Type">
+            <End Role="Bill_Type" EntitySet="Bill_Type" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Customer" Association="Self.FK_Bill_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Detail_Bill" Association="Self.FK_Bill_Detail_Bill">
+            <End Role="Bill" EntitySet="Bill" />
+            <End Role="Bill_Detail" EntitySet="Bill_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Detail_Book" Association="Self.FK_Bill_Detail_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Bill_Detail" EntitySet="Bill_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Detail_Book_Inventory" Association="Self.FK_Bill_Detail_Book_Inventory">
+            <End Role="Book_Inventory" EntitySet="Book_Inventory" />
+            <End Role="Bill_Detail" EntitySet="Bill_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Discount_Code" Association="Self.FK_Bill_Discount_Code">
+            <End Role="Discount_Code" EntitySet="Discount_Code" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Employee" Association="Self.FK_Bill_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Book_Theme" Association="Self.FK_Book_Book_Theme">
+            <End Role="Book_Theme" EntitySet="Book_Theme" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Inventory_Book" Association="Self.FK_Book_Inventory_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Book_Inventory" EntitySet="Book_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Inventory_Warehouse" Association="Self.FK_Book_Inventory_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Book_Inventory" EntitySet="Book_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Publishing_Company" Association="Self.FK_Book_Publishing_Company">
+            <End Role="Publishing_Company" EntitySet="Publishing_Company" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Theme_Book_Type" Association="Self.FK_Book_Theme_Book_Type">
+            <End Role="Book_Type" EntitySet="Book_Type" />
+            <End Role="Book_Theme" EntitySet="Book_Theme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Discount_Code_Promotion_Type" Association="Self.FK_Discount_Code_Promotion_Type">
+            <End Role="Promotion_Type" EntitySet="Promotion_Type" />
+            <End Role="Discount_Code" EntitySet="Discount_Code" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Account_Employee" Association="Self.FK_Employee_Account_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employee_Account" EntitySet="Employee_Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Employee_Role" Association="Self.FK_Employee_Employee_Role">
+            <End Role="Employee_Role" EntitySet="Employee_Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role_Decentralization" Association="Self.FK_Employee_Role_Decentralization">
+            <End Role="Decentralization" EntitySet="Decentralization" />
+            <End Role="Employee_Role" EntitySet="Employee_Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pay_Wage_Employee" Association="Self.FK_Pay_Wage_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Pay_Wage" EntitySet="Pay_Wage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehouse_Detail_Book" Association="Self.FK_Warehouse_Detail_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Warehouse_Detail" EntitySet="Warehouse_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehouse_Detail_Warehouse" Association="Self.FK_Warehouse_Detail_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Warehouse_Detail" EntitySet="Warehouse_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehouse_Employee" Association="Self.FK_Warehouse_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Warehouse" EntitySet="Warehouse" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookStoreDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bill_Type" Type="Int32" Nullable="false" />
+          <Property Name="Discount_Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Sum_Money" Type="Double" Nullable="false" />
+          <Property Name="Total_Money" Type="Double" Nullable="false" />
+          <Property Name="Excess_Cash" Type="Double" Nullable="false" />
+          <Property Name="Customer_Cash" Type="Double" Nullable="false" />
+          <Property Name="Customer_ID" Type="Int32" Nullable="false" />
+          <Property Name="Employee_ID" Type="Int32" Nullable="false" />
+          <Property Name="Bill_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Bill_Type1" Relationship="Self.FK_Bill_Bill_Type" FromRole="Bill" ToRole="Bill_Type" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Bill_Customer" FromRole="Bill" ToRole="Customer" />
+          <NavigationProperty Name="Bill_Detail" Relationship="Self.FK_Bill_Detail_Bill" FromRole="Bill" ToRole="Bill_Detail" />
+          <NavigationProperty Name="Discount_Code1" Relationship="Self.FK_Bill_Discount_Code" FromRole="Bill" ToRole="Discount_Code" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Bill_Employee" FromRole="Bill" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Bill_Detail">
+          <Key>
+            <PropertyRef Name="Detail_ID" />
+          </Key>
+          <Property Name="Detail_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bill_ID" Type="Int32" Nullable="false" />
+          <Property Name="Book_ID" Type="Int32" Nullable="false" />
+          <Property Name="Warehouse_ID" Type="Int32" Nullable="false" />
+          <Property Name="Book_Count" Type="Int32" Nullable="false" />
+          <Property Name="Book_Price" Type="Double" Nullable="false" />
+          <Property Name="Book_Promotion" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_Detail_Bill" FromRole="Bill_Detail" ToRole="Bill" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Bill_Detail_Book" FromRole="Bill_Detail" ToRole="Book" />
+          <NavigationProperty Name="Book_Inventory" Relationship="Self.FK_Bill_Detail_Book_Inventory" FromRole="Bill_Detail" ToRole="Book_Inventory" />
+        </EntityType>
+        <EntityType Name="Bill_Type">
+          <Key>
+            <PropertyRef Name="Type_IDs" />
+          </Key>
+          <Property Name="Type_IDs" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type_Names" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Bill_Type" FromRole="Bill_Type" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Book_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Book_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Book_Author" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Book_Type" Type="Int32" Nullable="false" />
+          <Property Name="Book_Theme" Type="Int32" Nullable="false" />
+          <Property Name="Book_Company" Type="Int32" Nullable="false" />
+          <Property Name="Book_Price" Type="Double" Nullable="false" />
+          <Property Name="Book_Promotion" Type="Double" Nullable="false" />
+          <Property Name="Book_Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Book_Count" Type="Int32" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Bill_Detail" Relationship="Self.FK_Bill_Detail_Book" FromRole="Book" ToRole="Bill_Detail" />
+          <NavigationProperty Name="Book_Theme1" Relationship="Self.FK_Book_Book_Theme" FromRole="Book" ToRole="Book_Theme" />
+          <NavigationProperty Name="Book_Inventory" Relationship="Self.FK_Book_Inventory_Book" FromRole="Book" ToRole="Book_Inventory" />
+          <NavigationProperty Name="Publishing_Company" Relationship="Self.FK_Book_Publishing_Company" FromRole="Book" ToRole="Publishing_Company" />
+          <NavigationProperty Name="Warehouse_Detail" Relationship="Self.FK_Warehouse_Detail_Book" FromRole="Book" ToRole="Warehouse_Detail" />
+        </EntityType>
+        <EntityType Name="Book_Inventory">
+          <Key>
+            <PropertyRef Name="Book_ID" />
+            <PropertyRef Name="Warehouse_ID" />
+          </Key>
+          <Property Name="Book_ID" Type="Int32" Nullable="false" />
+          <Property Name="Warehouse_ID" Type="Int32" Nullable="false" />
+          <Property Name="Book_Count" Type="Int32" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Bill_Detail" Relationship="Self.FK_Bill_Detail_Book_Inventory" FromRole="Book_Inventory" ToRole="Bill_Detail" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Inventory_Book" FromRole="Book_Inventory" ToRole="Book" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_Book_Inventory_Warehouse" FromRole="Book_Inventory" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="Book_Theme">
+          <Key>
+            <PropertyRef Name="Theme_ID" />
+            <PropertyRef Name="Type_IDs" />
+          </Key>
+          <Property Name="Theme_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type_IDs" Type="Int32" Nullable="false" />
+          <Property Name="Theme_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Book_Book_Theme" FromRole="Book_Theme" ToRole="Book" />
+          <NavigationProperty Name="Book_Type" Relationship="Self.FK_Book_Theme_Book_Type" FromRole="Book_Theme" ToRole="Book_Type" />
+        </EntityType>
+        <EntityType Name="Book_Type">
+          <Key>
+            <PropertyRef Name="Type_IDs" />
+          </Key>
+          <Property Name="Type_IDs" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type_Names" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Book_Theme" Relationship="Self.FK_Book_Theme_Book_Type" FromRole="Book_Type" ToRole="Book_Theme" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Customer_Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Customer_Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Customer_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Customer_Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Customer" FromRole="Customer" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="Decentralization_ID" />
+          </Key>
+          <Property Name="Decentralization_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Decentralization_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Employee_Role" Relationship="Self.FK_Employee_Role_Decentralization" FromRole="Decentralization" ToRole="Employee_Role" />
+        </EntityType>
+        <EntityType Name="Discount_Code">
+          <Key>
+            <PropertyRef Name="Code_ID" />
+          </Key>
+          <Property Name="Code_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Code_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code_Type" Type="Int32" Nullable="false" />
+          <Property Name="Date_Begin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Date_End" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Discount_Code" FromRole="Discount_Code" ToRole="Bill" />
+          <NavigationProperty Name="Promotion_Type" Relationship="Self.FK_Discount_Code_Promotion_Type" FromRole="Discount_Code" ToRole="Promotion_Type" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Employee_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Employee_Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Employee_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Employee_DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Employee_Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Employee_Role" Type="Int32" Nullable="false" />
+          <Property Name="Employee_Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Employee_FirstDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Employee_Sum_Date" Type="Int32" Nullable="false" />
+          <Property Name="Employee_Date_Work" Type="Int32" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <Property Name="Employee_Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Employee" FromRole="Employee" ToRole="Bill" />
+          <NavigationProperty Name="Employee_Account" Relationship="Self.FK_Employee_Account_Employee" FromRole="Employee" ToRole="Employee_Account" />
+          <NavigationProperty Name="Employee_Role1" Relationship="Self.FK_Employee_Employee_Role" FromRole="Employee" ToRole="Employee_Role" />
+          <NavigationProperty Name="Pay_Wage" Relationship="Self.FK_Pay_Wage_Employee" FromRole="Employee" ToRole="Pay_Wage" />
+          <NavigationProperty Name="Warehouses" Relationship="Self.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="Employee_Account">
+          <Key>
+            <PropertyRef Name="Account_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="Int32" Nullable="false" />
+          <Property Name="Account_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account_User" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Account_Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Account_LastLogin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Account_Employee" FromRole="Employee_Account" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee_Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role_Decentralization" Type="Int32" Nullable="false" />
+          <Property Name="Role_Salary" Type="Double" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Decentralization" Relationship="Self.FK_Employee_Role_Decentralization" FromRole="Employee_Role" ToRole="Decentralization" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Employee_Role" FromRole="Employee_Role" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Pay_Wage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_ID" Type="Int32" Nullable="false" />
+          <Property Name="Salary" Type="Double" Nullable="false" />
+          <Property Name="PayWage_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Pay_Wage_Employee" FromRole="Pay_Wage" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Promotion_Type">
+          <Key>
+            <PropertyRef Name="Type_IDs" />
+          </Key>
+          <Property Name="Type_IDs" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type_Names" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Book_Count" Type="Int32" />
+          <Property Name="Type_Promotion" Type="Double" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Discount_Code" Relationship="Self.FK_Discount_Code_Promotion_Type" FromRole="Promotion_Type" ToRole="Discount_Code" />
+        </EntityType>
+        <EntityType Name="Publishing_Company">
+          <Key>
+            <PropertyRef Name="Company_ID" />
+          </Key>
+          <Property Name="Company_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Company_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Book_Publishing_Company" FromRole="Publishing_Company" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Warehouse_ID" />
+          </Key>
+          <Property Name="Warehouse_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Warehouse_Type" Type="Boolean" Nullable="false" />
+          <Property Name="Warehouse_Toltal_Money" Type="Double" Nullable="false" />
+          <Property Name="Warehouse_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Employee_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Book_Inventory" Relationship="Self.FK_Book_Inventory_Warehouse" FromRole="Warehouse" ToRole="Book_Inventory" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
+          <NavigationProperty Name="Warehouse_Detail" Relationship="Self.FK_Warehouse_Detail_Warehouse" FromRole="Warehouse" ToRole="Warehouse_Detail" />
+        </EntityType>
+        <EntityType Name="Warehouse_Detail">
+          <Key>
+            <PropertyRef Name="Detail_ID" />
+          </Key>
+          <Property Name="Detail_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Warehouse_ID" Type="Int32" Nullable="false" />
+          <Property Name="Book_ID" Type="Int32" Nullable="false" />
+          <Property Name="Book_Count" Type="Int32" Nullable="false" />
+          <Property Name="Book_Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Warehouse_Detail_Book" FromRole="Warehouse_Detail" ToRole="Book" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_Warehouse_Detail_Warehouse" FromRole="Warehouse_Detail" ToRole="Warehouse" />
+        </EntityType>
+        <Association Name="FK_Bill_Bill_Type">
+          <End Role="Bill_Type" Type="Self.Bill_Type" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill_Type">
+              <PropertyRef Name="Type_IDs" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Bill_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Detail_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="Bill_Detail" Type="Self.Bill_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="Bill_ID" />
+            </Principal>
+            <Dependent Role="Bill_Detail">
+              <PropertyRef Name="Bill_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Discount_Code">
+          <End Role="Discount_Code" Type="Self.Discount_Code" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discount_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Discount_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Detail_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Bill_Detail" Type="Self.Bill_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="Bill_Detail">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Detail_Book_Inventory">
+          <End Role="Book_Inventory" Type="Self.Book_Inventory" Multiplicity="1" />
+          <End Role="Bill_Detail" Type="Self.Bill_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book_Inventory">
+              <PropertyRef Name="Book_ID" />
+              <PropertyRef Name="Warehouse_ID" />
+            </Principal>
+            <Dependent Role="Bill_Detail">
+              <PropertyRef Name="Book_ID" />
+              <PropertyRef Name="Warehouse_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Book_Theme">
+          <End Role="Book_Theme" Type="Self.Book_Theme" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book_Theme">
+              <PropertyRef Name="Type_IDs" />
+              <PropertyRef Name="Theme_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Book_Type" />
+              <PropertyRef Name="Book_Theme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Inventory_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Book_Inventory" Type="Self.Book_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="Book_Inventory">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Publishing_Company">
+          <End Role="Publishing_Company" Type="Self.Publishing_Company" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publishing_Company">
+              <PropertyRef Name="Company_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Book_Company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehouse_Detail_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Warehouse_Detail" Type="Self.Warehouse_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="Warehouse_Detail">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Inventory_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="Book_Inventory" Type="Self.Book_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Warehouse_ID" />
+            </Principal>
+            <Dependent Role="Book_Inventory">
+              <PropertyRef Name="Warehouse_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Theme_Book_Type">
+          <End Role="Book_Type" Type="Self.Book_Type" Multiplicity="1" />
+          <End Role="Book_Theme" Type="Self.Book_Theme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book_Type">
+              <PropertyRef Name="Type_IDs" />
+            </Principal>
+            <Dependent Role="Book_Theme">
+              <PropertyRef Name="Type_IDs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role_Decentralization">
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="1" />
+          <End Role="Employee_Role" Type="Self.Employee_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Decentralization">
+              <PropertyRef Name="Decentralization_ID" />
+            </Principal>
+            <Dependent Role="Employee_Role">
+              <PropertyRef Name="Role_Decentralization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Discount_Code_Promotion_Type">
+          <End Role="Promotion_Type" Type="Self.Promotion_Type" Multiplicity="1" />
+          <End Role="Discount_Code" Type="Self.Discount_Code" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promotion_Type">
+              <PropertyRef Name="Type_IDs" />
+            </Principal>
+            <Dependent Role="Discount_Code">
+              <PropertyRef Name="Code_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Account_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employee_Account" Type="Self.Employee_Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Employee_Account">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Employee_Role">
+          <End Role="Employee_Role" Type="Self.Employee_Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Employee_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pay_Wage_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Pay_Wage" Type="Self.Pay_Wage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Pay_Wage">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehouse_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehouse_Detail_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="Warehouse_Detail" Type="Self.Warehouse_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Warehouse_ID" />
+            </Principal>
+            <Dependent Role="Warehouse_Detail">
+              <PropertyRef Name="Warehouse_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookStoreDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Bill_Detail" EntityType="Self.Bill_Detail" />
+          <EntitySet Name="Bill_Type" EntityType="Self.Bill_Type" />
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Book_Inventory" EntityType="Self.Book_Inventory" />
+          <EntitySet Name="Book_Theme" EntityType="Self.Book_Theme" />
+          <EntitySet Name="Book_Type" EntityType="Self.Book_Type" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Decentralizations" EntityType="Self.Decentralization" />
+          <EntitySet Name="Discount_Code" EntityType="Self.Discount_Code" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Employee_Account" EntityType="Self.Employee_Account" />
+          <EntitySet Name="Employee_Role" EntityType="Self.Employee_Role" />
+          <EntitySet Name="Pay_Wage" EntityType="Self.Pay_Wage" />
+          <EntitySet Name="Promotion_Type" EntityType="Self.Promotion_Type" />
+          <EntitySet Name="Publishing_Company" EntityType="Self.Publishing_Company" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+          <EntitySet Name="Warehouse_Detail" EntityType="Self.Warehouse_Detail" />
+          <AssociationSet Name="FK_Bill_Bill_Type" Association="Self.FK_Bill_Bill_Type">
+            <End Role="Bill_Type" EntitySet="Bill_Type" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Customer" Association="Self.FK_Bill_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Detail_Bill" Association="Self.FK_Bill_Detail_Bill">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="Bill_Detail" EntitySet="Bill_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Discount_Code" Association="Self.FK_Bill_Discount_Code">
+            <End Role="Discount_Code" EntitySet="Discount_Code" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Employee" Association="Self.FK_Bill_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Detail_Book" Association="Self.FK_Bill_Detail_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Bill_Detail" EntitySet="Bill_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Detail_Book_Inventory" Association="Self.FK_Bill_Detail_Book_Inventory">
+            <End Role="Book_Inventory" EntitySet="Book_Inventory" />
+            <End Role="Bill_Detail" EntitySet="Bill_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Book_Theme" Association="Self.FK_Book_Book_Theme">
+            <End Role="Book_Theme" EntitySet="Book_Theme" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Inventory_Book" Association="Self.FK_Book_Inventory_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Book_Inventory" EntitySet="Book_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Publishing_Company" Association="Self.FK_Book_Publishing_Company">
+            <End Role="Publishing_Company" EntitySet="Publishing_Company" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehouse_Detail_Book" Association="Self.FK_Warehouse_Detail_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Warehouse_Detail" EntitySet="Warehouse_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Inventory_Warehouse" Association="Self.FK_Book_Inventory_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Book_Inventory" EntitySet="Book_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Theme_Book_Type" Association="Self.FK_Book_Theme_Book_Type">
+            <End Role="Book_Type" EntitySet="Book_Type" />
+            <End Role="Book_Theme" EntitySet="Book_Theme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role_Decentralization" Association="Self.FK_Employee_Role_Decentralization">
+            <End Role="Decentralization" EntitySet="Decentralizations" />
+            <End Role="Employee_Role" EntitySet="Employee_Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Discount_Code_Promotion_Type" Association="Self.FK_Discount_Code_Promotion_Type">
+            <End Role="Promotion_Type" EntitySet="Promotion_Type" />
+            <End Role="Discount_Code" EntitySet="Discount_Code" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Account_Employee" Association="Self.FK_Employee_Account_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Employee_Account" EntitySet="Employee_Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Employee_Role" Association="Self.FK_Employee_Employee_Role">
+            <End Role="Employee_Role" EntitySet="Employee_Role" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pay_Wage_Employee" Association="Self.FK_Pay_Wage_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Pay_Wage" EntitySet="Pay_Wage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehouse_Employee" Association="Self.FK_Warehouse_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Warehouse" EntitySet="Warehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehouse_Detail_Warehouse" Association="Self.FK_Warehouse_Detail_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Warehouse_Detail" EntitySet="Warehouse_Detail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookStoreDataModelStoreContainer" CdmEntityContainer="BookStoreDataEntities">
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+                <ScalarProperty Name="Bill_Type" ColumnName="Bill_Type" />
+                <ScalarProperty Name="Discount_Code" ColumnName="Discount_Code" />
+                <ScalarProperty Name="Sum_Money" ColumnName="Sum_Money" />
+                <ScalarProperty Name="Total_Money" ColumnName="Total_Money" />
+                <ScalarProperty Name="Excess_Cash" ColumnName="Excess_Cash" />
+                <ScalarProperty Name="Customer_Cash" ColumnName="Customer_Cash" />
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+                <ScalarProperty Name="Bill_Date" ColumnName="Bill_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bill_Detail">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Bill_Detail">
+              <MappingFragment StoreEntitySet="Bill_Detail">
+                <ScalarProperty Name="Detail_ID" ColumnName="Detail_ID" />
+                <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="Warehouse_ID" ColumnName="Warehouse_ID" />
+                <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+                <ScalarProperty Name="Book_Price" ColumnName="Book_Price" />
+                <ScalarProperty Name="Book_Promotion" ColumnName="Book_Promotion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bill_Type">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Bill_Type">
+              <MappingFragment StoreEntitySet="Bill_Type">
+                <ScalarProperty Name="Type_IDs" ColumnName="Type_IDs" />
+                <ScalarProperty Name="Type_Names" ColumnName="Type_Names" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="Book_Name" ColumnName="Book_Name" />
+                <ScalarProperty Name="Book_Author" ColumnName="Book_Author" />
+                <ScalarProperty Name="Book_Type" ColumnName="Book_Type" />
+                <ScalarProperty Name="Book_Theme" ColumnName="Book_Theme" />
+                <ScalarProperty Name="Book_Company" ColumnName="Book_Company" />
+                <ScalarProperty Name="Book_Price" ColumnName="Book_Price" />
+                <ScalarProperty Name="Book_Promotion" ColumnName="Book_Promotion" />
+                <ScalarProperty Name="Book_Image" ColumnName="Book_Image" />
+                <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Book_Inventory">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Book_Inventory">
+              <MappingFragment StoreEntitySet="Book_Inventory">
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="Warehouse_ID" ColumnName="Warehouse_ID" />
+                <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Book_Theme">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Book_Theme">
+              <MappingFragment StoreEntitySet="Book_Theme">
+                <ScalarProperty Name="Theme_ID" ColumnName="Theme_ID" />
+                <ScalarProperty Name="Type_IDs" ColumnName="Type_IDs" />
+                <ScalarProperty Name="Theme_Name" ColumnName="Theme_Name" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Book_Type">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Book_Type">
+              <MappingFragment StoreEntitySet="Book_Type">
+                <ScalarProperty Name="Type_IDs" ColumnName="Type_IDs" />
+                <ScalarProperty Name="Type_Names" ColumnName="Type_Names" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+                <ScalarProperty Name="Customer_Gender" ColumnName="Customer_Gender" />
+                <ScalarProperty Name="Customer_Address" ColumnName="Customer_Address" />
+                <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
+                <ScalarProperty Name="Customer_Phone" ColumnName="Customer_Phone" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Decentralizations">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Decentralization">
+              <MappingFragment StoreEntitySet="Decentralization">
+                <ScalarProperty Name="Decentralization_ID" ColumnName="Decentralization_ID" />
+                <ScalarProperty Name="Decentralization_Name" ColumnName="Decentralization_Name" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discount_Code">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Discount_Code">
+              <MappingFragment StoreEntitySet="Discount_Code">
+                <ScalarProperty Name="Code_ID" ColumnName="Code_ID" />
+                <ScalarProperty Name="Code_Name" ColumnName="Code_Name" />
+                <ScalarProperty Name="Code_Type" ColumnName="Code_Type" />
+                <ScalarProperty Name="Date_Begin" ColumnName="Date_Begin" />
+                <ScalarProperty Name="Date_End" ColumnName="Date_End" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+                <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+                <ScalarProperty Name="Employee_Address" ColumnName="Employee_Address" />
+                <ScalarProperty Name="Employee_Email" ColumnName="Employee_Email" />
+                <ScalarProperty Name="Employee_DOB" ColumnName="Employee_DOB" />
+                <ScalarProperty Name="Employee_Gender" ColumnName="Employee_Gender" />
+                <ScalarProperty Name="Employee_Role" ColumnName="Employee_Role" />
+                <ScalarProperty Name="Employee_Image" ColumnName="Employee_Image" />
+                <ScalarProperty Name="Employee_FirstDate" ColumnName="Employee_FirstDate" />
+                <ScalarProperty Name="Employee_Sum_Date" ColumnName="Employee_Sum_Date" />
+                <ScalarProperty Name="Employee_Date_Work" ColumnName="Employee_Date_Work" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+                <ScalarProperty Name="Employee_Phone" ColumnName="Employee_Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Account">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Employee_Account">
+              <MappingFragment StoreEntitySet="Employee_Account">
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+                <ScalarProperty Name="Account_ID" ColumnName="Account_ID" />
+                <ScalarProperty Name="Account_User" ColumnName="Account_User" />
+                <ScalarProperty Name="Account_Password" ColumnName="Account_Password" />
+                <ScalarProperty Name="Account_LastLogin" ColumnName="Account_LastLogin" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Role">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Employee_Role">
+              <MappingFragment StoreEntitySet="Employee_Role">
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+                <ScalarProperty Name="Role_Decentralization" ColumnName="Role_Decentralization" />
+                <ScalarProperty Name="Role_Salary" ColumnName="Role_Salary" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pay_Wage">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Pay_Wage">
+              <MappingFragment StoreEntitySet="Pay_Wage">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="PayWage_Date" ColumnName="PayWage_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Promotion_Type">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Promotion_Type">
+              <MappingFragment StoreEntitySet="Promotion_Type">
+                <ScalarProperty Name="Type_IDs" ColumnName="Type_IDs" />
+                <ScalarProperty Name="Type_Names" ColumnName="Type_Names" />
+                <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+                <ScalarProperty Name="Type_Promotion" ColumnName="Type_Promotion" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publishing_Company">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Publishing_Company">
+              <MappingFragment StoreEntitySet="Publishing_Company">
+                <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+                <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
+                <ScalarProperty Name="Exist" ColumnName="Exist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="Warehouse_ID" ColumnName="Warehouse_ID" />
+                <ScalarProperty Name="Warehouse_Type" ColumnName="Warehouse_Type" />
+                <ScalarProperty Name="Warehouse_Toltal_Money" ColumnName="Warehouse_Toltal_Money" />
+                <ScalarProperty Name="Warehouse_Date" ColumnName="Warehouse_Date" />
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouse_Detail">
+            <EntityTypeMapping TypeName="BookStoreDataModel.Warehouse_Detail">
+              <MappingFragment StoreEntitySet="Warehouse_Detail">
+                <ScalarProperty Name="Detail_ID" ColumnName="Detail_ID" />
+                <ScalarProperty Name="Warehouse_ID" ColumnName="Warehouse_ID" />
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+                <ScalarProperty Name="Book_Price" ColumnName="Book_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
