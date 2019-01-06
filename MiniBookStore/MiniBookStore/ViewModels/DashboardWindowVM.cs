@@ -24,20 +24,89 @@ namespace MiniBookStore.ViewModels
         /// </summary>
         public Visibility OpenMenuVisibility { get => _openMenuVisibility; set { if (value == _openMenuVisibility) return; _openMenuVisibility = value; OnPropertyChanged(); } }
 
+        private Thickness _gridCursorMargin;
+        /// <summary>
+        /// Thuộc tính margin của thanh trượt
+        /// </summary>
+        public Thickness GridCursorMargin { get => _gridCursorMargin;set { if (value == _gridCursorMargin) return;_gridCursorMargin = value;OnPropertyChanged(); } }
+       
         #endregion
 
         #region command binding
 
         public ICommand OpenMenuCommand { get; set; }
         public ICommand CloseMenuCommand { get; set; }
+        public ICommand LoadCommand { get; set; }
+        public ICommand PayCommand { get; set; }
+        public ICommand BookCommand { get; set; }
+        public ICommand PromotionCommand { get; set; }
+        public ICommand ChartCommand { get; set; }
+        public ICommand EmployeeCommand { get; set; }
+        public ICommand CustomerCommand { get; set; }
+        public ICommand AccountCommand { get; set; }
+        public ICommand ExitCommand { get; set; }
 
         #endregion
 
         public DashboardWindowVM()
         {
-            //Khởi tạo
-            CloseMenuVisibility = Visibility.Collapsed;
-            OpenMenuVisibility = Visibility.Visible;
+            LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                //Khởi tạo
+                CloseMenuVisibility = Visibility.Collapsed;
+                OpenMenuVisibility = Visibility.Visible;
+
+                GridCursorMargin = new Thickness(0, 70, 0, 0);
+            }
+               );
+
+            PayCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {               
+                GridCursorMargin = new Thickness(0, 70 + 0, 0, 0);
+            }
+               );
+
+            BookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 70 + 1 * 60, 0, 0);
+            }
+               );
+
+            PromotionCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 70 + 2 * 60, 0, 0);
+            }
+               );
+
+            ChartCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 70 + 3 * 60, 0, 0);
+            }
+               );
+
+            EmployeeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 70 + 4 * 60, 0, 0);
+            }
+               );
+
+            CustomerCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 70 + 5 * 60, 0, 0);
+            }
+               );
+
+            AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 70 + 6 * 60, 0, 0);
+            }
+               );
+
+            ExitCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 70 + 7 * 60, 0, 0);
+            }
+               );
 
             OpenMenuCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {

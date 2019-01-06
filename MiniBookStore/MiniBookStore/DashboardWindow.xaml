@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MiniBookStore"
         mc:Ignorable="d"
@@ -17,7 +18,7 @@
         Title="DashboardWindow" Height="750" Width="1200"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource DashboardWindowVM}" WindowStyle="None">
-    
+
     <!--resource-->
     <Window.Resources>
         <Storyboard x:Key="OpenMenu">
@@ -33,7 +34,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
-    
+
     <!--trigger -->
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
@@ -43,19 +44,37 @@
             <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
         </EventTrigger>
     </Window.Triggers>
-    
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <!--content-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-       
+
         <!-- Thanh menu -->
-        <Grid x:Name="GridMenu" Width="70" HorizontalAlignment="Left" Background="#FF31577E" Grid.Column="0" Panel.ZIndex="0">
+        <Grid x:Name="GridMenu" Width="75" HorizontalAlignment="Left" Grid.Column="0" Panel.ZIndex="0" Background="Black">
             
-            <StackPanel>
-                <Grid Height="150" Background="White" RenderTransformOrigin="0.5,0.5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- Thanh chạy-->
+            <Grid Grid.Column="0">
+                <Grid Width="5" Height="59" Background="Aqua" VerticalAlignment="Top" 
+                      Margin="{Binding GridCursorMargin}"></Grid>
+                <!--96-->
+            </Grid>
+
+            <!-- Menu-->
+            <StackPanel Grid.Column="1">
+                <Grid Height="70" Background="White" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -82,32 +101,74 @@
 
                     <Image Height="80" VerticalAlignment="Bottom"/>
                 </Grid>
-                <ListView x:Name="ListViewMenu" Foreground="#FF5C99D6" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <ListViewItem x:Name="ItemHome" Height="60">
+                <StackPanel HorizontalAlignment="Left">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedAccentButton}">
+                            <Setter Property="Background" Value="{x:Null}"/>
+                            <Setter Property="BorderBrush" Value="{x:Null}"/>
+                            <Setter Property="Height" Value="60"/>
+                            <Setter Property="Width" Value="200"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <Button ToolTip="Thanh toán" Command="{Binding PayCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="ViewDashboard" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10"/>
+                            <materialDesign:PackIcon Kind="CartOutline" Height="25" Width="25" Margin="-62,10,0,10"/>
+                            <TextBlock Text="Thanh toán" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                         </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem x:Name="ItemCreate" Height="60">
+                    </Button>
+
+                    <Button ToolTip="Kho sách" Command="{Binding BookCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Pencil" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="Create" VerticalAlignment="Center" Margin="20 10"/>
+                            <materialDesign:PackIcon Kind="Book" Height="25" Width="25" Margin="-62,10,0,10"/>
+                            <TextBlock Text="Kho sách" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                         </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="60">
+                    </Button>
+
+                    <Button ToolTip="Khuyến mãi" Command="{Binding PromotionCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Ticket" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="Tickets" VerticalAlignment="Center"  Margin="20 10"/>
+                            <materialDesign:PackIcon Kind="Sale" Height="25" Width="25" Margin="-62,10,0,10"/>
+                            <TextBlock Text="Khuyến mãi" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                         </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="60">
+                    </Button>
+
+                    <Button ToolTip="Thống kê" Command="{Binding ChartCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Message" Height="25" Width="25" Margin="10"/>
-                            <TextBlock Text="Messages" VerticalAlignment="Center"  Margin="20 10"/>
+                            <materialDesign:PackIcon Kind="ChartPie" Height="25" Width="25" Margin="-62,10,0,10"/>
+                            <TextBlock Text="Thống kê" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                         </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                    </Button>
+
+                    <Button ToolTip="Nhân sự" Command="{Binding EmployeeCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Worker" Height="25" Width="25" Margin="-62,10,0,10"/>
+                            <TextBlock Text="Nhân sự" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button ToolTip="Khách hàng" Command="{Binding CustomerCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="HumanMaleFemale" Height="25" Width="25" Margin="-62,10,0,10"/>
+                            <TextBlock Text="Khách hàng" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button ToolTip="Tài khoản" Command="{Binding AccountCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountEdit" Height="25" Width="25" Margin="-62,10,0,10"/>
+                            <TextBlock Text="Tài khoản" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button ToolTip="Thoát" Command="{Binding ExitCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ExitToApp" Height="25" Width="25" Margin="-62,10,0,10"/>
+                            <TextBlock Text="Thoát" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
             </StackPanel>
         </Grid>
 
@@ -116,15 +177,15 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
             <!-- Thanh menu để chọn-->
             <Grid Grid.Row="0">
-                
+
                 <!-- Controlbar - O X-->
                 <uc:ControlBar VerticalAlignment="Top" Panel.ZIndex="1" Grid.Column="1"/>
 
             </Grid>
-            
+
         </Grid>
     </Grid>
 </Window>
