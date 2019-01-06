@@ -64,6 +64,7 @@ namespace MiniBookStore.ViewModels
                 OpenMenuVisibility = Visibility.Visible;
 
                 GridCursorMargin = new Thickness(0, 70 + 1*60, 0, 0);
+                FramePage = new BookMenuPage();
             }
                );
 

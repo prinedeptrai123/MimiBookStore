@@ -3,5 +3,6 @@
                     xmlns:viewmodel="clr-namespace:MiniBookStore.ViewModels"
                     xmlns:local="clr-namespace:MiniBookStore.ResourceXAML">
     <viewmodel:DashboardWindowVM x:Key="DashboardWindowVM"></viewmodel:DashboardWindowVM>
+    <viewmodel:BookMenuPageVM x:Key="BookMenuPageVM"></viewmodel:BookMenuPageVM>
     
 </ResourceDictionary>
