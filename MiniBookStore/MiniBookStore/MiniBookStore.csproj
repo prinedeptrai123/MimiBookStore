@@ -70,6 +70,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindingProxy.cs" />
+    <Compile Include="Models\Help.cs" />
+    <Compile Include="Models\MyClass\CAccount.cs" />
+    <Compile Include="Models\MyClass\CBill.cs" />
+    <Compile Include="Models\MyClass\CBook.cs" />
+    <Compile Include="Models\MyClass\CBookBill.cs" />
+    <Compile Include="Models\MyClass\CBookInventory.cs" />
+    <Compile Include="Models\MyClass\CCustomer.cs" />
+    <Compile Include="Models\MyClass\CDiscoutCode.cs" />
+    <Compile Include="Models\MyClass\CEmployee.cs" />
+    <Compile Include="Models\MyClass\CEmployee_Role.cs" />
+    <Compile Include="Models\MyClass\CPromotion.cs" />
+    <Compile Include="Models\MyClass\Human.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -193,7 +206,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
-    <Folder Include="Models\MyClass\" />
     <Folder Include="Styles\" />
     <Folder Include="Templates\" />
   </ItemGroup>

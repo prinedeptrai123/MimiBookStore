@@ -36,6 +36,7 @@ namespace MiniBookStore.Models
         public int Employee_Date_Work { get; set; }
         public bool Exist { get; set; }
         public string Employee_Phone { get; set; }
+        public string Employee_Identity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
