@@ -20,50 +20,59 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <materialDesign:ColorZone
-  Mode="Inverted" Background="Transparent"
-  Padding="0">
+        <materialDesign:ColorZone         
+            Background="Transparent">
             <DockPanel>
-                <DockPanel.Resources>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
-                    </Style>
-                </DockPanel.Resources>
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+                            <Setter Property="Height" Value="20"/>
+                            <Setter Property="Height" Value="20"/>
+                        </Style>
+                    </StackPanel.Resources>
                     <Button Background="White" BorderBrush="White"
                                 Margin="3,2,3,2" Command="{Binding MinimizeWindowCommand}"
                             CommandParameter="{Binding ElementName=ucControlBar}"                            
-                            ToolTip="Ẩn" Height="25" Width="25">
+                            ToolTip="Ẩn" Height="22" Width="22">
                         <materialDesign:PackIcon
                                 Kind="WindowMinimize"
-                                Height="22"
-                                Width="22" Foreground="Black"/>
+                                Height="19"
+                                Width="19" Foreground="Black"/>
                     </Button>
 
                     <Button Background="White" BorderBrush="White"
-                                Margin="3,2,3,2" Height="25" Width="25" Command="{Binding MaximizeWindowCommand}"
+                                Margin="3,2,3,2"  Command="{Binding MaximizeWindowCommand}"
                             CommandParameter="{Binding ElementName=ucControlBar}"                           
-                            ToolTip="Toàn màn hình">
+                            ToolTip="Toàn màn hình" Height="22" Width="22">
                         <materialDesign:PackIcon
                                 Kind="Fullscreen"
-                                Height="22"
-                                Width="22" Foreground="Black"/>
+                                Height="19"
+                                Width="19" Foreground="Black"/>
                     </Button>
 
                     <Button Background="White" BorderBrush="White"
-                                Margin="3,2,3,2" Height="25" Width="25" Command="{Binding CloseWindowCommand}"
+                                Margin="3,2,3,2" Height="22" Width="22" Command="{Binding CloseWindowCommand}"
                             CommandParameter="{Binding ElementName=ucControlBar}"                        
                             ToolTip="Thoát">
                         <materialDesign:PackIcon
                                 Kind="WindowClose"
-                                Height="22"
-                                Width="22" Foreground="Black"/>
+                                Height="19"
+                                Width="19" Foreground="Black"/>
                     </Button>
                 </StackPanel>
                 <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center">
-                    <Label Content="{Binding Tag,ElementName=ucControlBar}" 
-                           Foreground="Black" FontSize="16"
-                           FontWeight="Medium" VerticalAlignment="Center"
-                           Margin="50,0,50,0"/>
+                    <Grid Width="200" HorizontalAlignment="Left">
+                        <Button  Width="200"  Height="22"                       
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            materialDesign:ButtonProgressAssist.Value="-1"
+                            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                            
+                            HorizontalAlignment="Center"
+                            Margin="0,0" Background="Black" BorderBrush="Black" Foreground="White">
+                            <TextBlock Text="Quản lý nhà sách" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40,0,0,0"/>
+                        </Button>
+                    </Grid> 
                 </StackPanel>
             </DockPanel>
         </materialDesign:ColorZone>

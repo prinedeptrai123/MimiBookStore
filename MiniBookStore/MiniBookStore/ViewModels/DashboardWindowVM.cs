@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MiniBookStore.ViewModels
@@ -29,7 +30,13 @@ namespace MiniBookStore.ViewModels
         /// Thuộc tính margin của thanh trượt
         /// </summary>
         public Thickness GridCursorMargin { get => _gridCursorMargin;set { if (value == _gridCursorMargin) return;_gridCursorMargin = value;OnPropertyChanged(); } }
-       
+
+        private Page _framePage;
+        /// <summary>
+        /// Thuộc tính content của Frame ở đây lưu page cần chuyển qua
+        /// </summary>
+        public Page FramePage { get => _framePage;set { if (value == _framePage) return;_framePage = value;OnPropertyChanged(); } }
+
         #endregion
 
         #region command binding
@@ -56,7 +63,7 @@ namespace MiniBookStore.ViewModels
                 CloseMenuVisibility = Visibility.Collapsed;
                 OpenMenuVisibility = Visibility.Visible;
 
-                GridCursorMargin = new Thickness(0, 70, 0, 0);
+                GridCursorMargin = new Thickness(0, 70 + 1*60, 0, 0);
             }
                );
 
