@@ -96,6 +96,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddNewBookWindow.xaml.cs">
+      <DependentUpon>AddNewBookWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BindingProxy.cs" />
     <Compile Include="BookInfoPage.xaml.cs">
       <DependentUpon>BookInfoPage.xaml</DependentUpon>
@@ -121,11 +124,16 @@
     <Compile Include="UserControls\ControlBar.xaml.cs">
       <DependentUpon>ControlBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AddNewBookWindowVM.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookInfoPageVM.cs" />
     <Compile Include="ViewModels\BookMenuPageVM.cs" />
     <Compile Include="ViewModels\ControlBarVM.cs" />
     <Compile Include="ViewModels\DashboardWindowVM.cs" />
+    <Page Include="AddNewBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BookInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -263,11 +271,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\" />
     <Folder Include="Styles\" />
     <Folder Include="Templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\harry.jpg" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>

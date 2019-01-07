@@ -31,14 +31,14 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Đầu trang -->
         <Grid Grid.Row="0" Height="90">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="760"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <!-- Cụm bên trái-->
             <Grid>
                 <!-- Label thông báo-->
@@ -122,7 +122,7 @@
                     </StackPanel>
                 </materialDesign:Card>
             </Grid>
-            
+
             <!-- Cụm bên trái-->
             <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="30,0,0,0">
                 <materialDesign:Card   HorizontalAlignment="Left" Background="#00cec9" VerticalAlignment="Bottom" Margin="0,0,0,0"
@@ -136,16 +136,16 @@
                         </TextBlock>
                         <Separator Style="{StaticResource MaterialDesignDarkSeparator}" BorderThickness="5"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            
+
                             <TextBlock Text="{Binding TargetNullValue,FallbackValue=500}"
                         Style="{StaticResource ReportStyle}"/>
 
                             <TextBlock Text="cuốn" Margin="5,0,0,0"
                         Style="{StaticResource ReportStyle}"/>
                         </StackPanel>
-                        
+
                     </StackPanel>
-                    
+
                 </materialDesign:Card>
             </Grid>
         </Grid>
@@ -206,15 +206,29 @@
                 </StackPanel>
 
             </StackPanel>
-            
+
             <!-- Ảnh bìa sách và menu nhập thêm sách-->
             <StackPanel Grid.Column="1" HorizontalAlignment="Left" Margin="30,5,0,0">
-                
+
                 <!--Ảnh bìa sách-->
                 <materialDesign:Card Height="300" Width="300">
-                    
+                    <Grid>
+                        <TextBlock Text="Ảnh bìa" Panel.ZIndex="1" Foreground="White" FontWeight="Medium"
+                                   FontSize="15" MinWidth="0.5" 
+                                   Background="#2ecc71" Padding="45,6,0,0" Margin="-37.279,23.989,206.858,245.011" RenderTransformOrigin="0.5,0.5">
+                            <TextBlock.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-51.104"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                        <Image Source="./Images/harry.jpg" HorizontalAlignment="Stretch"/>
+                    </Grid>
                 </materialDesign:Card>
-                
+
                 <!-- Menu chọn công cụ-->
                 <materialDesign:Card Background="#00cec9" VerticalAlignment="Bottom" Margin="0,5,0,0"                                 
                      Width="300"
@@ -227,7 +241,8 @@
                         <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                            <Button Margin="0,0,3,0" Background="#2c2c54" BorderBrush="{x:Null}">
+                            <Button Margin="0,0,3,0" Background="#2c2c54" BorderBrush="{x:Null}"
+                                    Command="{Binding addNewBookCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="PlusBoxOutline" />
                                     <TextBlock Text="Sách mới"/>
@@ -277,6 +292,6 @@
                 </materialDesign:Card>
             </StackPanel>
         </Grid>
-        
+
     </Grid>
 </Page>
