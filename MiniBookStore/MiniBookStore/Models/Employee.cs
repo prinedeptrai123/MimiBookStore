@@ -30,13 +30,13 @@ namespace MiniBookStore.Models
         public System.DateTime Employee_DOB { get; set; }
         public string Employee_Gender { get; set; }
         public int Employee_Role { get; set; }
-        public byte[] Employee_Image { get; set; }
         public System.DateTime Employee_FirstDate { get; set; }
         public int Employee_Sum_Date { get; set; }
         public int Employee_Date_Work { get; set; }
         public bool Exist { get; set; }
         public string Employee_Phone { get; set; }
         public string Employee_Identity { get; set; }
+        public byte[] Employee_Image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }

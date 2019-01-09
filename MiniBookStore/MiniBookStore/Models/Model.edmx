@@ -126,13 +126,13 @@
           <Property Name="Employee_DOB" Type="datetime" Nullable="false" />
           <Property Name="Employee_Gender" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Employee_Role" Type="int" Nullable="false" />
-          <Property Name="Employee_Image" Type="image" Nullable="false" />
           <Property Name="Employee_FirstDate" Type="datetime" Nullable="false" />
           <Property Name="Employee_Sum_Date" Type="int" Nullable="false" />
           <Property Name="Employee_Date_Work" Type="int" Nullable="false" />
           <Property Name="Exist" Type="bit" Nullable="false" />
           <Property Name="Employee_Phone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Employee_Identity" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Employee_Image" Type="image" />
         </EntityType>
         <EntityType Name="Employee_Account">
           <Key>
@@ -795,13 +795,13 @@
           <Property Name="Employee_DOB" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Employee_Gender" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Employee_Role" Type="Int32" Nullable="false" />
-          <Property Name="Employee_Image" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="Employee_FirstDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Employee_Sum_Date" Type="Int32" Nullable="false" />
           <Property Name="Employee_Date_Work" Type="Int32" Nullable="false" />
           <Property Name="Exist" Type="Boolean" Nullable="false" />
           <Property Name="Employee_Phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Employee_Identity" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Employee_Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Bills" Relationship="BookStoreDataModel.FK_Bill_Employee" FromRole="Employee" ToRole="Bill" />
           <NavigationProperty Name="Employee_Account" Relationship="BookStoreDataModel.FK_Employee_Account_Employee" FromRole="Employee" ToRole="Employee_Account" />
           <NavigationProperty Name="Employee_Role1" Relationship="BookStoreDataModel.FK_Employee_Employee_Role" FromRole="Employee" ToRole="Employee_Role" />
@@ -1131,7 +1131,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1258,13 +1258,13 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="BookStoreDataModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Employee_Image" ColumnName="Employee_Image" />
                 <ScalarProperty Name="Employee_Identity" ColumnName="Employee_Identity" />
                 <ScalarProperty Name="Employee_Phone" ColumnName="Employee_Phone" />
                 <ScalarProperty Name="Exist" ColumnName="Exist" />
                 <ScalarProperty Name="Employee_Date_Work" ColumnName="Employee_Date_Work" />
                 <ScalarProperty Name="Employee_Sum_Date" ColumnName="Employee_Sum_Date" />
                 <ScalarProperty Name="Employee_FirstDate" ColumnName="Employee_FirstDate" />
-                <ScalarProperty Name="Employee_Image" ColumnName="Employee_Image" />
                 <ScalarProperty Name="Employee_Role" ColumnName="Employee_Role" />
                 <ScalarProperty Name="Employee_Gender" ColumnName="Employee_Gender" />
                 <ScalarProperty Name="Employee_DOB" ColumnName="Employee_DOB" />
