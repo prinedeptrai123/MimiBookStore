@@ -109,6 +109,9 @@
     <Compile Include="DashboardWindow.xaml.cs">
       <DependentUpon>DashboardWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DetailsBookWindow.xaml.cs">
+      <DependentUpon>DetailsBookWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataTransfer.cs" />
     <Compile Include="Models\Help.cs" />
     <Compile Include="Models\MyClass\CAccount.cs" />
@@ -121,6 +124,7 @@
     <Compile Include="Models\MyClass\CEmployee.cs" />
     <Compile Include="Models\MyClass\CEmployee_Role.cs" />
     <Compile Include="Models\MyClass\CPromotion.cs" />
+    <Compile Include="Models\MyClass\CWarehouse_History.cs" />
     <Compile Include="Models\MyClass\Human.cs" />
     <Compile Include="UserControls\ControlBar.xaml.cs">
       <DependentUpon>ControlBar.xaml</DependentUpon>
@@ -131,6 +135,7 @@
     <Compile Include="ViewModels\BookMenuPageVM.cs" />
     <Compile Include="ViewModels\ControlBarVM.cs" />
     <Compile Include="ViewModels\DashboardWindowVM.cs" />
+    <Compile Include="ViewModels\DetailsBookWindowVM.cs" />
     <Page Include="AddNewBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -144,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DashboardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DetailsBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

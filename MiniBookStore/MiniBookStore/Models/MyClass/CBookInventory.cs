@@ -253,6 +253,35 @@ namespace MiniBookStore.Models.MyClass
             return false;
         }
 
+        /// <summary>
+        /// Hàm trả về thông tin ngày cuối nhập kho
+        /// </summary>
+        /// <returns></returns>
+        public CWarehouse_History LastWarehouse()
+        {
+            CWarehouse_History data = new CWarehouse_History();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Warehouses.OrderByDescending(x => x.Warehouse_Date).FirstOrDefault();
+
+                    if (find != null)
+                    {
+                        data.Date = find.Warehouse_Date;
+                        data.ToltalMoney = (float)find.Warehouse_Toltal_Money;
+                        data.TotalCount = find.Warehouse_Detail.Sum(x => x.Book_Count);
+                    }                  
+                }
+            }
+            catch
+            {
+
+            }
+
+            return data;
+        }
+
         #endregion
     }
 }

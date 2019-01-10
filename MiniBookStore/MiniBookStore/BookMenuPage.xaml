@@ -17,7 +17,7 @@
       Background="{DynamicResource MaterialDesignPaper}"     
       DataContext="{StaticResource BookMenuPageVM}"
       
-      d:DesignHeight="758" d:DesignWidth="1125"
+      d:DesignHeight="758" d:DesignWidth="1175"
       Title="BookMenuPage">
 
     <i:Interaction.Triggers>

@@ -17,7 +17,7 @@
       Background="{DynamicResource MaterialDesignPaper}"     
       DataContext="{StaticResource BookInfoPageVM}"
       
-      d:DesignHeight="700" d:DesignWidth="1125"
+      d:DesignHeight="700" d:DesignWidth="1175"
       Title="BookInfoPage">
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="ReportStyle">
@@ -25,6 +25,12 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
     </Page.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -35,7 +41,7 @@
         <!-- Đầu trang -->
         <Grid Grid.Row="0" Height="90">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="760"/>
+                <ColumnDefinition Width="810"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -48,7 +54,7 @@
                 </TextBlock>
 
                 <!-- Thanh tìm kiếm và thanh lọc-->
-                <materialDesign:Card Margin="10,5,0,0" Width="750" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                <materialDesign:Card Margin="10,5,0,0" Width="800" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                     <StackPanel Orientation="Horizontal" Width="auto" >
 
                         <!--Thanh tìm kiếm-->
@@ -109,6 +115,16 @@
 
                             <StackPanel>
                                 <Label  VerticalAlignment="Center">
+                                    <TextBlock Text="Nhà xuất bản" Style="{StaticResource labelStyle}"/>
+                                </Label>
+                                <ComboBox
+                                materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
+                                >
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <Label  VerticalAlignment="Center">
                                     <TextBlock Text="Sắp xếp theo" Style="{StaticResource labelStyle}"/>
                                 </Label>
                                 <ComboBox
@@ -137,7 +153,7 @@
                         <Separator Style="{StaticResource MaterialDesignDarkSeparator}" BorderThickness="5"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                            <TextBlock Text="{Binding TargetNullValue,FallbackValue=500}"
+                            <TextBlock Text="{Binding SumNumber,StringFormat='0,0'}"
                         Style="{StaticResource ReportStyle}"/>
 
                             <TextBlock Text="cuốn" Margin="5,0,0,0"
@@ -152,7 +168,7 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="760"/>
+                <ColumnDefinition Width="810"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -160,8 +176,125 @@
             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0">
                 <!--List hiển thị danh sách-->
                 <materialDesign:Card Height="auto" Width="auto">
-                    <ListView Height="560" Width="750" Background="Blue">
+                    <ListView Height="560" Width="800" Background="Blue"
+                              ItemsSource="{Binding ListBook}" SelectedItem="{Binding ListSelectedItem}">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type TextBlock}" x:Key="WrapStyle">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                                <Setter Property="Width" Value="120"/>
+                            </Style>
+                        </ListView.Resources>
 
+                        <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Style.Triggers>
+                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                    <Setter Property="IsSelected" Value="True"/>
+                                </Trigger>
+                            </Style.Triggers>
+                            
+                        </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ListSelectionChanged}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn                                      
+                                        Header="Mã">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ID}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn                                      
+                                        Header="Tên sách">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" Style="{StaticResource WrapStyle}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn                                      
+                                        Header="Thể loại">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Type}" Style="{StaticResource WrapStyle}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn                                      
+                                        Header="Chủ đề">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Theme}" Style="{StaticResource WrapStyle}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                               
+                                <GridViewColumn                                      
+                                        Header="Tồn kho">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Inventory,StringFormat='0,0'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn                                      
+                                        Header="Giá bán">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding OutPricePromotion,StringFormat='0,0.0'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn                                      
+                                        Header="Đã bán">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Sold}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Background="#3498db" BorderBrush="#3498db" Width="45"
+                                                    Command="{Binding Path=DataContext.editBookCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}} }"
+                                                    CommandParameter="{Binding}"
+                                                    ToolTip="Chi tiết">
+                                                <materialDesign:PackIcon Kind="Pencil" Foreground="White" Height="15" Width="15"/>
+                                            </Button>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Background="#c0392b" BorderBrush="#c0392b" Width="45"
+                                                    Command="{Binding Path=DataContext.deleteBookCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}} }"
+                                                    CommandParameter="{Binding}"
+                                                    ToolTip="Xóa">
+                                                <materialDesign:PackIcon Kind="DeleteForever" Foreground="White" Height="15" Width="15"/>
+                                            </Button>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+
+                            </GridView>
+                        </ListView.View>
                     </ListView>
                 </materialDesign:Card>
 
@@ -225,7 +358,7 @@
                                 </TransformGroup>
                             </TextBlock.RenderTransform>
                         </TextBlock>
-                        <Image Source="./Images/harry.jpg" HorizontalAlignment="Stretch"/>
+                        <Image Source="{Binding CoverImage}" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </materialDesign:Card>
 
@@ -276,16 +409,19 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="CalendarText" Foreground="White" Margin="0,0,3,0"/>
                             <TextBlock Text="Ngày nhập: " Style="{StaticResource ReportStyle}"/>
+                            <TextBlock Text="{Binding LastDate}" Style="{StaticResource ReportStyle}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="LibraryBooks" Foreground="White" Margin="0,0,3,0"/>
                             <TextBlock Text="Tổng sách nhập: " Style="{StaticResource ReportStyle}"/>
+                            <TextBlock Text="{Binding LastNumberBook,StringFormat='0,0'}" Style="{StaticResource ReportStyle}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Coin" Foreground="White" Margin="0,0,3,0"/>
                             <TextBlock Text="Tổng tiền: " Style="{StaticResource ReportStyle}"/>
+                            <TextBlock Text="{Binding LastTotalMoney,StringFormat='0,0.0'}" Style="{StaticResource ReportStyle}"/>
                         </StackPanel>
 
                     </StackPanel>

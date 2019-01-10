@@ -37,6 +37,7 @@ namespace MiniBookStore.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill_Detail> Bill_Detail { get; set; }
         public virtual Book_Theme Book_Theme1 { get; set; }
+        public virtual Book_Type Book_Type1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book_Inventory> Book_Inventory { get; set; }
         public virtual Publishing_Company Publishing_Company { get; set; }

@@ -17,6 +17,7 @@ namespace MiniBookStore.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Book_Type()
         {
+            this.Books = new HashSet<Book>();
             this.Book_Theme = new HashSet<Book_Theme>();
         }
     
@@ -24,6 +25,8 @@ namespace MiniBookStore.Models
         public string Type_Names { get; set; }
         public bool Exist { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Book> Books { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book_Theme> Book_Theme { get; set; }
     }

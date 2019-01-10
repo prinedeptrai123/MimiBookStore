@@ -302,6 +302,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Book_Book_Type">
+          <End Role="Book_Type" Type="Self.Book_Type" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book_Type">
+              <PropertyRef Name="Type_IDs" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Book_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Book_Inventory_Book">
           <End Role="Book" Type="Self.Book" Multiplicity="1" />
           <End Role="Book_Inventory" Type="Self.Book_Inventory" Multiplicity="*" />
@@ -497,6 +509,10 @@
             <End Role="Book_Theme" EntitySet="Book_Theme" />
             <End Role="Book" EntitySet="Book" />
           </AssociationSet>
+          <AssociationSet Name="FK_Book_Book_Type" Association="Self.FK_Book_Book_Type">
+            <End Role="Book_Type" EntitySet="Book_Type" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
           <AssociationSet Name="FK_Book_Inventory_Book" Association="Self.FK_Book_Inventory_Book">
             <End Role="Book" EntitySet="Book" />
             <End Role="Book_Inventory" EntitySet="Book_Inventory" />
@@ -599,6 +615,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Book_Book_Theme" Association="BookStoreDataModel.FK_Book_Book_Theme">
             <End Role="Book_Theme" EntitySet="Book_Theme" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Book_Type" Association="BookStoreDataModel.FK_Book_Book_Type">
+            <End Role="Book_Type" EntitySet="Book_Type" />
             <End Role="Book" EntitySet="Books" />
           </AssociationSet>
           <AssociationSet Name="FK_Book_Inventory_Book" Association="BookStoreDataModel.FK_Book_Inventory_Book">
@@ -711,6 +731,7 @@
           <Property Name="Exist" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Bill_Detail" Relationship="BookStoreDataModel.FK_Bill_Detail_Book" FromRole="Book" ToRole="Bill_Detail" />
           <NavigationProperty Name="Book_Theme1" Relationship="BookStoreDataModel.FK_Book_Book_Theme" FromRole="Book" ToRole="Book_Theme" />
+          <NavigationProperty Name="Book_Type1" Relationship="BookStoreDataModel.FK_Book_Book_Type" FromRole="Book" ToRole="Book_Type" />
           <NavigationProperty Name="Book_Inventory" Relationship="BookStoreDataModel.FK_Book_Inventory_Book" FromRole="Book" ToRole="Book_Inventory" />
           <NavigationProperty Name="Publishing_Company" Relationship="BookStoreDataModel.FK_Book_Publishing_Company" FromRole="Book" ToRole="Publishing_Company" />
           <NavigationProperty Name="Warehouse_Detail" Relationship="BookStoreDataModel.FK_Warehouse_Detail_Book" FromRole="Book" ToRole="Warehouse_Detail" />
@@ -747,6 +768,7 @@
           <Property Name="Type_IDs" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type_Names" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Exist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="BookStoreDataModel.FK_Book_Book_Type" FromRole="Book_Type" ToRole="Book" />
           <NavigationProperty Name="Book_Theme" Relationship="BookStoreDataModel.FK_Book_Theme_Book_Type" FromRole="Book_Type" ToRole="Book_Theme" />
         </EntityType>
         <EntityType Name="Customer">
@@ -984,6 +1006,18 @@
             <Dependent Role="Book">
               <PropertyRef Name="Book_Type" />
               <PropertyRef Name="Book_Theme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Book_Type">
+          <End Type="BookStoreDataModel.Book_Type" Role="Book_Type" Multiplicity="1" />
+          <End Type="BookStoreDataModel.Book" Role="Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book_Type">
+              <PropertyRef Name="Type_IDs" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Book_Type" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
