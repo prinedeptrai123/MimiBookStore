@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniBookStore.Models.MyClass
 {
-    class CBookBill:CBookInventory
+    public class CBookBill:CBookInventory
     {
         #region private properties
 

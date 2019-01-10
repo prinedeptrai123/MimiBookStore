@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MiniBookStore.Models.MyClass
 {
-    class Human
+    public class Human
     {
         #region private properties
 
-        private string _iD;//id
+        private int _iD;//id
         private string _name;//tên
         private string _address;//địa chỉ
         private string _email;//email
@@ -25,7 +25,7 @@ namespace MiniBookStore.Models.MyClass
         /// <summary>
         /// Id
         /// </summary>
-        public string ID { get => _iD; set { if (value == _iD) return; _iD = value; } }
+        public int ID { get => _iD; set { if (value == _iD) return; _iD = value; } }
         /// <summary>
         /// Tên
         /// </summary>

@@ -16,11 +16,52 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"       
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Background="{DynamicResource MaterialDesignPaper}"     
+        Background="{DynamicResource MaterialDesignPaper}"
         DataContext="{StaticResource AddNewBookWindowVM}"
-        
+        Icon="./Images/icon.png"
+              
         WindowStyle="None" WindowStartupLocation="CenterScreen"
-        Title="AddNewBookWindow" Height="450" Width="800">
+        Title="AddNewBookWindow" Height="800" Width="1000">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}" x:Key="nameStyle">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Tahoma"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="nameBoldStyle">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}" x:Key="textboxStyle">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="180"/>
+        </Style>
+
+        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignComboBox}" x:Key="comboboxStyle">
+            <Setter Property="IsEditable" Value="True"/>
+            <Setter  Property="materialDesign:HintAssist.HintOpacity" Value=".26"/>
+            <Setter Property="MinWidth" Value="180"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}" x:Key="buttonStyle">
+            <Setter Property="Background" Value="#2c2c54"/>
+            <Setter Property="BorderBrush" Value="#2c2c54"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+        </Style>
+
+    </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -30,5 +71,240 @@
         <!-- Controlbar - O X-->
         <uc:ControlBar VerticalAlignment="Top" Panel.ZIndex="1" Grid.Row="0"/>
 
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Thông báo màn hình-->
+            <Grid Grid.Row="0" Background="#2c2c54" Height="35">
+                <TextBlock Text="Nhập sách mới" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" FontFamily="Verdana" Foreground="White" FontSize="18" FontWeight="Medium"/>
+            </Grid>
+            
+            <!-- Thông tin -->
+            <StackPanel Grid.Row="1" Margin="10,10,0,0">
+                
+                <!-- Thông tin nhân viên nhập-->
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"/>
+                    <TextBlock Text="Người nhập: "  Style="{StaticResource nameBoldStyle}"/>
+                    <TextBlock Text="{Binding EmployeeName}" Style="{StaticResource nameStyle}"/>
+                    <TextBlock Text="Ngày nhập: " Style="{StaticResource nameBoldStyle}" Margin="20,0,0,0"/>
+                    <TextBlock Text="{Binding DateNow}" Style="{StaticResource nameStyle}"/>
+
+                </StackPanel>
+
+                <Separator Margin="30,10,30,0"/>
+
+                <TextBlock Text="Thông tin sách" Margin="0,5,0,0" FontSize="17" TextDecorations="Underline"
+                           HorizontalAlignment="Center" Style="{StaticResource nameBoldStyle}"/>
+                <Grid Margin="0,10,0,0" Height="auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="600"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <!-- Thông tin sách-->
+                        <WrapPanel Grid.Column="0">
+                            <WrapPanel.Resources>
+                                <Style TargetType="{x:Type StackPanel}">
+                                    <Setter Property="Margin" Value="5,5,5,5"/>
+                                </Style>
+                            </WrapPanel.Resources>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="Tên sách: " Style="{StaticResource nameBoldStyle}"/>
+                                <TextBox Style="{StaticResource textboxStyle}" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"
+                        materialDesign:HintAssist.Hint="Tên sách"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="Tác giả: " Style="{StaticResource nameBoldStyle}"/>
+                                <TextBox Style="{StaticResource textboxStyle}" Text="{Binding Author,UpdateSourceTrigger=PropertyChanged}"
+                        materialDesign:HintAssist.Hint="Tên tác giả"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="Thể loại: " Style="{StaticResource nameBoldStyle}"/>
+                                <ComboBox Style="{StaticResource comboboxStyle}" materialDesign:HintAssist.Hint="Chọn thể loại"
+                                          Text="{Binding Type,UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding listType}"
+                                          SelectedItem="{Binding TypeSelectedItem}"
+                                          >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding TypeSelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="Chủ đề: " Style="{StaticResource nameBoldStyle}"/>
+                                <ComboBox Style="{StaticResource comboboxStyle}" materialDesign:HintAssist.Hint="Chọn chủ đề"
+                                          Text="{Binding Theme,UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding ListTheme}"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="Nhà xuất bản: " Style="{StaticResource nameBoldStyle}"/>
+                                <ComboBox Style="{StaticResource comboboxStyle}" materialDesign:HintAssist.Hint="Chọn nhà xuất bản"
+                                          Text="{Binding Company,UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding ListCompany}"/>
+                            </StackPanel>
+                        </WrapPanel>
+
+                        <Separator Margin="10,10,10,0"/>
+
+                        <TextBlock Text="Số lượng nhập kho" Style="{StaticResource nameBoldStyle}" TextDecorations="Underline"
+                                    HorizontalAlignment="Center" Margin="0,5,0,5"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource textboxStyle}">
+                                    <Setter Property="Margin" Value="5,0,5,0"/>
+                                    <Setter Property="MinWidth" Value="100"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            
+                            <TextBlock Text="Giá nhập: " Style="{StaticResource nameBoldStyle}"/>
+                            <TextBox materialDesign:HintAssist.Hint="50000" Text="{Binding InPrice,UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Số lượng: " Style="{StaticResource nameBoldStyle}"/>
+                            <TextBox materialDesign:HintAssist.Hint="50000" MinWidth="80" Text="{Binding WarehouseInventory,UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Tổng tiền: " Style="{StaticResource nameBoldStyle}"/>
+                            <TextBox materialDesign:HintAssist.Hint="0" IsReadOnly="True" Text="{Binding TotalPrice}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+
+                    <materialDesign:Card Grid.Column="1" Height="200" Width="200" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0">
+                        <Grid>
+                            <Button Panel.ZIndex="1" Background="#2ecc71" BorderBrush="#2ecc71" Width="50" Height="25" 
+                                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0"
+                                    Command="{Binding imageCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ImagePlus" Foreground="White" Height="15" HorizontalAlignment="Center"/>
+                                    
+                                </StackPanel>
+                               
+                            </Button>
+                            <Image Source="{Binding CoverImage,UpdateSourceTrigger=PropertyChanged}" Panel.ZIndex="0"/>
+                        </Grid>
+                        
+                    </materialDesign:Card>
+                </Grid>
+
+                <Separator Margin="20,10,30,10"/>
+                <!-- List sách thêm vào-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0">
+                        <Button Content="Thêm" Style="{StaticResource buttonStyle}" Command="{Binding addToListCommand}"/>
+                        <Button Content="Sửa" Style="{StaticResource buttonStyle}" Command="{Binding editListCommand}"/>
+                        <Button Content="Xóa" Style="{StaticResource buttonStyle}" Command="{Binding deleteListCommand}"/>
+                        
+                        
+                    </StackPanel>
+
+                    <Button Style="{StaticResource buttonStyle}" Content="Nhập sách" Command="{Binding addCommand}"
+                             Width="100" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+
+                    <materialDesign:Card Height="350" Grid.Row="1" Margin="0,10,10,0">
+                        <ListView ItemsSource="{Binding ListBook}" 
+                                  SelectedIndex="{Binding ListSelectedIndex}"
+                                  SelectedItem="{Binding ListSelectedItem}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ListSelectionChanged}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn                                      
+                                        Header="Tên sách">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn                                      
+                                        Header="Tác giả">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Author}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    
+                                    <GridViewColumn                                      
+                                        Header="Thể loại">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Type}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn                                      
+                                        Header="Chủ đề">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Theme}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn                                      
+                                        Header="NXB">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Company}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn                                      
+                                        Header="Số lượng">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding WarehouseInventory}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn                                      
+                                        Header="Giá nhập">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding InPrice}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn                                      
+                                        Header="Tổng tiền">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding TotalPrice}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </materialDesign:Card>
+                </Grid>
+                
+                
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniBookStore.Models.MyClass
 {
-    class CEmployee_Role
+    public class CEmployee_Role
     {
         #region private properties
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiniBookStore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,12 @@ namespace MiniBookStore.ViewModels
 {
     public class BookInfoPageVM:BaseViewModel
     {
+        #region data binding
+
+        public Employee EmployeeInfo;
+
+        #endregion
+
         #region properties binding
 
         #endregion
@@ -25,8 +32,7 @@ namespace MiniBookStore.ViewModels
             {
                 //Khởi tạo
                 AddNewBookWindow wd = new AddNewBookWindow();
-                wd.ShowDialog();
-               
+                wd.ShowDialog();               
             }
                );
         }

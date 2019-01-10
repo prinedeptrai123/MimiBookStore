@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace MiniBookStore.Models.MyClass
 {
-    class CEmployee:Human
+    public class CEmployee:Human
     {
         #region private properties
 
@@ -54,6 +54,8 @@ namespace MiniBookStore.Models.MyClass
         #endregion
 
         #region method
+
+        
 
         #endregion
     }

@@ -109,6 +109,7 @@
     <Compile Include="DashboardWindow.xaml.cs">
       <DependentUpon>DashboardWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataTransfer.cs" />
     <Compile Include="Models\Help.cs" />
     <Compile Include="Models\MyClass\CAccount.cs" />
     <Compile Include="Models\MyClass\CBill.cs" />
@@ -276,6 +277,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\harry.jpg" />
+    <Resource Include="Images\icon.png" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MiniBookStore.Models;
+using MiniBookStore.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,10 @@ namespace MiniBookStore
     /// </summary>
     public partial class AddNewBookWindow : Window
     {
+        
         public AddNewBookWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
     }
 }

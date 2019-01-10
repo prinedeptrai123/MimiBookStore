@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniBookStore.Models.MyClass
 {
-    class CDiscoutCode
+    public class CDiscoutCode
     {
         #region private propeties
 

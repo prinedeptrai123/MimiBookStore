@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MiniBookStore.Models;
+using MiniBookStore.Models.MyClass;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,6 +67,12 @@ namespace MiniBookStore.ViewModels
 
                 GridCursorMargin = new Thickness(0, 70 + 1*60, 0, 0);
                 FramePage = new BookMenuPage();
+
+                DataTransfer.EmployeeInfo = new CEmployee
+                {
+                    Name = "Lê Tường Qui",
+                    ID = 1
+                };             
             }
                );
 
