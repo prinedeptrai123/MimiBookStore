@@ -65,6 +65,8 @@ namespace MiniBookStore.ViewModels
 
         public ICommand editBookCommand { get; set; }
 
+        public ICommand increaseBookCommand { get; set; }
+
         #endregion
 
         public BookInfoPageVM()
@@ -74,6 +76,14 @@ namespace MiniBookStore.ViewModels
                 //Khởi tạo
                 AddNewBookWindow wd = new AddNewBookWindow();
                 wd.ShowDialog();               
+            }
+               );
+
+            increaseBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                //Khởi tạo
+                IncreaseBookWindow wd = new IncreaseBookWindow();
+                wd.ShowDialog();
             }
                );
 

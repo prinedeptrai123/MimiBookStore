@@ -15,6 +15,7 @@ namespace MiniBookStore.Models.MyClass
         private int _totalCount;
         private float _toltalMoney;
         private float _inPrice;
+        private string _type;
 
         #endregion
 
@@ -41,6 +42,11 @@ namespace MiniBookStore.Models.MyClass
         /// Giá sách nhập trong đợt đó
         /// </summary>
         public float InPrice { get => _inPrice; set { if (value == _inPrice) return; _inPrice = value; } }
+
+        /// <summary>
+        /// Loại nhập nhập mới, nhập thêm
+        /// </summary>
+        public string Type { get => _type; set { if (value == _type) return; _type = value; } }
 
 
         #endregion

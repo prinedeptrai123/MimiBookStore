@@ -161,9 +161,12 @@
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <TextBlock Text="Tổng sách tồn: " Style="{StaticResource nameBoldStyle}" VerticalAlignment="Center"/>
                                 <TextBlock Text="{Binding Inventory}" VerticalAlignment="Center" Margin="0,3,0,0" FontSize="15"/>
+
+                                <TextBlock Text="Số lượng bán ra: " Style="{StaticResource nameBoldStyle}" VerticalAlignment="Center" Margin="70,0,0,0"/>
+                                <TextBlock Text="{Binding Sold,StringFormat='0,0'}" VerticalAlignment="Center" Margin="0,3,0,0" FontSize="15"/>
                                 <CheckBox
                                     Style="{StaticResource MaterialDesignCheckBox}" 
-                                    FontSize="14" Margin="160,0,0,0" 
+                                    FontSize="14" Margin="100,0,0,0" 
                                     Content="Hiển thị tất cả" IsChecked="{Binding IsChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CheckedCommand}">
                                     
                                 </CheckBox>
@@ -191,10 +194,19 @@
                                             </GridViewColumn>
 
                                             <GridViewColumn                                      
+                                                Header="Loại nhập">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Type}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+
+                                            <GridViewColumn                                      
                                                 Header="Số lượng tồn">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding TotalCount}"/>
+                                                        <TextBlock Text="{Binding TotalCount,StringFormat='0,0'}"/>
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
@@ -203,7 +215,7 @@
                                                 Header="Giá nhập">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding InPrice}"/>
+                                                        <TextBlock Text="{Binding InPrice,StringFormat='0,0.0'}"/>
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>

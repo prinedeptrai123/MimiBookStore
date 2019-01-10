@@ -306,7 +306,8 @@ namespace MiniBookStore.Models.MyClass
                             ID = item.Warehouse_ID,
                             TotalCount = item.Book_Count,
                             InPrice = Price,
-                            Date = item.Warehouse.Warehouse_Date
+                            Date = item.Warehouse.Warehouse_Date,
+                            Type = item.Warehouse.Warehouse_Type == false ? "Nhập mới" : "Nhập thêm"
                         };
 
                         if(isAll==true && item.Book_Count == 0)

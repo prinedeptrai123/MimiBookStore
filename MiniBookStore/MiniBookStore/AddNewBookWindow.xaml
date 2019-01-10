@@ -99,7 +99,7 @@
 
                 <Separator Margin="30,10,30,0"/>
 
-                <TextBlock Text="Thông tin sách" Margin="0,5,0,0" FontSize="17" TextDecorations="Underline"
+                <TextBlock Text="Thông tin sách" Margin="0,5,0,0" FontSize="17" 
                            HorizontalAlignment="Center" Style="{StaticResource nameBoldStyle}"/>
                 <Grid Margin="0,10,0,0" Height="auto">
                     <Grid.ColumnDefinitions>
@@ -158,7 +158,7 @@
 
                         <Separator Margin="10,10,10,0"/>
 
-                        <TextBlock Text="Số lượng nhập kho" Style="{StaticResource nameBoldStyle}" TextDecorations="Underline"
+                        <TextBlock Text="Số lượng nhập kho" Style="{StaticResource nameBoldStyle}"
                                     HorizontalAlignment="Center" Margin="0,5,0,5"/>
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                             <StackPanel.Resources>

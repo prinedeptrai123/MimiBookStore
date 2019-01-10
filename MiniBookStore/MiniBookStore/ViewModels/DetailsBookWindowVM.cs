@@ -63,6 +63,9 @@ namespace MiniBookStore.ViewModels
         private int _inventory;
         public int Inventory { get => _inventory; set { if (value == _inventory) return; _inventory = value; OnPropertyChanged(); } }
 
+        private int _sold;
+        public int Sold { get => _sold; set { if (value == _sold) return; _sold = value; OnPropertyChanged(); } }
+
         private string _outPrice;
         public string OutPrice { get => _outPrice; set { if (value == _outPrice) return; _outPrice = value; OnPropertyChanged(); } }
 
@@ -119,6 +122,7 @@ namespace MiniBookStore.ViewModels
                 Promotion = BookDetails.Promotion.ToString();
                 OutPricePromotion = BookDetails.OutPricePromotion;
                 Company = BookDetails.Company;
+                Sold = BookDetails.Sold;
 
                 CoverImage = BookDetails.Image;
 
