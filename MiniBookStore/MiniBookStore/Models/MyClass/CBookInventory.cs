@@ -282,6 +282,56 @@ namespace MiniBookStore.Models.MyClass
             return data;
         }
 
+        /// <summary>
+        /// Hàm trả về chi tiết số lượng tồn trong các đợt nhập sách của sách nếu isAll == true thì trả về tất cả nếu isAll== false thì trả về những sách tồn(giá trị lớn hơn 0)
+        /// </summary>
+        /// <param name="BookID"></param>
+        /// <param name="isAll"></param>
+        /// <returns></returns>
+        public List<CWarehouse_History> DetailsInventoryOfBook(int BookID,bool isAll)
+        {
+            List<CWarehouse_History> List = new List<CWarehouse_History>();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Book_Inventory.Where(x => x.Book_ID == BookID);
+
+                    foreach (var item in data)
+                    {
+                        //Lấy ra giá nhập sách của đợt này
+                        float Price = (float)DB.Warehouse_Detail.Where(x => x.Warehouse_ID == item.Warehouse_ID && x.Book_ID == item.Book_ID).Select(x => x.Book_Price).FirstOrDefault();
+                        CWarehouse_History history = new CWarehouse_History
+                        {
+                            ID = item.Warehouse_ID,
+                            TotalCount = item.Book_Count,
+                            InPrice = Price,
+                            Date = item.Warehouse.Warehouse_Date
+                        };
+
+                        if(isAll==true && item.Book_Count == 0)
+                        {
+                            List.Add(history);
+                        }
+                        else if(isAll==false && item.Book_Count==0)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            List.Add(history);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
         #endregion
     }
 }

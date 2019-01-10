@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
+using MiniBookStore.Models;
 
 namespace MiniBookStore.ViewModels
 {
@@ -74,6 +75,17 @@ namespace MiniBookStore.ViewModels
         private BitmapImage _coverImage;
         public BitmapImage CoverImage { get => _coverImage; set { if (value == _coverImage) return; _coverImage = value; OnPropertyChanged(); } }
 
+        private ObservableCollection<CWarehouse_History> _listWarehouse;
+        public ObservableCollection<CWarehouse_History> ListWarehouse { get => _listWarehouse; set { if (value == _listWarehouse) return; _listWarehouse = value; OnPropertyChanged(); } }
+
+        #endregion
+
+
+        #region properties binding
+
+        private bool _isChecked;
+        public bool IsChecked { get => _isChecked; set { if (value == _isChecked) return; _isChecked = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region command binding
@@ -83,6 +95,11 @@ namespace MiniBookStore.ViewModels
         public ICommand imageCommand { get; set; }
         public ICommand updateCommand { get; set; }
 
+        public ICommand OutPriceTextChanged { get; set; }
+        public ICommand PromotionTextChanged { get; set; }
+
+        public ICommand CheckedCommand { get; set; }
+
         #endregion
 
 
@@ -90,6 +107,7 @@ namespace MiniBookStore.ViewModels
         {
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                IsChecked = false;
                 //Cập nhật thông tin cho giao diện
                 ID = BookDetails.ID;
                 Name = BookDetails.Name;
@@ -108,6 +126,14 @@ namespace MiniBookStore.ViewModels
                 ListTheme = new ObservableCollection<string>();
                 ListCompany = new ObservableCollection<string>(CBook.Ins.ListCompany());
 
+                ListWarehouse = new ObservableCollection<CWarehouse_History>(CBookInventory.InsInventory.DetailsInventoryOfBook(BookDetails.ID, IsChecked));
+
+            }
+               );
+
+            CheckedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ListWarehouse = new ObservableCollection<CWarehouse_History>(CBookInventory.InsInventory.DetailsInventoryOfBook(BookDetails.ID, IsChecked));
             }
                );
 
@@ -118,6 +144,25 @@ namespace MiniBookStore.ViewModels
                     ListTheme = new ObservableCollection<string>(CBook.Ins.ListThemeOfType(TypeSelectedItem));
                 }
 
+            }
+               );
+
+            OutPriceTextChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if(Help.isFloat(OutPrice) ==true && Help.isFloat(Promotion) == true)
+                {
+                    OutPricePromotion = float.Parse(OutPrice) - float.Parse(OutPrice) * float.Parse(Promotion);
+                }
+
+            }
+               );
+
+            PromotionTextChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (Help.isFloat(OutPrice) == true && Help.isFloat(Promotion) == true)
+                {
+                    OutPricePromotion = float.Parse(OutPrice) - float.Parse(OutPrice) * float.Parse(Promotion);
+                }
             }
                );
 

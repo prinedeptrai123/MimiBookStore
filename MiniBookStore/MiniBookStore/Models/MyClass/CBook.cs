@@ -329,6 +329,38 @@ namespace MiniBookStore.Models.MyClass
         }
 
         /// <summary>
+        /// Đánh dấu là dữ liệu đã bị xóa
+        /// </summary>
+        /// <param name="BookID"></param>
+        /// <returns></returns>
+        public bool deleteBook(int BookID)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    //Tìm sách theo ID
+                    var find = DB.Books.Find(BookID);
+                    if (find != null)
+                    {
+                        //Thay đổi dữ liệu
+                        find.Exist = true;
+
+                        //Lưu thay đổi
+                        DB.SaveChanges();
+
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Hàm cập nhật thông tin mới cho sách
         /// </summary>
         /// <param name="BookInfo"></param>

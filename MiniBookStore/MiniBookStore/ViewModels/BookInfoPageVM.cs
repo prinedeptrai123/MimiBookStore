@@ -85,6 +85,19 @@ namespace MiniBookStore.ViewModels
                     {
                         MessageBox.Show("Không thể xóa sách còn tồn trong kho", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                    else
+                    {
+                        if(CBook.Ins.deleteBook(ListSelectedItem.ID) == true)
+                        {
+                            MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            //load lại
+                            ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook("tất cả", "tất cả", "tất cả", "tất cả", "tất cả", currentPage, NumberPage));
+                        }
+                        else
+                        {
+                            MessageBox.Show("Xóa thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
                 }
             }
                );
