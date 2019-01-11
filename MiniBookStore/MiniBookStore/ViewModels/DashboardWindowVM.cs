@@ -85,12 +85,14 @@ namespace MiniBookStore.ViewModels
             BookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 70 + 1 * 60, 0, 0);
+                FramePage = new BookMenuPage();
             }
                );
 
             PromotionCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 70 + 2 * 60, 0, 0);
+                FramePage = new PromotionMenuPage();
             }
                );
 
