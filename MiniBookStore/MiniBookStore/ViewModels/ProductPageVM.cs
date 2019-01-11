@@ -100,12 +100,25 @@ namespace MiniBookStore.ViewModels
 
         public ICommand PreviousPageCommand { get; set; }
         public ICommand NextPageCommand { get; set; }
+
         public ICommand TypeSelectionChanged { get; set; }
+        public ICommand ThemeSelectionChanged { get; set; }
+        public ICommand AuthorSelectionChanged { get; set; }
+        public ICommand CompanySelectionChanged { get; set; }
+        public ICommand PriceSelectionChanged { get; set; }
+
+        public ICommand searchCommand { get; set; }
 
         #endregion
 
         public ProductPageVM()
         {
+            searchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                LoadBook();
+            }
+               );
+
             TypeSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (SelectedItemType != null)
@@ -113,7 +126,33 @@ namespace MiniBookStore.ViewModels
                     ListTheme = new ObservableCollection<string>(CBook.Ins.ListThemeOfType(SelectedItemType));
                     ListTheme.Add("Tất cả");
                     SelectedItemTheme = "Tất cả";
+
+                    LoadBook();
                 }
+            }
+               );
+
+            ThemeSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                LoadBook();
+            }
+               );
+
+            AuthorSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                LoadBook();
+            }
+               );
+
+            CompanySelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                LoadBook();
+            }
+               );
+
+            PriceSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                LoadBook();
             }
                );
 
@@ -174,14 +213,14 @@ namespace MiniBookStore.ViewModels
                 {
                     if (SelectedItemCompany != null && SelectedItemTheme != null && SelectedItemType != null && SelectedItemAuthor != null)
                     {
-                        ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook(FilterString, SelectedItemAuthor, SelectedItemType, TextTheme, SelectedItemCompany, isSale, CurrentPage, NumberPage));
+                        ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook(FilterString, SelectedItemAuthor, SelectedItemType, SelectedItemTheme, SelectedItemCompany, isSale, CurrentPage, NumberPage));
                     }
                 }
                 else
                 {
                     if (SelectedItemCompany != null && SelectedItemTheme != null && SelectedItemType != null && SelectedItemAuthor != null)
                     {
-                        ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook(FilterString, SelectedItemAuthor, SelectedItemType, TextTheme, SelectedItemCompany, CurrentPage, NumberPage));
+                        ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook(FilterString, SelectedItemAuthor, SelectedItemType, SelectedItemTheme, SelectedItemCompany, CurrentPage, NumberPage));
                     }
                 }
             }

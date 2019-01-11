@@ -76,7 +76,7 @@
                                     materialDesign:HintAssist.Hint="Tìm kiếm" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}"/>
 
                             <!-- Nút tìm kiếm-->
-                            <Button Background="#0984e3" BorderBrush="{x:Null}" Height="35">
+                            <Button Background="#0984e3" BorderBrush="{x:Null}" Height="35" Command="{Binding searchCommand}">
                                 <materialDesign:PackIcon Height="30" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Magnify" Foreground="White"/>
                             </Button>
@@ -123,6 +123,11 @@
                                           IsEditable="True"
                                           materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
                                 >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ThemeSelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </StackPanel>
 
@@ -136,6 +141,11 @@
                                           IsEditable="True"
                                           materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
                                 >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding AuthorSelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </StackPanel>
 
@@ -149,6 +159,11 @@
                                           IsEditable="True"
                                           materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
                                 >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding CompanySelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </StackPanel>
 
@@ -161,6 +176,11 @@
                                           SelectedItem="{Binding SelectedItemPrice}"
                                           materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
                                 >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding PriceSelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </StackPanel>
 
