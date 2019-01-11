@@ -676,6 +676,8 @@ namespace MiniBookStore.Models.MyClass
 
             return false;
         }
+
+        
         #endregion
     }
 }

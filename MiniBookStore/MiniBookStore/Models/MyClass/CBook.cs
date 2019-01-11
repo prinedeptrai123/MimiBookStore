@@ -428,7 +428,7 @@ namespace MiniBookStore.Models.MyClass
                     List<Book> data = DB.Books.ToList();
 
                     //Lọc theo tên
-                    if(Name.ToLower()=="tất cả")
+                    if(Name.ToLower()=="tất cả" ||string.IsNullOrEmpty(Name))
                     {
                         //do nothing
                     }
@@ -546,6 +546,145 @@ namespace MiniBookStore.Models.MyClass
         }
 
         /// <summary>
+        /// Hàm trả về danh sách lọc theo điều kiện
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="Author"></param>
+        /// <param name="Type"></param>
+        /// <param name="Theme"></param>
+        /// <param name="Company"></param>
+        /// <param name="isSale"></param>
+        /// <param name="currentPage"></param>
+        /// <param name="NumberPage"></param>
+        /// <returns></returns>
+        public List<CBook> ListBook(string Name, string Author, string Type, string Theme, string Company,bool isSale, int currentPage, int NumberPage)
+        {
+            List<CBook> List = new List<CBook>();
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    List<Book> data = DB.Books.Where(x => x.Book_Promotion != 0).ToList();
+
+                    //Lọc theo tên
+                    if (Name.ToLower() == "tất cả")
+                    {
+                        //do nothing
+                    }
+                    else
+                    {
+                        data = data.Where(x => x.Book_Name.ToLower().Contains(Name.ToLower())).ToList();
+                    }
+
+                    //Lọc theo thể loại
+                    if (Type.ToLower() == "tất cả")
+                    {
+                        //do nothing
+                    }
+                    else
+                    {
+                        int TypeID = isType(Type);
+                        if (TypeID != 0)
+                        {
+                            data = data.Where(x => x.Book_Type == TypeID).ToList();
+                        }
+                    }
+
+                    //Lọc theo chủ đề
+                    if (Theme.ToLower() == "tất cả")
+                    {
+                        //do nothing
+                    }
+                    else
+                    {
+                        int ThemeID = isTheme(Theme);
+                        if (ThemeID != 0)
+                        {
+                            data = data.Where(x => x.Book_Theme == ThemeID).ToList();
+                        }
+                    }
+
+                    //Lọc theo NXB
+                    if (Company.ToLower() == "tất cả")
+                    {
+                        //do nothing
+                    }
+                    else
+                    {
+                        int CompanyID = isCompany(Company);
+                        if (CompanyID != 0)
+                        {
+                            data = data.Where(x => x.Book_Company == CompanyID).ToList();
+                        }
+                    }
+
+                    //Lọc theo tác giả
+                    if (Author.ToLower() == "tất cả")
+                    {
+                        //do nothing
+                    }
+                    else
+                    {
+                        data = data.Where(x => x.Book_Author.ToLower().Contains(Author.ToLower())).ToList();
+                    }
+
+                    //Lấy từng trang
+                    if (currentPage > 0 && NumberPage > 0)
+                    {
+                        data = data.Skip((currentPage - 1) * NumberPage).Take(NumberPage).ToList();
+                    }
+
+                    if (data.Count > 0)
+                    {
+                        //Thêm vào trong danh sách
+                        foreach (var item in data)
+                        {
+
+                            //Tính tổng sách đã bán ra
+                            int totalNumber = 0;
+                            if (DB.Bill_Detail.Where(x => x.Book_ID == item.Book_ID).Count() > 0)
+                            {
+                                totalNumber = DB.Bill_Detail.Where(x => x.Book_ID == item.Book_ID).Sum(x => x.Book_Count);
+                            }
+
+                            if (item.Exist == false)
+                            {
+                                //Tạo mới sách
+                                CBook Book = new CBook
+                                {
+                                    ID = item.Book_ID,
+                                    Name = item.Book_Name,
+                                    Author = item.Book_Author,
+                                    Company = item.Publishing_Company.Company_Name,
+                                    Type = item.Book_Type1.Type_Names,
+                                    Theme = item.Book_Theme1.Theme_Name,
+                                    Inventory = item.Book_Count,
+                                    OutPrice = (float)item.Book_Price,
+                                    Promotion = (float)item.Book_Promotion,
+                                    OutPricePromotion = item.Book_Promotion == 0 ? (float)item.Book_Price : (float)(item.Book_Price - item.Book_Price * item.Book_Promotion),
+                                    Image = Help.ByteToImage(item.Book_Image),
+                                    Sold = totalNumber
+                                };
+
+                                //Thêm vào danh sách
+                                List.Add(Book);
+                            }
+
+                        }
+                    }
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+
+        }
+
+        /// <summary>
         /// Hàm tăng số lượng của sách trong kho
         /// </summary>
         /// <param name="BookID"></param>
@@ -580,6 +719,35 @@ namespace MiniBookStore.Models.MyClass
 
             }
             return false;
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách tác giả
+        /// </summary>
+        /// <returns></returns>
+        public List<string> ListAuthor()
+        {
+            List<string> List = new List<string>();
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Books.Select(x => x.Book_Author).Distinct();
+                    if (data.Count() > 0)
+                    {
+                        foreach (var item in data)
+                        {
+                            List.Add(item);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
         }
 
         #endregion

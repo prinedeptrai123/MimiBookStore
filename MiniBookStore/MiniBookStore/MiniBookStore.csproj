@@ -135,9 +135,13 @@
     <Compile Include="Models\MyClass\CPromotion_Type.cs" />
     <Compile Include="Models\MyClass\CWarehouse_History.cs" />
     <Compile Include="Models\MyClass\Human.cs" />
+    <Compile Include="ProductPage.xaml.cs">
+      <DependentUpon>ProductPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PromotionMenuPage.xaml.cs">
       <DependentUpon>PromotionMenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PromotionToVisibilityConverter.cs" />
     <Compile Include="RestoreBoolToVisibilityConverter.cs" />
     <Compile Include="SellMenuPage.xaml.cs">
       <DependentUpon>SellMenuPage.xaml</DependentUpon>
@@ -157,6 +161,7 @@
     <Compile Include="ViewModels\DashboardWindowVM.cs" />
     <Compile Include="ViewModels\DetailsBookWindowVM.cs" />
     <Compile Include="ViewModels\IncreaseBookWindowVM.cs" />
+    <Compile Include="ViewModels\ProductPageVM.cs" />
     <Compile Include="ViewModels\PromotionMenuPageVM.cs" />
     <Compile Include="ViewModels\SellMenuPageVM.cs" />
     <Compile Include="ViewModels\TypePromotionPageVM.cs" />
@@ -200,6 +205,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PromotionMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -11,4 +11,5 @@
     <viewmodel:TypePromotionPageVM x:Key="TypePromotionPageVM"></viewmodel:TypePromotionPageVM>
     <viewmodel:CodePromotionPageVM x:Key="CodePromotionPageVM"></viewmodel:CodePromotionPageVM>
     <viewmodel:SellMenuPageVM x:Key="SellMenuPageVM"></viewmodel:SellMenuPageVM>
+    <viewmodel:ProductPageVM x:Key="ProductPageVM"></viewmodel:ProductPageVM>
 </ResourceDictionary>

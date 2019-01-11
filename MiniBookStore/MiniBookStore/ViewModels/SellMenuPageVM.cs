@@ -41,7 +41,7 @@ namespace MiniBookStore.ViewModels
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(10, 0, 0, 0);
-               
+                FramePage = new ProductPage();
             }
                );
            
