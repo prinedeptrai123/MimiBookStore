@@ -114,7 +114,8 @@ namespace MiniBookStore.Models.MyClass
                                 BookCount = (int)item.Book_Count,
                                 Promotion = (float)item.Type_Promotion,
                                 IsExist = item.Exist,
-                                Applied = item.Discount_Code.Count
+                                Applied = item.Discount_Code.Count,
+                                IsTrueValue=true
                             };
 
                             if(isAll == true && item.Exist == false)
@@ -137,6 +138,145 @@ namespace MiniBookStore.Models.MyClass
 
             }
 
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về List theo tên
+        /// </summary>
+        /// <param name="TypeName"></param>
+        /// <param name="isAll"></param>
+        /// <param name="currentPage"></param>
+        /// <param name="NumberPage"></param>
+        /// <returns></returns>
+        public List<CPromotion_Type> ListTypeOfPromotion(string TypeName,bool isAll, int currentPage, int NumberPage)
+        {
+            List<CPromotion_Type> List = new List<CPromotion_Type>();
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Promotion_Type.Where(x => x.Type_Names.ToLower().Contains(TypeName.ToLower())).ToList().Skip((currentPage - 1) * NumberPage).Take(NumberPage);
+
+                    if (data.Count() > 0)
+                    {
+                        foreach (var item in data)
+                        {
+                            //Tạo mới 
+                            CPromotion_Type Type = new CPromotion_Type
+                            {
+                                ID = item.Type_IDs,
+                                Name = item.Type_Names,
+                                BookCount = (int)item.Book_Count,
+                                Promotion = (float)item.Type_Promotion,
+                                IsExist = item.Exist,
+                                Applied = item.Discount_Code.Count,
+                                IsTrueValue=true
+                            };
+
+                            if (isAll == true && item.Exist == false)
+                            {
+                                List.Add(Type);
+                            }
+                            else if (isAll == false && item.Exist == false)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                List.Add(Type);
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        /// <summary>
+        /// hàm trả về List string các loại khuyến mãi
+        /// </summary>
+        /// <returns></returns>
+        public List<string> ListStringTypeOfPromotion()
+        {
+            List<string> List = new List<string>();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Promotion_Type.Where(x => x.Exist == true);
+                    if (data.Count() > 0)
+                    {
+                        foreach(var item in data)
+                        {
+                            List.Add(item.Type_Names);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về Danh sách mã khuyến mãi
+        /// </summary>
+        /// <param name="isAll"></param>
+        /// <param name="currentPage"></param>
+        /// <param name="NumberPage"></param>
+        /// <returns></returns>
+        public List<CPromotion_Code> ListCode ( bool isAll,int currentPage, int NumberPage)
+        {
+            List<CPromotion_Code> List = new List<CPromotion_Code>();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Discount_Code.ToList().Skip((currentPage - 1) * NumberPage).Take(NumberPage);
+                    if (data.Count() > 0)
+                    {
+                        foreach(var item in data)
+                        {
+                            //tạo mới
+                            CPromotion_Code Code = new CPromotion_Code
+                            {
+                                ID = item.Code_ID,
+                                Name = item.Code_Name,
+                                Type = item.Promotion_Type.Type_Names,
+                                DateBegin = item.Date_Begin,
+                                DateEnd = item.Date_End,
+                                IsExist = item.Exist,
+                                IstrueValue=true
+                            };
+
+                            if(isAll==true &&item.Exist == false)
+                            {
+                                List.Add(Code);
+                            }
+                            else if(isAll==false && item.Exist == false)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                List.Add(Code);
+                            }
+                        }                        
+                    }
+                }
+            }
+            catch
+            {
+
+            }
             return List;
         }
 
@@ -232,6 +372,37 @@ namespace MiniBookStore.Models.MyClass
         }
 
         /// <summary>
+        /// Hàm khôi phục lại loại khuyến mãi
+        /// </summary>
+        /// <param name="TypeID"></param>
+        /// <returns></returns>
+        public bool restorePromotionType(int TypeID)
+        {
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    //Tìm loại theo ID
+                    var find = DB.Promotion_Type.Find(TypeID);
+                    if (find != null)
+                    {
+                        //Khôi phục lại
+                        find.Exist = true;
+
+                        //Lưu thay đổi
+                        DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
         /// hàm Cập nhật lại thông tin của loại khuyến mãi
         /// </summary>
         /// <param name="Type"></param>
@@ -263,8 +434,193 @@ namespace MiniBookStore.Models.MyClass
             return false;
         }
 
+        /// <summary>
+        /// Hàm kiểm tra xem code đã tồn tại hay chưa
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <returns></returns>
+        public string isCode(string Code)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Discount_Code.Find(Code);
+                    if (find != null)
+                    {
+                        return find.Code_ID;
+                    }
+                }
+            }
+            catch
+            {
 
+            }
+            return "";
+        }
 
+        /// <summary>
+        /// Hàm kiểm tra xem đã tồn tại tên này hay chưa
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public string isCodeName(string Name)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Discount_Code.Where(x => x.Code_Name.ToLower() == Name.ToLower()).FirstOrDefault();
+                    if (find != null)
+                    {
+                        return find.Code_ID;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return "";
+        }
+
+        /// <summary>
+        /// Hàm thêm mã code mới
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <returns></returns>
+        public bool addNewCode(CPromotion_Code Code)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    //Tìm loại của Type
+                    int TypeID = isPromotionType(Code.Type);
+                    if (TypeID == 0)
+                        return false;
+                    //tạo mới
+                    Discount_Code newCode = new Discount_Code
+                    {
+                        Code_ID = Code.ID,
+                        Code_Name = Code.Name,
+                        Code_Type = TypeID,
+                        Date_Begin = Code.DateBegin,
+                        Date_End = Code.DateEnd,
+                        Exist = true
+                    };
+
+                    //Thêm vào
+                    DB.Discount_Code.Add(newCode);
+
+                    //Lưu thay đổi
+                    DB.SaveChanges();
+
+                    return true;
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// hàm đánh dấu mã đã bị xóa
+        /// </summary>
+        /// <param name="CodeID"></param>
+        /// <returns></returns>
+        public bool deleteCode(string CodeID)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Discount_Code.Find(CodeID);
+                    if (find != null)
+                    {
+                        //Đánh dấu đã bị xóa
+                        find.Exist = false;
+
+                        //Lưu thay đổi
+                        DB.SaveChanges();
+
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm khôi phục CodeID
+        /// </summary>
+        /// <param name="CodeID"></param>
+        /// <returns></returns>
+        public bool restoreCode(string CodeID)
+        {
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Discount_Code.Find(CodeID);
+                    if (find != null)
+                    {
+                        //Đánh dấu đã bị xóa
+                        find.Exist = true;
+
+                        //Lưu thay đổi
+                        DB.SaveChanges();
+
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        public bool updateCode(CPromotion_Code Code)
+        {
+
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    //Tìm mã theo ID
+                    var find = DB.Discount_Code.Find(Code.ID);
+                    if (find != null)
+                    {
+                        //Lấy ra loại
+                        int TypeID = isPromotionType(Code.Type);
+                        //Cập nhật thông tin mới
+                        find.Code_Name = Code.Name;
+                        find.Code_Type = TypeID;
+                        find.Date_Begin = Code.DateBegin;
+                        find.Date_End = Code.DateEnd;
+
+                        //Lưu thay đổi
+                        DB.SaveChanges();
+                        return true;
+                    }
+                      
+                }
+            }
+            catch
+            {
+
+            }
+
+            return false;
+        }
         #endregion
     }
 }

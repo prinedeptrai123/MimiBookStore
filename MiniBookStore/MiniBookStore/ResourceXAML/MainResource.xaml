@@ -9,4 +9,5 @@
     <viewmodel:IncreaseBookWindowVM x:Key="IncreaseBookWindowVM"></viewmodel:IncreaseBookWindowVM>
     <viewmodel:PromotionMenuPageVM x:Key="PromotionMenuPageVM"></viewmodel:PromotionMenuPageVM>
     <viewmodel:TypePromotionPageVM x:Key="TypePromotionPageVM"></viewmodel:TypePromotionPageVM>
+    <viewmodel:CodePromotionPageVM x:Key="CodePromotionPageVM"></viewmodel:CodePromotionPageVM>
 </ResourceDictionary>

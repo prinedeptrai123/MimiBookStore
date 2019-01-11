@@ -37,6 +37,9 @@ namespace MiniBookStore.ViewModels
         private string _promotion;
         public string Promotion { get => _promotion; set { if (value == _promotion) return; _promotion = value; OnPropertyChanged(); } }
 
+        private string _filterString;
+        public string FilterString { get => _filterString; set { if (value == _filterString) return; _filterString = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region properties binding
@@ -53,6 +56,8 @@ namespace MiniBookStore.ViewModels
         public ICommand deleteCommand { get; set; }
         public ICommand editCommand { get; set; }
         public ICommand CheckedCommand { get; set; }
+        public ICommand restoreCommand { get; set; }
+        public ICommand searchCommand { get; set; }
 
         #endregion
 
@@ -60,7 +65,22 @@ namespace MiniBookStore.ViewModels
         {
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(false,currentPage,NumberPage));
+                IsChecked = false;
+                ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage,NumberPage));
+            }
+               );
+
+            searchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (FilterString == "")
+                {
+                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
+                }
+                else
+                {
+                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(FilterString, IsChecked, currentPage, NumberPage));
+                }
+
             }
                );
 
@@ -71,23 +91,57 @@ namespace MiniBookStore.ViewModels
             }
                );
 
+            restoreCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItem != null)
+                {
+                    if (CBill.Ins.restorePromotionType(SelectedItem.ID) == true)
+                    {
+                        MessageBox.Show("Khôi phục thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Khôi phục thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+               );
+
             editCommand = new RelayCommand<object>((p) => {
                 if (SelectedItem != null)
                 {
                     if (string.IsNullOrEmpty(SelectedItem.Name))
                     {
-                        return false;
+                        SelectedItem.IsTrueValue = false;                     
                     }
-                    if(CBill.Ins.isPromotionType(SelectedItem.Name) !=SelectedItem.ID && CBill.Ins.isPromotionType(SelectedItem.Name) != 0)
+                    else
                     {
+                        if (CBill.Ins.isPromotionType(SelectedItem.Name) != SelectedItem.ID && CBill.Ins.isPromotionType(SelectedItem.Name) != 0)
+                        {
+                            SelectedItem.IsTrueValue = false;
+                            
+                        }
+                        else
+                        {
+                            if (SelectedItem.BookCount < 0)
+                            {
+                                SelectedItem.IsTrueValue = false;
+                            }
+                            else
+                            {
+                                if (SelectedItem.Promotion < 0 || SelectedItem.Promotion > 1)
+                                {
+                                    SelectedItem.IsTrueValue = false;
+                                }
+                                else
+                                {
+                                    SelectedItem.IsTrueValue = true;
+                                }
+                            }
+                        }
+                    }
 
-                        return false;
-                    }                   
-
-                    if (SelectedItem.BookCount < 0)
-                        return false;
-                    if (SelectedItem.Promotion < 0 || SelectedItem.Promotion > 1)
-                        return false;
                 }
                 return true;
             }, (p) =>
@@ -101,7 +155,7 @@ namespace MiniBookStore.ViewModels
                     else
                     {
                         MessageBox.Show("Cập nhật thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                        ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(false, currentPage, NumberPage));
+                        ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
                     }
                 }
             }
@@ -121,7 +175,7 @@ namespace MiniBookStore.ViewModels
                         {
                             MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                             //load lại 
-                            ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(false, currentPage, NumberPage));
+                            ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
                         }
                         else
                         {
@@ -164,7 +218,7 @@ namespace MiniBookStore.ViewModels
                 if (CBill.Ins.addNewPromotionType(Type) == true)
                 {
                     MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(false, currentPage, NumberPage));
+                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
                 }
                 else
                 {

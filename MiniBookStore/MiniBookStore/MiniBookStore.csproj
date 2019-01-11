@@ -106,6 +106,10 @@
     <Compile Include="BookMenuPage.xaml.cs">
       <DependentUpon>BookMenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BoolToVisibilityConverter.cs" />
+    <Compile Include="CodePromotionPage.xaml.cs">
+      <DependentUpon>CodePromotionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DashboardWindow.xaml.cs">
       <DependentUpon>DashboardWindow.xaml</DependentUpon>
     </Compile>
@@ -127,12 +131,14 @@
     <Compile Include="Models\MyClass\CEmployee.cs" />
     <Compile Include="Models\MyClass\CEmployee_Role.cs" />
     <Compile Include="Models\MyClass\CPromotion.cs" />
+    <Compile Include="Models\MyClass\CPromotion_Code.cs" />
     <Compile Include="Models\MyClass\CPromotion_Type.cs" />
     <Compile Include="Models\MyClass\CWarehouse_History.cs" />
     <Compile Include="Models\MyClass\Human.cs" />
     <Compile Include="PromotionMenuPage.xaml.cs">
       <DependentUpon>PromotionMenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RestoreBoolToVisibilityConverter.cs" />
     <Compile Include="TypePromotionPage.xaml.cs">
       <DependentUpon>TypePromotionPage.xaml</DependentUpon>
     </Compile>
@@ -143,6 +149,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookInfoPageVM.cs" />
     <Compile Include="ViewModels\BookMenuPageVM.cs" />
+    <Compile Include="ViewModels\CodePromotionPageVM.cs" />
     <Compile Include="ViewModels\ControlBarVM.cs" />
     <Compile Include="ViewModels\DashboardWindowVM.cs" />
     <Compile Include="ViewModels\DetailsBookWindowVM.cs" />
@@ -158,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BookMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CodePromotionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

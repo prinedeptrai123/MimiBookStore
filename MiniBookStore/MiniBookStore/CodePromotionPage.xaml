@@ -1,4 +1,4 @@
-﻿<Page x:Class="MiniBookStore.TypePromotionPage"
+﻿<Page x:Class="MiniBookStore.CodePromotionPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,11 +15,11 @@
       TextOptions.TextRenderingMode="Auto"       
       FontFamily="{DynamicResource MaterialDesignFont}"
       Background="{DynamicResource MaterialDesignPaper}"     
-      DataContext="{StaticResource TypePromotionPageVM}"
+      DataContext="{StaticResource CodePromotionPageVM}"
       
       d:DesignHeight="700" d:DesignWidth="1175"
       
-      Title="TypePromotionPage">
+      Title="CodePromotionPage">
 
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="nameStyle">
@@ -58,7 +58,7 @@
         <!-- Label thông báo-->
         <TextBlock Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" FontSize="18"
                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,5,0,5">
-                Cài đặt loại khuyến mãi
+                Cài đặt Mã khuyến mãi
         </TextBlock>
 
         <Grid Grid.Row="1" Margin="10,0,0,0">
@@ -75,7 +75,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Background="#3498db" Height="30">
-                            <TextBlock Text="Danh sách loại khuyến mãi" VerticalAlignment="Center" 
+                            <TextBlock Text="Danh sách mã khuyến mãi" VerticalAlignment="Center" 
                                    Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center" Foreground="White"/>
                         </Grid>
 
@@ -103,11 +103,11 @@
                             <DataGrid HorizontalAlignment="Left"
                         Margin="0 0 0 0"
                         Height="500"                   
-                        ItemsSource="{Binding ListType}"
+                        ItemsSource="{Binding ListCode}"
                         CanUserSortColumns="True"
                         CanUserAddRows="False"
                         AutoGenerateColumns="False"
-                        Width="730"
+                        Width="830"
                         materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                         materialDesign:DataGridAssist.ColumnHeaderPadding="8"
                         SelectedItem="{Binding SelectedItem}">
@@ -116,7 +116,7 @@
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn
-                                Binding="{Binding ID}"
+                                Binding="{Binding ID,UpdateSourceTrigger=PropertyChanged}"
                                 Header="Mã"
                                 IsReadOnly="True"
                                 Width="80" MinWidth="80">
@@ -127,7 +127,7 @@
                                 Header="Tên"
                                 Width="130"
                                 MinWidth="130"
-                                IsReadOnly="{Binding Data.NameisReadOnly,Source={StaticResource proxy}}"
+                                IsReadOnly="False"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
@@ -136,46 +136,39 @@
                                         </DataGridTextColumn.ElementStyle>
                                     </materialDesign:MaterialDataGridTextColumn>
 
-                                    <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding BookCount,UpdateSourceTrigger=PropertyChanged}"
-                                Header="Số lượng sách"                            
-                                MinWidth="110"
-                                Width="110"
-                                IsReadOnly="{Binding Data.AuthorisReadOnly,Source={StaticResource proxy}}"
-                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" >
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </materialDesign:MaterialDataGridTextColumn>
+                                    <materialDesign:MaterialDataGridComboBoxColumn                                      
+                                        Header="Loại"
+                                        SelectedValueBinding="{Binding Type,UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.ListType}" />
 
-                                    <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Promotion}"
-                                Header="Khuyến mãi"                           
-                                MinWidth="100"
-                                Width="100"                               
-                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </materialDesign:MaterialDataGridTextColumn>
+                                    <DataGridTemplateColumn Header="Ngày bắt đầu">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <DatePicker SelectedDate="{Binding DateBegin,UpdateSourceTrigger=PropertyChanged}"                                              
+                                                     Name="LocaleDatePicker"
+                                                     Width="120"
+                                                     materialDesign:HintAssist.Hint="Locale Date" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
-                                    <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Applied,StringFormat='0,0'}"
-                                IsReadOnly="True"
-                                Header="Mã áp dụng"
-                                MinWidth="100" Width="100">
-                                    </materialDesign:MaterialDataGridTextColumn>
+                                    <DataGridTemplateColumn Header="Ngày kết thúc">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <DatePicker SelectedDate="{Binding DateEnd,UpdateSourceTrigger=PropertyChanged}"                                              
+                                                     Name="LocaleDatePicker"
+                                                     Width="120"
+                                                     materialDesign:HintAssist.Hint="Locale Date" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
                                     <DataGridTemplateColumn Visibility="{Binding Data.EditColumnVisibility,Source={StaticResource proxy}}">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button x:Name="ButtonEdit" Visibility="{Binding IsExist,Converter={StaticResource BoolToVisibilityConverter}}"
                                                         Background="#3498db" BorderBrush="#3498db" Width="45"
-                                                        ToolTip="Cập nhật" IsEnabled="{Binding IsTrueValue}"
+                                                        ToolTip="Cập nhật" IsEnabled="{Binding IstrueValue}"
                                             Command="{Binding Path=DataContext.editCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                             CommandParameter="{Binding}">
                                                     <materialDesign:PackIcon Kind="Pencil" Foreground="White" Height="15" Width="15"/>
@@ -213,7 +206,7 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            
+
                         </StackPanel>
                     </Grid>
                 </materialDesign:Card>
@@ -257,10 +250,10 @@
                     </Button>
                 </StackPanel>
             </StackPanel>
-            
+
 
             <materialDesign:Card Grid.Column="1" Margin="10,0,0,0" 
-                                 Width="410" HorizontalAlignment="Left" Height="auto" VerticalContentAlignment="Top">
+                                 Width="310" HorizontalAlignment="Left" Height="auto" VerticalContentAlignment="Top">
                 <Grid VerticalAlignment="Top">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -269,7 +262,7 @@
 
                     <Grid Grid.Row="0" 
                           Background="#3498db" Height="30" HorizontalAlignment="Stretch">
-                        <TextBlock Text="Thêm loại mới" VerticalAlignment="Center" 
+                        <TextBlock Text="Thêm mã mới" VerticalAlignment="Center" 
                                    Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center" Foreground="White"/>
                     </Grid>
                     <StackPanel Grid.Row="1">
@@ -284,18 +277,40 @@
                                    Style="{StaticResource MaterialDesignLightSeparator}"/>
 
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Tên loại: " Style="{StaticResource nameBoldStyle}"/>
+                            <TextBlock Text="Mã: " HorizontalAlignment="Center" Margin="0,2,0,0"
+                                       Style="{StaticResource nameBoldStyle}"/>
+                            <TextBox Style="{StaticResource textboxStyle}" Text="{Binding ID,UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Tên mã: " HorizontalAlignment="Center" Margin="0,2,0,0"
+                                       Style="{StaticResource nameBoldStyle}"/>
                             <TextBox Style="{StaticResource textboxStyle}" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Số lượng sách: " Style="{StaticResource nameBoldStyle}"/>
-                            <TextBox Style="{StaticResource textboxStyle}" Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="Loại : " 
+                                       Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                            <ComboBox SelectedItem="{Binding Type}"
+                                materialDesign:HintAssist.Hint="Loại khuyến mãi"
+                                IsEditable="True"
+                                materialDesign:HintAssist.HintOpacity=".26" ItemsSource="{Binding ListType}">
+                            </ComboBox>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Khuyến mãi: " Style="{StaticResource nameBoldStyle}"/>
-                            <TextBox Style="{StaticResource textboxStyle}" Text="{Binding Promotion,UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="Ngày bắt đầu: " HorizontalAlignment="Center" Margin="0,2,0,0"
+                                       Style="{StaticResource nameBoldStyle}"/>
+                            <DatePicker Width="120" materialDesign:HintAssist.Hint="Ngày áp dụng" SelectedDate="{Binding DateBegin}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Ngày kết thúc: " Style="{StaticResource nameBoldStyle}"
+                                       HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                            <DatePicker Width="120" materialDesign:HintAssist.Hint="Ngày hết hạn"
+                                        SelectedDate="{Binding DateEnd}" FontSize="14" >
+                                
+                            </DatePicker>
                         </StackPanel>
 
                         <Separator Margin="5,0,5,0" Background="Black"
@@ -310,6 +325,6 @@
             </materialDesign:Card>
         </Grid>
 
-        
+
     </Grid>
 </Page>
