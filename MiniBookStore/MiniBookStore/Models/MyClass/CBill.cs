@@ -281,6 +281,61 @@ namespace MiniBookStore.Models.MyClass
         }
 
         /// <summary>
+        /// hàm trả về list khuyến mãi theo tên
+        /// </summary>
+        /// <param name="CodeName"></param>
+        /// <param name="isAll"></param>
+        /// <param name="currentPage"></param>
+        /// <param name="NumberPage"></param>
+        /// <returns></returns>
+        public List<CPromotion_Code> ListCode(string CodeName,bool isAll, int currentPage, int NumberPage)
+        {
+            List<CPromotion_Code> List = new List<CPromotion_Code>();
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Discount_Code.Where(x => x.Code_Name.ToLower().Contains(CodeName.ToLower())).ToList().Skip((currentPage - 1) * NumberPage).Take(NumberPage);
+                    if (data.Count() > 0)
+                    {
+                        foreach (var item in data)
+                        {
+                            //tạo mới
+                            CPromotion_Code Code = new CPromotion_Code
+                            {
+                                ID = item.Code_ID,
+                                Name = item.Code_Name,
+                                Type = item.Promotion_Type.Type_Names,
+                                DateBegin = item.Date_Begin,
+                                DateEnd = item.Date_End,
+                                IsExist = item.Exist,
+                                IstrueValue = true
+                            };
+
+                            if (isAll == true && item.Exist == false)
+                            {
+                                List.Add(Code);
+                            }
+                            else if (isAll == false && item.Exist == false)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                List.Add(Code);
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
         /// Hàm trả về Id của loại khuyến mãi, nếu không có trả về 0
         /// </summary>
         /// <param name="TypeName"></param>

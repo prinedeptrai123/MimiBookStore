@@ -46,6 +46,9 @@ namespace MiniBookStore.ViewModels
         private DateTime _dateEnd;
         public DateTime DateEnd { get => _dateEnd; set { if (value == _dateEnd) return; _dateEnd = value; OnPropertyChanged(); } }
 
+        private string _filterString;
+        public string FilterString { get => _filterString; set { if (value == _filterString) return; _filterString = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region properties binding
@@ -63,6 +66,7 @@ namespace MiniBookStore.ViewModels
         public ICommand CheckedCommand { get; set; }
         public ICommand restoreCommand { get; set; }
         public ICommand editCommand { get; set; }
+        public ICommand searchCommand { get; set; }
 
         #endregion
 
@@ -82,6 +86,20 @@ namespace MiniBookStore.ViewModels
             CheckedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, currentPage, NumberPage));
+            }
+              );
+
+            searchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (FilterString == "")
+                {
+                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, currentPage, NumberPage));
+                }
+                else
+                {
+                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(FilterString, IsChecked, currentPage, NumberPage));
+                }
+                
             }
               );
 
