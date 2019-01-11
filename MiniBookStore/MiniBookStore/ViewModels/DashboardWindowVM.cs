@@ -79,6 +79,7 @@ namespace MiniBookStore.ViewModels
             PayCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {               
                 GridCursorMargin = new Thickness(0, 70 + 0, 0, 0);
+                FramePage = new SellMenuPage();
             }
                );
 

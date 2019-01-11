@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace MiniBookStore.ViewModels
 {
-    public class PromotionMenuPageVM:BaseViewModel
+    public class SellMenuPageVM : BaseViewModel
     {
         #region properties binding
 
@@ -25,40 +25,34 @@ namespace MiniBookStore.ViewModels
         /// </summary>
         public Thickness GridCursorMargin { get => _gridCursorMargin; set { if (value == _gridCursorMargin) return; _gridCursorMargin = value; OnPropertyChanged(); } }
 
+
         #endregion
 
-        #region command binding
+        #region data binding
 
         public ICommand LoadCommand { get; set; }
-        public ICommand TypePromotionCommand { get; set; }
-        public ICommand CodePromotionCommand { get; set; }
+        public ICommand ProductCommand { get; set; }
+        public ICommand HistoryCommand { get; set; }
 
         #endregion
 
-        public PromotionMenuPageVM()
+        public SellMenuPageVM()
         {
-            
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(10, 0, 0, 0);
-                FramePage = new CodePromotionPage();
+               
             }
                );
+           
 
-            TypePromotionCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ProductCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(10 + 150, 0, 0, 0);
-                FramePage = new TypePromotionPage();
-            }
-               );
-
-            CodePromotionCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                GridCursorMargin = new Thickness(10, 0, 0, 0);
-                FramePage = new CodePromotionPage();
                 
             }
                );
         }
     }
 }
+

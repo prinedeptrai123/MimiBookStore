@@ -139,6 +139,9 @@
       <DependentUpon>PromotionMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="RestoreBoolToVisibilityConverter.cs" />
+    <Compile Include="SellMenuPage.xaml.cs">
+      <DependentUpon>SellMenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TypePromotionPage.xaml.cs">
       <DependentUpon>TypePromotionPage.xaml</DependentUpon>
     </Compile>
@@ -155,6 +158,7 @@
     <Compile Include="ViewModels\DetailsBookWindowVM.cs" />
     <Compile Include="ViewModels\IncreaseBookWindowVM.cs" />
     <Compile Include="ViewModels\PromotionMenuPageVM.cs" />
+    <Compile Include="ViewModels\SellMenuPageVM.cs" />
     <Compile Include="ViewModels\TypePromotionPageVM.cs" />
     <Page Include="AddNewBookWindow.xaml">
       <SubType>Designer</SubType>
@@ -201,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceXAML\MainResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SellMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
