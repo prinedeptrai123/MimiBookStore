@@ -111,6 +111,9 @@ namespace MiniBookStore.ViewModels
 
         public ICommand ListSelectionChanged { get; set; }
 
+        public ICommand CountTextChange { get; set; }
+        public ICommand InPriceTextChange { get; set; }
+
 
         #endregion
 
@@ -128,13 +131,31 @@ namespace MiniBookStore.ViewModels
             }
                );
 
+            CountTextChange = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if(Help.isInt(WarehouseInventory)==true &&Help.isFloat(InPrice)==true)
+                {
+                    TotalPrice = int.Parse(WarehouseInventory) * float.Parse(InPrice);
+                }
+            }
+               );
+
+            InPriceTextChange = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (Help.isInt(WarehouseInventory) == true && Help.isFloat(InPrice) == true)
+                {
+                    TotalPrice = int.Parse(WarehouseInventory) * float.Parse(InPrice);
+                }
+            }
+               );
+
             TypeSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (TypeSelectedItem != null)
                 {
                     ListTheme = new ObservableCollection<string>(CBook.Ins.ListThemeOfType(TypeSelectedItem));
                 }
-               
+
             }
                );
 

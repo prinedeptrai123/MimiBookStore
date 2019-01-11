@@ -545,6 +545,43 @@ namespace MiniBookStore.Models.MyClass
            
         }
 
+        /// <summary>
+        /// Hàm tăng số lượng của sách trong kho
+        /// </summary>
+        /// <param name="BookID"></param>
+        /// <param name="Number"></param>
+        /// <returns></returns>
+        public bool increaseBook(int BookID,int Number)
+        {
+            try
+            {
+                if(Number <=0)
+                {
+                    return false;
+                }
+
+                using(var DB = new BookStoreDataEntities())
+                {
+                    //Tìm sách theo ID
+                    var find = DB.Books.Find(BookID);
+                    if (find != null)
+                    {
+                        //Cập nhật số lượng sách mới
+                        find.Book_Count = find.Book_Count + Number;
+
+                        //Lưu thay đổi
+                        DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
         #endregion
     }
 }

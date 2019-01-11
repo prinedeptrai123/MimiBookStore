@@ -75,7 +75,12 @@ namespace MiniBookStore.ViewModels
             {
                 //Khởi tạo
                 AddNewBookWindow wd = new AddNewBookWindow();
-                wd.ShowDialog();               
+                wd.ShowDialog();
+                //Load lại List
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook("tất cả", "tất cả", "tất cả", "tất cả", "tất cả", currentPage, NumberPage));
+                SumNumber = CBook.Ins.sumBook();
+
+                CWarehouse_History LastWarehouse = CBookInventory.InsInventory.LastWarehouse();
             }
                );
 
@@ -84,6 +89,11 @@ namespace MiniBookStore.ViewModels
                 //Khởi tạo
                 IncreaseBookWindow wd = new IncreaseBookWindow();
                 wd.ShowDialog();
+                //Load lại List
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook("tất cả", "tất cả", "tất cả", "tất cả", "tất cả", currentPage, NumberPage));
+                SumNumber = CBook.Ins.sumBook();
+
+                CWarehouse_History LastWarehouse = CBookInventory.InsInventory.LastWarehouse();
             }
                );
 

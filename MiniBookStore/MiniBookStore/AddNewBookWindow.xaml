@@ -169,13 +169,25 @@
                             </StackPanel.Resources>
                             
                             <TextBlock Text="Giá nhập: " Style="{StaticResource nameBoldStyle}"/>
-                            <TextBox materialDesign:HintAssist.Hint="50000" Text="{Binding InPrice,UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox materialDesign:HintAssist.Hint="50000" Text="{Binding InPrice,UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding InPriceTextChange}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
 
                             <TextBlock Text="Số lượng: " Style="{StaticResource nameBoldStyle}"/>
-                            <TextBox materialDesign:HintAssist.Hint="50000" MinWidth="80" Text="{Binding WarehouseInventory,UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox materialDesign:HintAssist.Hint="50000" MinWidth="80" Text="{Binding WarehouseInventory,UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding CountTextChange}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
 
                             <TextBlock Text="Tổng tiền: " Style="{StaticResource nameBoldStyle}"/>
-                            <TextBox materialDesign:HintAssist.Hint="0" IsReadOnly="True" Text="{Binding TotalPrice}"/>
+                            <TextBox materialDesign:HintAssist.Hint="0" IsReadOnly="True" Text="{Binding TotalPrice,StringFormat='0,0.0'}"/>
                         </StackPanel>
                     </StackPanel>
                     

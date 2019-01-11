@@ -112,10 +112,10 @@
                             <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <!-- Text box tìm kiếm-->
                                 <TextBox Width="300" FontSize="15" Height="35"                                   
-                                    materialDesign:HintAssist.Hint="Tìm kiếm" Text="{Binding FilterString}"/>
+                                    materialDesign:HintAssist.Hint="Tìm kiếm" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}"/>
 
                                 <!-- Nút tìm kiếm-->
-                                <Button Background="#0984e3" BorderBrush="{x:Null}" Height="35">
+                                <Button Background="#0984e3" BorderBrush="{x:Null}" Height="35" Command="{Binding SearchCommand}">
                                     <materialDesign:PackIcon Height="30" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Magnify" Foreground="White"/>
                                 </Button>
@@ -125,28 +125,17 @@
                         <!-- List sách -->
                         <materialDesign:Card Height="auto" Width="auto">
                             <ListView Height="250" Width="500" Background="Blue"
-                              ItemsSource="{Binding ListBook}" SelectedItem="{Binding ListSelectedItem}">
+                              ItemsSource="{Binding ListBookSearch}" SelectedItem="{Binding ListSearchSelectedItem}">
                                 <ListView.Resources>
                                     <Style TargetType="{x:Type TextBlock}" x:Key="WrapStyle">
                                         <Setter Property="TextWrapping" Value="Wrap"/>
                                         <Setter Property="Width" Value="120"/>
                                     </Style>
                                 </ListView.Resources>
-
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                                <Setter Property="IsSelected" Value="True"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-
+                               
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding ListSelectionChanged}"/>
+                                        <i:InvokeCommandAction Command="{Binding ListSearchSelectionChanged}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <ListView.View>
@@ -174,6 +163,16 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Author}" Style="{StaticResource WrapStyle}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+
+                                        <GridViewColumn                                      
+                                        Header="NXB">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Company}" Style="{StaticResource WrapStyle}" Width="75"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -209,22 +208,34 @@
                                     <TextBlock Text="Thông tin nhập" HorizontalAlignment="Center" Style="{StaticResource nameBoldStyle}"/>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Mã sách: " Style="{StaticResource nameBoldStyle}"/>
-                                        <TextBlock Text="{Binding ID}"/>
+                                        <TextBlock Text="{Binding ID}" Style="{StaticResource nameStyle}"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Số lượng: " Style="{StaticResource nameBoldStyle}"/>
-                                        <TextBox Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}"/>
+                                        <TextBox Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="TextChanged">
+                                                    <i:InvokeCommandAction Command="{Binding CountTextChange}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Giá nhập: " Style="{StaticResource nameBoldStyle}"/>
-                                        <TextBox Text="{Binding InPrice,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}"/>
+                                        <TextBox Text="{Binding InPrice,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="TextChanged">
+                                                    <i:InvokeCommandAction Command="{Binding InPriceTextChange}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Tổng tiền: " Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                        <TextBox Text="{Binding TotalPrice,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}" HorizontalAlignment="Center"/>
+                                        <TextBox Text="{Binding TotalBookPrice,StringFormat='0,0.0'}" Style="{StaticResource textboxStyle}" HorizontalAlignment="Center"/>
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
@@ -261,25 +272,15 @@
                             <!-- List sách -->
                             <materialDesign:Card Height="320" Width="740" Margin="20,10,10,0" HorizontalAlignment="Left">
                                 <ListView Height="320" Width="740" Background="Blue"
-                              ItemsSource="{Binding ListBook}" SelectedItem="{Binding ListSelectedItem}">
+                              ItemsSource="{Binding ListBook}" 
+                                          SelectedItem="{Binding ListSelectedItem}" SelectedIndex="{Binding ListSelectedIndex}">
                                     <ListView.Resources>
                                         <Style TargetType="{x:Type TextBlock}" x:Key="WrapStyle">
                                             <Setter Property="TextWrapping" Value="Wrap"/>
                                             <Setter Property="Width" Value="120"/>
                                         </Style>
                                     </ListView.Resources>
-
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                                    <Setter Property="IsSelected" Value="True"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-
+                                   
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding ListSelectionChanged}"/>
@@ -315,10 +316,19 @@
                                             </GridViewColumn>
 
                                             <GridViewColumn                                      
+                                        Header="NXB">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Company}" Style="{StaticResource WrapStyle}" Width="100"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+
+                                            <GridViewColumn                                      
                                         Header="Giá nhập">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Inventory,StringFormat='0,0'}"/>
+                                                        <TextBlock Text="{Binding InPrice,StringFormat='0,0.0'}"/>
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
@@ -327,7 +337,7 @@
                                         Header="Số lượng nhập">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Inventory,StringFormat='0,0'}"/>
+                                                        <TextBlock Text="{Binding WarehouseInventory,StringFormat='0,0'}"/>
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
@@ -336,7 +346,7 @@
                                         Header="Tổng tiền">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Inventory,StringFormat='0,0'}"/>
+                                                        <TextBlock Text="{Binding TotalPrice,StringFormat='0,0'}"/>
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
@@ -356,10 +366,10 @@
                                 </Grid>
                                 <TextBlock Text="Tổng tiền" Margin="0,5,0,0"                                     
                                            Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding rerer,FallbackValue=34}" Margin="0,10,0,0"
+                                <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0'}" Margin="0,10,0,0"
                                            Style="{StaticResource nameStyle}" HorizontalAlignment="Center"/>
                                 <Separator Margin="10,5,10,0" />
-                                <Button Content="Nhập sách" HorizontalAlignment="Center" Margin="0,30,0,0"
+                                <Button Content="Nhập sách" HorizontalAlignment="Center" Margin="0,30,0,0" Command="{Binding addCommand}"
                                         Style="{StaticResource buttonStyle}" Width="120"/>
                             </StackPanel>
                         </materialDesign:Card>
