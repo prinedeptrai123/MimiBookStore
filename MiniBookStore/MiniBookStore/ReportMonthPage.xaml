@@ -26,9 +26,28 @@
             <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+    <Page.Resources>
+        <Style x:Key="VerticalSeparatorStyle" 
+       TargetType="{x:Type Separator}"
+       BasedOn="{StaticResource {x:Type Separator}}">
+            <Setter Property="Margin" Value="6,0,6,0"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <TransformCollection>
+                                <RotateTransform Angle="90"/>
+                            </TransformCollection>
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -176,6 +195,81 @@
                 </Grid>
             </Grid>
 
+        </materialDesign:Card>
+
+        <materialDesign:Card Grid.Row="2" HorizontalAlignment="Left"
+            Width="900" Margin="10,5,0,0" Height="110">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Height="40" Background="#c0392b">
+                    <TextBlock Foreground="White" HorizontalAlignment="Center"
+                               VerticalAlignment="Center" FontFamily="Tahoma" FontSize="16"
+                        Text="Tổng cộng trong năm">
+                        
+                    </TextBlock>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" Margin="40,5,0,0">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type TextBlock}" x:Key="textBlockStyle">
+                                <Setter Property="FontFamily" Value="Tahoma"/>
+                                <Setter Property="FontSize" Value="15"/>
+                                <Setter Property="FontWeight" Value="Medium"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="0,5,0,0"/>
+                            </Style>
+
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Setter Property="Margin" Value="15,5,15,5"/>
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <StackPanel>
+                            <TextBlock Text="Tổng sách nhập" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                        </StackPanel>
+
+                        <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
+
+                        <StackPanel>
+                            <TextBlock Text="Tổng tiền nhập" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                        </StackPanel>
+
+                        <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
+
+                        <StackPanel>
+                            <TextBlock Text="Số sách bán ra" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                        </StackPanel>
+
+                        <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
+
+                        <StackPanel>
+                            <TextBlock Text="Tổng tiền bán sách" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                        </StackPanel>
+
+                        <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
+                        
+                        <StackPanel>
+                            <TextBlock Text="Tổng lương nhân viên" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                        </StackPanel>
+                        
+                        <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
+
+                        <StackPanel>
+                            <TextBlock Text="Lợi nhuận" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Grid>
         </materialDesign:Card>
     </Grid>
 </Page>
