@@ -22,7 +22,7 @@
               
         WindowStyle="None" WindowStartupLocation="CenterScreen"
         
-        Title="MakeBillWindow" Height="800" Width="1050">
+        Title="MakeBillWindow" Height="800" Width="1110">
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="nameStyle">
             <Setter Property="FontSize" Value="15"/>
@@ -222,9 +222,9 @@
                         </materialDesign:Card>
                     </StackPanel>
 
-                    <Grid Grid.Column="1" Margin="5,33,0,0">
+                    <Grid Grid.Column="1" Margin="40,33,0,0">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:Card Width="240" Height="250">
+                            <materialDesign:Card Width="250" Height="250">
                                 <Image Source="{Binding CoverImage}" HorizontalAlignment="Stretch"/>
                             </materialDesign:Card>
                         </StackPanel>
@@ -246,20 +246,176 @@
 
                         <StackPanel Margin="0,10,0,0" Grid.Column="0">
 
-                            <TextBlock Text="Danh sách nhập" Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Tìm kiếm khách hàng" Margin="140,0,0,0"
+                                       Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Left"/>
+                            <Grid Margin="0,5,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <!-- Tìm kiếm khách hàng -->
 
-                            <!-- List sách -->
-                            <materialDesign:Card Height="320" Width="740" Margin="20,10,10,0" HorizontalAlignment="Left">
-                                
-                            </materialDesign:Card>
+                                    <!--Thanh tìm kiếm-->
+                                    <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <!-- Text box tìm kiếm-->
+                                        <TextBox Width="335" FontSize="15" Height="35" Padding="10,0,0,0"                              
+                                    materialDesign:HintAssist.Hint="Tên / Số điện thoại" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                        <!-- Nút tìm kiếm-->
+                                        <Button Background="#0984e3" BorderBrush="{x:Null}" Height="35" Command="{Binding searchCommand}">
+                                            <materialDesign:PackIcon Height="30" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Kind="Magnify" Foreground="White"/>
+                                        </Button>
+                                    </StackPanel>
+                                    <materialDesign:Card Height="300" Width="400" Margin="20,10,10,0" HorizontalAlignment="Left">
+                                        <ListView Height="300" Width="400" Background="Blue"
+                              ItemsSource="{Binding ListBookSearch}" SelectedItem="{Binding ListSearchSelectedItem}">
+                                            <ListView.Resources>
+                                                <Style TargetType="{x:Type TextBlock}" x:Key="WrapStyle">
+                                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                                    <Setter Property="Width" Value="120"/>
+                                                </Style>
+                                            </ListView.Resources>
+
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding ListSearchSelectionChanged}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridViewColumn                                      
+                                                        Header="Mã">
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding ID}"/>
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+
+                                                    <GridViewColumn                                      
+                                                        Header="Tên">
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Name}" Style="{StaticResource WrapStyle}"/>
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+
+                                                    <GridViewColumn                                      
+                                                         Header="Số điện thoại">
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Author}"/>
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+
+                                    </materialDesign:Card>
+                                    
+                                </StackPanel>
+                                <materialDesign:Card Grid.Column="1"
+                                    Height="345" Width="260" Margin="8,0,0,0">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <Grid Height="48" Background="#27ae60" Grid.Row="0">
+                                            <TextBlock Text="Thông tin khách hàng" Foreground="White"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource nameBoldStyle}"/>
+                                        </Grid>
+
+                                        <StackPanel Grid.Row="1">
+                                            <StackPanel.Resources>
+                                                <Style TargetType="{x:Type StackPanel}">
+                                                    <Setter Property="Margin" Value="5,8,5,8"/>
+                                                </Style>
+                                            </StackPanel.Resources>
+                             
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Mã khách hàng " Style="{StaticResource nameBoldStyle}"/>
+                                                <TextBlock Text="{Binding ID}" Style="{StaticResource nameStyle}"/>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Tên: " Style="{StaticResource nameBoldStyle}"/>
+                                                <TextBox Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="TextChanged">
+                                                            <i:InvokeCommandAction Command="{Binding CountTextChange}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </TextBox>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Giới tính: " Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                                                <CheckBox
+                                    Style="{StaticResource MaterialDesignCheckBox}" 
+                                    FontSize="14" Margin="15,0,0,0" 
+                                    Content="Nam"  FontWeight="Medium"  IsChecked="{Binding IsChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CheckedCommand}">
+
+                                                </CheckBox>
+
+                                                <CheckBox Margin="15,0,0,0"
+                                    Style="{StaticResource MaterialDesignCheckBox}" 
+                                    FontSize="14"  
+                                    Content="Nữ"  FontWeight="Medium"  IsChecked="{Binding IsChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CheckedCommand}">
+
+                                                </CheckBox>
+
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Số điện thoại: " Style="{StaticResource nameBoldStyle}"/>
+                                                <TextBox Text="{Binding InPrice,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="TextChanged">
+                                                            <i:InvokeCommandAction Command="{Binding InPriceTextChange}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </TextBox>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Email: " Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                                                <TextBox Text="{Binding TotalBookPrice,StringFormat='0,0.0'}" Style="{StaticResource textboxStyle}" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Địa chỉ: " Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                                                <TextBox Text="{Binding TotalBookPrice,StringFormat='0,0.0'}" Style="{StaticResource textboxStyle}" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+
+                                            <CheckBox
+                                    Style="{StaticResource MaterialDesignCheckBox}" 
+                                    FontSize="14" Margin="0,8,0,0" 
+                                    Content="Khách hàng cũ" Foreground="#e74c3c" FontWeight="Medium" FontStyle="Italic" IsChecked="{Binding IsChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CheckedCommand}">
+
+                                            </CheckBox>
+
+                                        </StackPanel>
+                                    </Grid>
+                                </materialDesign:Card>
+                            </Grid>
+                            
+
+                            
                         </StackPanel>
 
                         <materialDesign:Card Grid.Column="1" 
-                                             Height="320" Width="250" 
-                                             HorizontalAlignment="Left" Margin="10,40,0,0">
+                                             Height="345" Width="380" 
+                                             HorizontalAlignment="Left" Margin="10,32,0,0">
                             <StackPanel Margin="0,0,0,0">
-                                <Grid Height="50" Background="#2c2c54">
-
+                                <Grid Height="50" Background="#c0392b">
+                                    <TextBlock Text="Thông tin hóa đơn" VerticalAlignment="Center" Foreground="White"
+                                               HorizontalAlignment="Center" Style="{StaticResource nameBoldStyle}"/>
                                 </Grid>
                                 <TextBlock Text="Tổng tiền" Margin="0,5,0,0"                                     
                                            Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
