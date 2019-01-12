@@ -124,7 +124,7 @@ namespace MiniBookStore.ViewModels
         {
             searchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                LoadBook();
+                LoadBookWithSort();
             }
                );
 
@@ -133,7 +133,7 @@ namespace MiniBookStore.ViewModels
                 if (CurrentPage > 1)
                 {
                     CurrentPage = CurrentPage - 1;
-                    LoadBook();
+                    LoadBookWithSort();
                 }
             }
               );
@@ -141,7 +141,7 @@ namespace MiniBookStore.ViewModels
             NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 CurrentPage = CurrentPage + 1;
-                LoadBook();
+                LoadBookWithSort();
             }
               );
 
@@ -153,26 +153,26 @@ namespace MiniBookStore.ViewModels
                     ListTheme.Add("Tất cả");
                     SelectedItemTheme = "Tất cả";
 
-                    LoadBook();
+                    LoadBookWithSort();
                 }
             }
                );
 
             ThemeSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                LoadBook();
+                LoadBookWithSort();
             }
                );
 
             AuthorSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                LoadBook();
+                LoadBookWithSort();
             }
                );
 
             CompanySelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                LoadBook();
+                LoadBookWithSort();
             }
                );
 
@@ -182,7 +182,7 @@ namespace MiniBookStore.ViewModels
                 AddNewBookWindow wd = new AddNewBookWindow();
                 wd.ShowDialog();
                 //Load lại List
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook("tất cả", "tất cả", "tất cả", "tất cả", "tất cả", CurrentPage, NumberPage));
+                LoadBookWithSort();
                 SumNumber = CBook.Ins.sumBook();
 
                 CWarehouse_History LastWarehouse = CBookInventory.InsInventory.LastWarehouse();
@@ -195,7 +195,7 @@ namespace MiniBookStore.ViewModels
                 IncreaseBookWindow wd = new IncreaseBookWindow();
                 wd.ShowDialog();
                 //Load lại List
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook("tất cả", "tất cả", "tất cả", "tất cả", "tất cả", CurrentPage, NumberPage));
+                LoadBookWithSort();
                 SumNumber = CBook.Ins.sumBook();
 
                 CWarehouse_History LastWarehouse = CBookInventory.InsInventory.LastWarehouse();
@@ -216,7 +216,7 @@ namespace MiniBookStore.ViewModels
                         {
                             MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                             //load lại
-                            ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook("tất cả", "tất cả", "tất cả", "tất cả", "tất cả", CurrentPage, NumberPage));
+                            LoadBookWithSort();
                         }
                         else
                         {
@@ -233,7 +233,7 @@ namespace MiniBookStore.ViewModels
                 {
                     DetailsBookWindow wd = new DetailsBookWindow(ListSelectedItem);
                     wd.ShowDialog();
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook("tất cả", "tất cả", "tất cả", "tất cả", "tất cả", CurrentPage, NumberPage));
+                    LoadBookWithSort();
                 }
             }
                );

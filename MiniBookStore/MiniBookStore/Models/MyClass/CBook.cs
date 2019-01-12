@@ -792,6 +792,14 @@ namespace MiniBookStore.Models.MyClass
                         {
                             data = data.OrderBy(x => x.Book_ID).ToList();
                         }
+                        else if(sortBy == "Lượt mua tăng dần")
+                        {
+                            data = data.OrderBy(x => x.Bill_Detail.Sum(y => y.Book_Count)).ToList();
+                        }
+                        else if(sortBy=="Lượt mua giảm dần")
+                        {
+                            data = data.OrderByDescending(x => x.Bill_Detail.Sum(y => y.Book_Count)).ToList();
+                        }
                     }
 
                     //Lấy từng trang
