@@ -213,7 +213,7 @@
                 </Grid>
 
                 <Grid Grid.Row="1">
-                    <StackPanel Orientation="Horizontal" Margin="40,5,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="20,5,0,0">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type TextBlock}" x:Key="textBlockStyle">
                                 <Setter Property="FontFamily" Value="Tahoma"/>
@@ -230,42 +230,42 @@
 
                         <StackPanel>
                             <TextBlock Text="Tổng sách nhập" Style="{StaticResource textBlockStyle}"/>
-                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="{Binding BookInCount,StringFormat='0,0'}" Style="{StaticResource textBlockStyle}"/>
                         </StackPanel>
 
                         <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
 
                         <StackPanel>
                             <TextBlock Text="Tổng tiền nhập" Style="{StaticResource textBlockStyle}"/>
-                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="{Binding BookInPrice,StringFormat='0,0.00'}" Style="{StaticResource textBlockStyle}"/>
                         </StackPanel>
 
                         <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
 
                         <StackPanel>
                             <TextBlock Text="Số sách bán ra" Style="{StaticResource textBlockStyle}"/>
-                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="{Binding BookOutCount,StringFormat='0,0'}" Style="{StaticResource textBlockStyle}"/>
                         </StackPanel>
 
                         <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
 
                         <StackPanel>
                             <TextBlock Text="Tổng tiền bán sách" Style="{StaticResource textBlockStyle}"/>
-                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="{Binding BookOutPrice,StringFormat='0,0.00'}" Style="{StaticResource textBlockStyle}"/>
                         </StackPanel>
 
                         <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
                         
                         <StackPanel>
                             <TextBlock Text="Tổng lương nhân viên" Style="{StaticResource textBlockStyle}"/>
-                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="{Binding Salary,StringFormat='0,0.00'}" Style="{StaticResource textBlockStyle}"/>
                         </StackPanel>
                         
                         <Separator Style="{StaticResource VerticalSeparatorStyle}" Margin="0,0,0,5"/>
 
                         <StackPanel>
                             <TextBlock Text="Lợi nhuận" Style="{StaticResource textBlockStyle}"/>
-                            <TextBlock Text="0" Style="{StaticResource textBlockStyle}"/>
+                            <TextBlock Text="{Binding Profit,StringFormat='0,0.00'}" Style="{StaticResource textBlockStyle}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

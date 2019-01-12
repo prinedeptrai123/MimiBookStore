@@ -22,6 +22,24 @@ namespace MiniBookStore.ViewModels
         private ObservableCollection<CMonthReport> _listReport;
         public ObservableCollection<CMonthReport> ListReport { get => _listReport; set { if (value == _listReport) return; _listReport = value; OnPropertyChanged(); } }
 
+        private int _bookInCount;
+        public int BookInCount { get => _bookInCount; set { if (value == _bookInCount) return; _bookInCount = value; OnPropertyChanged(); } }
+
+        private float _bookInPrice;
+        public float BookInPrice { get => _bookInPrice; set { if (value == _bookInPrice) return; _bookInPrice = value; OnPropertyChanged(); } }
+
+        private int _bookOutCount;
+        public int BookOutCount { get => _bookOutCount; set { if (value == _bookOutCount) return; _bookOutCount = value; OnPropertyChanged(); } }
+
+        private float _bookOutPrice;
+        public float BookOutPrice { get => _bookOutPrice; set { if (value == _bookOutPrice) return; _bookOutPrice = value; OnPropertyChanged(); } }
+
+        private float _profit;
+        public float Profit { get => _profit; set { if (value == _profit) return; _profit = value; OnPropertyChanged(); } }
+
+        private float _salary;
+        public float Salary { get => _salary; set { if (value == _salary) return; _salary = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region command binding
@@ -40,12 +58,26 @@ namespace MiniBookStore.ViewModels
                 SelectedItemYear = DateTime.Now.Year;
 
                 ListReport = new ObservableCollection<CMonthReport>(CMonthReport.Ins.MonthlyReport(SelectedItemYear));
+
+                BookInCount = ListReport.Sum(x => x.BookInCount);
+                BookInPrice = ListReport.Sum(x => x.BookInPrice);
+                BookOutCount = ListReport.Sum(x => x.BookOutCount);
+                BookOutPrice = ListReport.Sum(x => x.BookOutPrice);
+                Profit = ListReport.Sum(x => x.Profit);
+                Salary = ListReport.Sum(x => x.Salary);
             }
                );
 
             SelectionChangedYear = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ListReport = new ObservableCollection<CMonthReport>(CMonthReport.Ins.MonthlyReport(SelectedItemYear));
+
+                BookInCount = ListReport.Sum(x => x.BookInCount);
+                BookInPrice = ListReport.Sum(x => x.BookInPrice);
+                BookOutCount = ListReport.Sum(x => x.BookOutCount);
+                BookOutPrice = ListReport.Sum(x => x.BookOutPrice);
+                Profit = ListReport.Sum(x => x.Profit);
+                Salary = ListReport.Sum(x => x.Salary);
             }
                );
         }
