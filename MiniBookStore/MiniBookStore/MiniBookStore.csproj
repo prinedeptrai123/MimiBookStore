@@ -140,6 +140,7 @@
     <Compile Include="Models\MyClass\CDiscoutCode.cs" />
     <Compile Include="Models\MyClass\CEmployee.cs" />
     <Compile Include="Models\MyClass\CEmployee_Role.cs" />
+    <Compile Include="Models\MyClass\CMonthReport.cs" />
     <Compile Include="Models\MyClass\CPromotion.cs" />
     <Compile Include="Models\MyClass\CPromotion_Code.cs" />
     <Compile Include="Models\MyClass\CPromotion_Type.cs" />

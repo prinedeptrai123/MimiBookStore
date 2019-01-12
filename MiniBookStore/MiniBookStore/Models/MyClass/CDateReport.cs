@@ -72,7 +72,7 @@ namespace MiniBookStore.Models.MyClass
         /// <param name="Month"></param>
         /// <param name="Year"></param>
         /// <returns></returns>
-        public List<CDateReport> MonthlyReport(int Month,int Year) 
+        public List<CDateReport> DailyReport(int Month,int Year) 
         {
             List<CDateReport> List = new List<CDateReport>();
             try
@@ -133,7 +133,7 @@ namespace MiniBookStore.Models.MyClass
             return List;
         }
 
-        public List<CDateReport> MonthlyReport(int Month, int Year,DateTime MinDate,DateTime MaxDate)
+        public List<CDateReport> DailyReport(int Month, int Year,DateTime MinDate,DateTime MaxDate)
         {
             List<CDateReport> List = new List<CDateReport>();
             try

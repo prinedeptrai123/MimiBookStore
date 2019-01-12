@@ -51,7 +51,7 @@ namespace MiniBookStore.ViewModels
             {
                 if (DateBeginSelectedDate != null && DateEndSelectedDate != null)
                 {
-                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.MonthlyReport(SelectedItemMonth, SelectedItemYear, DateBeginSelectedDate, DateEndSelectedDate));
+                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear, DateBeginSelectedDate, DateEndSelectedDate));
                    
                 }
             }
@@ -61,7 +61,7 @@ namespace MiniBookStore.ViewModels
             {
                 if (DateBeginSelectedDate != null && DateEndSelectedDate != null)
                 {
-                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.MonthlyReport(SelectedItemMonth, SelectedItemYear, DateBeginSelectedDate, DateEndSelectedDate));
+                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear, DateBeginSelectedDate, DateEndSelectedDate));
 
                 }
             }
@@ -71,7 +71,7 @@ namespace MiniBookStore.ViewModels
             {
                 if(SelectedItemMonth!=0 && SelectedItemYear != 0)
                 {
-                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.MonthlyReport(SelectedItemMonth, SelectedItemYear));
+                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear));
 
                     DateTime date = new DateTime(SelectedItemYear, SelectedItemMonth, 1);
                     DateBeginSelectedDate = new DateTime(date.Year, date.Month, 1);
@@ -84,7 +84,7 @@ namespace MiniBookStore.ViewModels
             {
                 if (SelectedItemMonth != 0 && SelectedItemYear != 0)
                 {
-                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.MonthlyReport(SelectedItemMonth, SelectedItemYear));
+                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear));
 
                     DateTime date = new DateTime(SelectedItemYear, SelectedItemMonth, 1);
                     DateBeginSelectedDate = new DateTime(date.Year, date.Month, 1);
@@ -110,7 +110,7 @@ namespace MiniBookStore.ViewModels
                 DateBeginSelectedDate = new DateTime(date.Year, date.Month, 1);
                 DateEndSelectedDate = DateBeginSelectedDate.AddMonths(1).AddDays(-1);
 
-                ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.MonthlyReport(SelectedItemMonth, SelectedItemYear));
+                ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear));
             }
                );
 

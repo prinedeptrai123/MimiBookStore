@@ -37,7 +37,7 @@
                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,5,0,5">
                 Thống kê lợi nhuận theo ngày
         </TextBlock>
-        <materialDesign:Card Grid.Row="1" Width="800" Margin="10,0,0,0"
+        <materialDesign:Card Grid.Row="1" Width="900" Margin="10,0,0,0"
                              HorizontalAlignment="Left">
             <Grid>
                 <Grid.RowDefinitions>
@@ -74,7 +74,7 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <ListView
-                    ItemsSource="{Binding ListReport}" Height="550">
+                    ItemsSource="{Binding ListReport}" Height="310">
 
                         <!-- https://social.msdn.microsoft.com/Forums/vstudio/en-US/0944b3ed-dce9-4e19-9ab4-99193d682b2c/align-each-columns-cell-text-in-a-listview-using-a-gridview?forum=wpf-->
                         <!-- Đặt text ở giữa mỗi côt-->
@@ -94,7 +94,7 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Date,StringFormat=Tháng {0:MM}}" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Month,StringFormat=Tháng {0}}" HorizontalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -106,7 +106,7 @@
 
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding BookCount,StringFormat='0,0'}" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding BookInCount,StringFormat='0,0'}" HorizontalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -118,7 +118,7 @@
 
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding SumMoney,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding BookInPrice,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -130,19 +130,19 @@
 
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding BookCount,StringFormat='0,0'}" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding BookOutCount,StringFormat='0,0'}" HorizontalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
                                 <GridViewColumn>
                                     <GridViewColumn.Header>
-                                        <GridViewColumnHeader Content="Tổng tiền" HorizontalContentAlignment="Center"/>
+                                        <GridViewColumnHeader Content="Tổng tiền bán sách" HorizontalContentAlignment="Center"/>
                                     </GridViewColumn.Header>
 
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding SumMoney,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding BookOutPrice,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -154,7 +154,7 @@
 
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding SumMoney,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Salary,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiniBookStore.Models.MyClass;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,6 +19,9 @@ namespace MiniBookStore.ViewModels
         private int _selectedItemYear;
         public int SelectedItemYear { get => _selectedItemYear; set { if (value == _selectedItemYear) return; _selectedItemYear = value; OnPropertyChanged(); } }
 
+        private ObservableCollection<CMonthReport> _listReport;
+        public ObservableCollection<CMonthReport> ListReport { get => _listReport; set { if (value == _listReport) return; _listReport = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region command binding
@@ -34,6 +38,14 @@ namespace MiniBookStore.ViewModels
                 ListYear = new ObservableCollection<int>();
                 CreateYear();
                 SelectedItemYear = DateTime.Now.Year;
+
+                ListReport = new ObservableCollection<CMonthReport>(CMonthReport.Ins.MonthlyReport(SelectedItemYear));
+            }
+               );
+
+            SelectionChangedYear = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ListReport = new ObservableCollection<CMonthReport>(CMonthReport.Ins.MonthlyReport(SelectedItemYear));
             }
                );
         }
