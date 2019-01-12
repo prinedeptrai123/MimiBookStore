@@ -413,17 +413,68 @@
                                              Height="345" Width="380" 
                                              HorizontalAlignment="Left" Margin="10,32,0,0">
                             <StackPanel Margin="0,0,0,0">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Setter Property="Margin" Value="20,5,0,5"/>
+                                    </Style>
+                                </StackPanel.Resources>
                                 <Grid Height="50" Background="#c0392b">
                                     <TextBlock Text="Thông tin hóa đơn" VerticalAlignment="Center" Foreground="White"
                                                HorizontalAlignment="Center" Style="{StaticResource nameBoldStyle}"/>
                                 </Grid>
-                                <TextBlock Text="Tổng tiền" Margin="0,5,0,0"                                     
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tổng tiền" Margin="0,5,0,0"                                     
                                            Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0'}" Margin="0,10,0,0"
-                                           Style="{StaticResource nameStyle}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0',FallbackValue=150000}" Margin="10,4,0,0"
+                                           Style="{StaticResource nameStyle}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                
                                 <Separator Margin="10,5,10,0" />
-                                <Button Content="Nhập sách" HorizontalAlignment="Center" Margin="0,30,0,0" Command="{Binding addCommand}"
-                                        Style="{StaticResource buttonStyle}" Width="120"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Hình thức thanh toán" Margin="0,5,0,0"                                     
+                                           Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                                    <ComboBox materialDesign:HintAssist.Hint="Thanh toán trực tiếp" Margin="10,0,0,0">
+                                        
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Mã khuyến mãi" Margin="0,5,0,0"                                     
+                                           Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                                    <TextBox Style="{StaticResource textboxStyle}" VerticalAlignment="Center" Margin="10,2,0,0"
+                                             materialDesign:HintAssist.Hint="Nhập mã khuyến mãi nếu có"/>
+                                </StackPanel>
+
+                                <Separator Margin="10,5,10,0" />
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tổng tiền phải thanh toán" Margin="0,5,0,0"                                     
+                                           Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0',FallbackValue=150000}" Margin="10,4,0,0"
+                                           Style="{StaticResource nameStyle}" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <Separator Margin="10,5,10,0" />
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tiền nhận từ khách" Margin="0,5,0,0"                                     
+                                           Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                                    <TextBox Style="{StaticResource textboxStyle}" VerticalAlignment="Center" Margin="10,2,0,0"
+                                             materialDesign:HintAssist.Hint="5000"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tiền thừa" Margin="0,5,0,0"                                     
+                                           Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0',FallbackValue=150000}" Margin="10,4,0,0"
+                                           Style="{StaticResource nameStyle}" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <Separator Margin="10,5,10,0" />
+
+                                <Button Content="Thanh toán" HorizontalAlignment="Center" Margin="0,15,0,0" Command="{Binding addCommand}"
+                                        Style="{StaticResource buttonStyle}" Background="#c0392b" BorderBrush="#c0392b" Width="120"/>
                             </StackPanel>
                         </materialDesign:Card>
                     </Grid>
