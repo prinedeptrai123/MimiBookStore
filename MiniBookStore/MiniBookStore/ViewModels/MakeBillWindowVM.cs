@@ -89,6 +89,14 @@ namespace MiniBookStore.ViewModels
         private string _address;
         public string Address { get => _address; set { if (value == _address) return; _address = value; OnPropertyChanged(); } }
 
+        private ObservableCollection<CCustomer> _listCustomer;
+        public ObservableCollection<CCustomer> ListCustomer { get => _listCustomer; set { if (value == _listCustomer) return; _listCustomer = value; OnPropertyChanged(); } }
+
+        private CCustomer _listCustomerSelectedItem;
+        public CCustomer ListCustomerSelectedItem { get => _listCustomerSelectedItem; set { if (value == _listCustomerSelectedItem) return; _listCustomerSelectedItem = value; OnPropertyChanged(); } }
+
+        private string _filterString;
+        public string FilterString { get => _filterString; set { if (value == _filterString) return; _filterString = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -112,11 +120,81 @@ namespace MiniBookStore.ViewModels
         public ICommand FeMaleCheckedCommand { get; set; }
 
         public ICommand PayCommand { get; set; }
+        public ICommand ListCustomerSelectionChanged { get; set; }
+        public ICommand PhoneTextChange { get; set; }
+
+        public ICommand searchCommand { get; set; }
 
         #endregion
 
         public MakeBillWindowVM()
         {
+            PhoneTextChange = new RelayCommand<object>((p) => {
+                return true;
+            }, (p) =>
+            {
+                if (!string.IsNullOrEmpty(Phone))
+                {
+                    if (CCustomer.Ins.isCustomer(Phone) != 0)
+                    {
+                        IsCustomerChecked = true;
+                    }
+                    else
+                    {
+                        IsCustomerChecked = false;
+                    }
+                }
+                else
+                {
+                    IsCustomerChecked = false;
+                }
+            }
+               );
+
+            searchCommand = new RelayCommand<object>((p) => {
+                return true;
+            }, (p) =>
+            {
+                if (Help.isInt(FilterString)==true)
+                {
+                    ListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.ListCustomerFilterPhone(FilterString));
+                }
+                else
+                {
+                    ListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.ListCustomerFilterName(FilterString));
+                }
+                
+            }
+              );
+
+            ListCustomerSelectionChanged = new RelayCommand<object>((p) => {
+                return true;
+            }, (p) =>
+            {
+                if (ListCustomerSelectedItem != null)
+                {
+                    ID = ListCustomerSelectedItem.ID;
+                    Name = ListCustomerSelectedItem.Name;
+                    Phone = ListCustomerSelectedItem.Phone;
+                    Address = ListCustomerSelectedItem.Address;
+                    Email = ListCustomerSelectedItem.Email;
+
+                    if (ListCustomerSelectedItem.Gender == "Nam")
+                    {
+                        IsMaleChecked = true;
+                        IsFeMaleChecked = false;
+                    }
+                    else
+                    {
+                        IsMaleChecked = false;
+                        IsFeMaleChecked = true;
+                    }
+
+                    IsCustomerChecked = true;
+                }
+            }
+               );
+
             PayCommand = new RelayCommand<object>((p) => {
                 if (ListBook.Count == 0)
                 {
@@ -264,6 +342,8 @@ namespace MiniBookStore.ViewModels
 
                 IsMaleChecked = true;
                 IsFeMaleChecked = false;
+
+                ListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.ListCustomerFilterPhone(""));
             }
                );
 

@@ -115,6 +115,96 @@ namespace MiniBookStore.Models.MyClass
             return 0;
         }
 
+        /// <summary>
+        /// Hàm trả về danh sách khách hàng
+        /// </summary>
+        /// <returns></returns>
+        public List<CCustomer> ListCustomerFilterPhone(string Phone)
+        {
+            List<CCustomer> List = new List<CCustomer>();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Customers.ToList();
+                    if(string.IsNullOrEmpty(Phone) || Phone == "")
+                    {
+                        //do nothing
+                    }
+                    else
+                    {
+                        data = data.Where(x => x.Customer_Phone.Contains(Phone)).ToList();
+                    }
+
+                    foreach(var item in data)
+                    {
+                        //Tạo mới một khách hàng
+                        CCustomer myCustomer = new CCustomer
+                        {
+                            ID = item.Customer_ID,
+                            Name = item.Customer_Name,
+                            Address = item.Customer_Address,
+                            Phone = item.Customer_Phone,
+                            Email = item.Customer_Email,
+                            Gender = item.Customer_Gender
+                        };
+
+                        List.Add(myCustomer);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm lọc khách hàng theo tên
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public List<CCustomer> ListCustomerFilterName(string Name)
+        {
+            List<CCustomer> List = new List<CCustomer>();
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Customers.ToList();
+                    if (string.IsNullOrEmpty(Name) || Name == "")
+                    {
+                        //do nothing
+                    }
+                    else
+                    {
+                        data = data.Where(x => x.Customer_Name.ToLower().Contains(Name.ToLower())).ToList();
+                    }
+
+                    foreach (var item in data)
+                    {
+                        //Tạo mới một khách hàng
+                        CCustomer myCustomer = new CCustomer
+                        {
+                            ID = item.Customer_ID,
+                            Name = item.Customer_Name,
+                            Address = item.Customer_Address,
+                            Phone = item.Customer_Phone,
+                            Email = item.Customer_Email,
+                            Gender = item.Customer_Gender
+                        };
+
+                        List.Add(myCustomer);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
         #endregion
 
     }

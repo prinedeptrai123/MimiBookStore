@@ -270,7 +270,7 @@
                                     </StackPanel>
                                     <materialDesign:Card Height="300" Width="400" Margin="20,10,10,0" HorizontalAlignment="Left">
                                         <ListView Height="300" Width="400" Background="Blue"
-                              ItemsSource="{Binding ListCutomer}" SelectedItem="{Binding ListCustomerSelectedItem}">
+                              ItemsSource="{Binding ListCustomer}" SelectedItem="{Binding ListCustomerSelectedItem}">
                                             <ListView.Resources>
                                                 <Style TargetType="{x:Type TextBlock}" x:Key="WrapStyle">
                                                     <Setter Property="TextWrapping" Value="Wrap"/>
@@ -307,7 +307,7 @@
                                                          Header="Số điện thoại">
                                                         <GridViewColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <TextBlock Text="{Binding Author}"/>
+                                                                <TextBlock Text="{Binding Phone}"/>
                                                             </DataTemplate>
                                                         </GridViewColumn.CellTemplate>
                                                     </GridViewColumn>
@@ -346,11 +346,6 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Tên: " Style="{StaticResource nameBoldStyle}"/>
                                                 <TextBox Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="TextChanged">
-                                                            <i:InvokeCommandAction Command="{Binding CountTextChange}"/>
-                                                        </i:EventTrigger>
-                                                    </i:Interaction.Triggers>
                                                 </TextBox>
                                             </StackPanel>
 
@@ -377,7 +372,7 @@
                                                 <TextBox Text="{Binding Phone,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="TextChanged">
-                                                            <i:InvokeCommandAction Command="{Binding InPriceTextChange}"/>
+                                                            <i:InvokeCommandAction Command="{Binding PhoneTextChange}"/>
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </TextBox>
