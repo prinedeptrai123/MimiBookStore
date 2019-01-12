@@ -41,7 +41,7 @@
         <!-- Đầu trang -->
         <Grid Grid.Row="0" Height="90">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="810"/>
+                <ColumnDefinition Width="850"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -54,17 +54,17 @@
                 </TextBlock>
 
                 <!-- Thanh tìm kiếm và thanh lọc-->
-                <materialDesign:Card Margin="10,5,0,0" Width="800" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                <materialDesign:Card Margin="10,5,0,0" Width="840" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                     <StackPanel Orientation="Horizontal" Width="auto" >
 
                         <!--Thanh tìm kiếm-->
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <!-- Text box tìm kiếm-->
-                            <TextBox Width="200" FontSize="15" Height="35"                                   
+                            <TextBox Width="170" FontSize="15" Height="35"                                   
                                     materialDesign:HintAssist.Hint="Tìm kiếm" Text="{Binding FilterString}"/>
 
                             <!-- Nút tìm kiếm-->
-                            <Button Background="#0984e3" BorderBrush="{x:Null}" Height="35">
+                            <Button Background="#0984e3" BorderBrush="{x:Null}" Height="35" Command="{Binding searchCommand}">
                                 <materialDesign:PackIcon Height="30" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Magnify" Foreground="White"/>
                             </Button>
@@ -89,7 +89,16 @@
                                 </Label>
                                 <ComboBox
                                 materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
+                                    ItemsSource="{Binding ListType}"
+                                          SelectedItem="{Binding SelectedItemType}"   
+                                          Text="{Binding TextType,UpdateSourceTrigger=PropertyChanged}"
+                                          IsEditable="True"
                                 >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding TypeSelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </StackPanel>
 
@@ -98,8 +107,17 @@
                                     <TextBlock Text="Chủ đề" Style="{StaticResource labelStyle}"/>
                                 </Label>
                                 <ComboBox
+                                    ItemsSource="{Binding ListTheme}"
+                                          SelectedItem="{Binding SelectedItemTheme}"  
+                                          Text="{Binding TextTheme,UpdateSourceTrigger=PropertyChanged}"
+                                          IsEditable="True"
                                 materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
                                 >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ThemeSelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </StackPanel>
 
@@ -107,9 +125,17 @@
                                 <Label  VerticalAlignment="Center">
                                     <TextBlock Text="Tác giả" Style="{StaticResource labelStyle}"/>
                                 </Label>
-                                <ComboBox
+                                <ComboBox ItemsSource="{Binding ListAuthor}"
+                                          Text="{Binding TextAuthor,UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedItem="{Binding SelectedItemAuthor}"
+                                          IsEditable="True"                                   
                                 materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
                                 >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding AuthorSelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </StackPanel>
 
@@ -117,9 +143,17 @@
                                 <Label  VerticalAlignment="Center">
                                     <TextBlock Text="Nhà xuất bản" Style="{StaticResource labelStyle}"/>
                                 </Label>
-                                <ComboBox
+                                <ComboBox ItemsSource="{Binding ListCompany}"
+                                          Text="{Binding TextCompany,UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedItem="{Binding SelectedItemCompany}"
+                                          IsEditable="True"
                                 materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
                                 >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding CompanySelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </StackPanel>
 
@@ -127,9 +161,16 @@
                                 <Label  VerticalAlignment="Center">
                                     <TextBlock Text="Sắp xếp theo" Style="{StaticResource labelStyle}"/>
                                 </Label>
-                                <ComboBox
+                                <ComboBox ItemsSource="{Binding ListSortBy}"
+                                          SelectedItem="{Binding SelectedItemSortBy}"
+                                          
                                 materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
                                 >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SortBySelectionChanged}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </StackPanel>
 
@@ -140,7 +181,7 @@
             </Grid>
 
             <!-- Cụm bên trái-->
-            <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="30,0,0,0">
+            <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0">
                 <materialDesign:Card   HorizontalAlignment="Left" Background="#00cec9" VerticalAlignment="Bottom" Margin="0,0,0,0"
                                     
                      Width="300"
@@ -168,7 +209,7 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="810"/>
+                <ColumnDefinition Width="850"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -176,7 +217,7 @@
             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0">
                 <!--List hiển thị danh sách-->
                 <materialDesign:Card Height="auto" Width="auto">
-                    <ListView Height="560" Width="800" Background="Blue"
+                    <ListView Height="560" Width="840" Background="Blue"
                               ItemsSource="{Binding ListBook}" SelectedItem="{Binding ListSelectedItem}">
                         <ListView.Resources>
                             <Style TargetType="{x:Type TextBlock}" x:Key="WrapStyle">
@@ -299,49 +340,34 @@
                 </materialDesign:Card>
 
                 <!--Nút điều hướng trang-->
-                <StackPanel Orientation="Horizontal" 
-                        HorizontalAlignment="Center" Margin="0,5,0,0">
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedAccentButton}">
-                            <Setter Property="Height" Value="30"/>
-                            <Setter Property="Width" Value="40"/>
-                            <Setter Property="materialDesign:RippleAssist.IsDisabled" Value="False"/>
-                            <Setter Property="materialDesign:RippleAssist.Feedback" Value="Green"/>
-                            <Setter Property="Margin" Value="2,0,2,0"/>
-                            <Setter Property="BorderBrush" Value="Black"/>
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="BorderThickness" Value="2"/>
-                            <Setter Property="FontSize" Value="11"/>
-                        </Style>
-                    </StackPanel.Resources>
-
-                    <Button Width="45">
-                        <materialDesign:PackIcon Kind="ChevronDoubleLeft" 
-                                             Width="20" HorizontalAlignment="Center" Height="20"/>
+                <StackPanel Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="MaterialDesignFloatingActionMiniAccentButton" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Command="{Binding PreviousPageCommand}">
+                        <materialDesign:PackIcon Kind="ArrowLeftThick" />
                     </Button>
-
-                    <Button Content="1">
+                    <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="MaterialDesignFloatingActionMiniAccentButton" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Content="{Binding CurrentPage,FallbackValue=1}">
 
                     </Button>
-
-                    <Button Content="2">
-
-                    </Button>
-
-                    <Button Content="3">
-
-                    </Button>
-
-                    <Button Width="45">
-                        <materialDesign:PackIcon Kind="ChevronDoubleRight" 
-                                             Width="20" HorizontalAlignment="Center" Height="20"/>
+                    <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="MaterialDesignFloatingActionMiniAccentButton" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Command="{Binding NextPageCommand}">
+                        <materialDesign:PackIcon Kind="ArrowRightThick" />
                     </Button>
                 </StackPanel>
 
             </StackPanel>
 
             <!-- Ảnh bìa sách và menu nhập thêm sách-->
-            <StackPanel Grid.Column="1" HorizontalAlignment="Left" Margin="30,5,0,0">
+            <StackPanel Grid.Column="1" HorizontalAlignment="Left" Margin="5,5,0,0">
 
                 <!--Ảnh bìa sách-->
                 <materialDesign:Card Height="300" Width="300">
