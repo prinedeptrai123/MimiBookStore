@@ -69,7 +69,7 @@ namespace MiniBookStore.ViewModels
 
             SelectionChangedMonth = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if(SelectedItemMonth!=null && SelectedItemYear != null)
+                if(SelectedItemMonth!=0 && SelectedItemYear != 0)
                 {
                     ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.MonthlyReport(SelectedItemMonth, SelectedItemYear));
 
@@ -82,7 +82,7 @@ namespace MiniBookStore.ViewModels
 
             SelectionChangedYear = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (SelectedItemMonth != null && SelectedItemYear != null)
+                if (SelectedItemMonth != 0 && SelectedItemYear != 0)
                 {
                     ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.MonthlyReport(SelectedItemMonth, SelectedItemYear));
 

@@ -158,6 +158,9 @@
     <Compile Include="ReportMenuPage.xaml.cs">
       <DependentUpon>ReportMenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReportMonthPage.xaml.cs">
+      <DependentUpon>ReportMonthPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RestoreBoolToVisibilityConverter.cs" />
     <Compile Include="SellMenuPage.xaml.cs">
       <DependentUpon>SellMenuPage.xaml</DependentUpon>
@@ -182,6 +185,7 @@
     <Compile Include="ViewModels\PromotionMenuPageVM.cs" />
     <Compile Include="ViewModels\ReportDatePageVM.cs" />
     <Compile Include="ViewModels\ReportMenuPageVM.cs" />
+    <Compile Include="ViewModels\ReportMonthPageVM.cs" />
     <Compile Include="ViewModels\SellMenuPageVM.cs" />
     <Compile Include="ViewModels\TypePromotionPageVM.cs" />
     <Page Include="AddNewBookWindow.xaml">
@@ -241,6 +245,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReportMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportMonthPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

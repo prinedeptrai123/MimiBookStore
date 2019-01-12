@@ -55,7 +55,7 @@ namespace MiniBookStore.ViewModels
             ReportMonthCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(10 + 170, 0, 0, 0);
-
+                FramePage = new ReportMonthPage();
             }
                );
         }
