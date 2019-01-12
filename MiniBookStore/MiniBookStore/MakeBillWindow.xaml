@@ -1,0 +1,279 @@
+﻿<Window x:Class="MiniBookStore.MakeBillWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MiniBookStore"
+        mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:MiniBookStore.UserControls"
+        
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"       
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        DataContext="{StaticResource MakeBillWindowVM}"
+        Icon="./Images/icon.png"
+              
+        WindowStyle="None" WindowStartupLocation="CenterScreen"
+        
+        Title="MakeBillWindow" Height="800" Width="1050">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}" x:Key="nameStyle">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Tahoma"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="nameBoldStyle">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}" x:Key="textboxStyle">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="150"/>
+        </Style>
+
+        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignComboBox}" x:Key="comboboxStyle">
+            <Setter Property="IsEditable" Value="True"/>
+            <Setter  Property="materialDesign:HintAssist.HintOpacity" Value=".26"/>
+            <Setter Property="MinWidth" Value="180"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}" x:Key="buttonStyle">
+            <Setter Property="Background" Value="#2c2c54"/>
+            <Setter Property="BorderBrush" Value="#2c2c54"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+        </Style>
+
+    </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Controlbar - O X-->
+        <uc:ControlBar VerticalAlignment="Top" Panel.ZIndex="1" Grid.Row="0"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Thông báo màn hình-->
+            <Grid Grid.Row="0" Background="#3498db" Height="35">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Cart" VerticalAlignment="Center" Margin="0,0,10,0"
+                                             Foreground="White" Width="25" Height="25"/>
+                    <TextBlock Text="Làm hóa đơn" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" FontFamily="Verdana" Foreground="White" FontSize="18" FontWeight="Medium"/>
+                </StackPanel>
+                
+            </Grid>
+            <!-- Thông tin -->
+            <StackPanel Grid.Row="1" Margin="10,10,0,0">
+
+                <!-- Thông tin nhân viên nhập-->
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"/>
+                    <TextBlock Text="Người thanh toán: "  Style="{StaticResource nameBoldStyle}"/>
+                    <TextBlock Text="{Binding EmployeeName}" Style="{StaticResource nameStyle}"/>
+                    <TextBlock Text="Ngày thanh toán: " Style="{StaticResource nameBoldStyle}" Margin="20,0,0,0"/>
+                    <TextBlock Text="{Binding DateNow}" Style="{StaticResource nameStyle}"/>
+
+                </StackPanel>
+                <Separator Margin="30,10,30,0"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="10,10,0,0">
+
+                        <TextBlock Text="Danh sách sản phẩm" Margin="0,0,0,5" Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+
+                        <!-- List sách -->
+                        <materialDesign:Card Height="auto" Width="auto">
+                            <DataGrid HorizontalAlignment="Left"
+                        Margin="0 0 0 0"
+                        Height="250"                   
+                        ItemsSource="{Binding ListBook}"
+                        CanUserSortColumns="True"
+                        CanUserAddRows="False"
+                        AutoGenerateColumns="False"
+                        Width="765"
+                        materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                        materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                        SelectedIndex="{Binding ListBookSelectedIndex}"
+                        SelectedItem="{Binding ListBookSelectedItem}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ListBookSelectionChanged}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <DataGrid.Resources>
+                                    <local:BindingProxy x:Key="proxy" Data="{Binding}"/>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                       Binding="{Binding ID}"
+                                       Header="Mã"
+                                       IsReadOnly="True"
+                                       Width="80" MinWidth="80">
+                                    </DataGridTextColumn>
+
+                                    <materialDesign:MaterialDataGridTextColumn                                        
+                                       Binding="{Binding Name}"     
+                                       Header="Tên sách"
+                                       Width="130"
+                                       MinWidth="130"
+                                       IsReadOnly="True">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </materialDesign:MaterialDataGridTextColumn>
+
+                                    <materialDesign:MaterialDataGridTextColumn                                        
+                                       Binding="{Binding Inventory,StringFormat='0,0'}"     
+                                       Header="Tồn kho"
+                                       Width="80"
+                                       MinWidth="80"
+                                       IsReadOnly="True">
+                                    </materialDesign:MaterialDataGridTextColumn>
+
+                                    <materialDesign:MaterialDataGridTextColumn                                        
+                                       Binding="{Binding OutPricePromotion,StringFormat='0,0.0'}"     
+                                       Header="Giá bán"
+                                       Width="120"
+                                       MinWidth="120"
+                                       IsReadOnly="True">
+                                    </materialDesign:MaterialDataGridTextColumn>
+
+                                    <materialDesign:MaterialDataGridTextColumn                                        
+                                       Binding="{Binding Count,StringFormat='0',UpdateSourceTrigger=PropertyChanged}"     
+                                       Header="Số lượng"
+                                       Width="80"
+                                       MinWidth="80"
+                                       IsReadOnly="False"
+                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                    </materialDesign:MaterialDataGridTextColumn>
+
+                                    <materialDesign:MaterialDataGridTextColumn                                        
+                                       Binding="{Binding OutPricePromotion,StringFormat='0,0.0'}"     
+                                       Header="Tổng tiền"
+                                       Width="120"
+                                       MinWidth="120"
+                                       IsReadOnly="True">
+                                    </materialDesign:MaterialDataGridTextColumn>
+
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="ButtonEdit"
+                                                        Background="#3498db" BorderBrush="#3498db" Width="45"
+                                                        ToolTip="Cập nhật" IsEnabled="{Binding IsTrueValue}"                                                       
+                                            Command="{Binding Path=DataContext.editCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                            CommandParameter="{Binding}">
+                                                    <materialDesign:PackIcon Kind="Pencil" Foreground="White" Height="15" Width="15"/>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="ButtonDelete"
+                                                        Background="#c0392b" BorderBrush="#c0392b" Width="45"
+                                                        ToolTip="Xóa"
+                                            Command="{Binding Path=DataContext.deleteCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                            CommandParameter="{Binding}">
+                                                    <materialDesign:PackIcon Kind="DeleteForever" Foreground="White" Height="15" Width="15"/>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </materialDesign:Card>
+                    </StackPanel>
+
+                    <Grid Grid.Column="1" Margin="5,33,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:Card Width="240" Height="250">
+                                <Image Source="{Binding CoverImage}" HorizontalAlignment="Stretch"/>
+                            </materialDesign:Card>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+
+            </StackPanel>
+
+            <Grid Grid.Row="2">
+                <StackPanel>
+                    <Separator Margin="10,10,10,5" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="0,10,0,0" Grid.Column="0">
+
+                            <TextBlock Text="Danh sách nhập" Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+
+                            <!-- List sách -->
+                            <materialDesign:Card Height="320" Width="740" Margin="20,10,10,0" HorizontalAlignment="Left">
+                                
+                            </materialDesign:Card>
+                        </StackPanel>
+
+                        <materialDesign:Card Grid.Column="1" 
+                                             Height="320" Width="250" 
+                                             HorizontalAlignment="Left" Margin="10,40,0,0">
+                            <StackPanel Margin="0,0,0,0">
+                                <Grid Height="50" Background="#2c2c54">
+
+                                </Grid>
+                                <TextBlock Text="Tổng tiền" Margin="0,5,0,0"                                     
+                                           Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0'}" Margin="0,10,0,0"
+                                           Style="{StaticResource nameStyle}" HorizontalAlignment="Center"/>
+                                <Separator Margin="10,5,10,0" />
+                                <Button Content="Nhập sách" HorizontalAlignment="Center" Margin="0,30,0,0" Command="{Binding addCommand}"
+                                        Style="{StaticResource buttonStyle}" Width="120"/>
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </Grid>
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

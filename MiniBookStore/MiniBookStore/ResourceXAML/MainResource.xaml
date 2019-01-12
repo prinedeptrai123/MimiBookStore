@@ -12,4 +12,5 @@
     <viewmodel:CodePromotionPageVM x:Key="CodePromotionPageVM"></viewmodel:CodePromotionPageVM>
     <viewmodel:SellMenuPageVM x:Key="SellMenuPageVM"></viewmodel:SellMenuPageVM>
     <viewmodel:ProductPageVM x:Key="ProductPageVM"></viewmodel:ProductPageVM>
+    <viewmodel:MakeBillWindowVM x:Key="MakeBillWindowVM"></viewmodel:MakeBillWindowVM>
 </ResourceDictionary>

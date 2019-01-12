@@ -46,6 +46,7 @@ namespace MiniBookStore.Models.MyClass
         private int _inventory;
         private int _sold;
         private BitmapImage _image;
+        private bool _isTrueValue;
 
         #endregion
 
@@ -89,7 +90,7 @@ namespace MiniBookStore.Models.MyClass
         /// <summary>
         /// Tổng số sách còn tồn trong kho
         /// </summary>
-        public int Inventory { get => _inventory; set { if (value == _inventory) return; _inventory = value; } }
+        public int Inventory { get => _inventory; set { if (value == _inventory) return; _inventory = value;OnPropertyChanged(); } }
         /// <summary>
         /// Tổng số lượng sách đã bán ra
         /// </summary>
@@ -98,6 +99,8 @@ namespace MiniBookStore.Models.MyClass
         /// Ảnh bìa
         /// </summary>
         public BitmapImage Image { get => _image; set { if (value == _image) return; _image = value; OnPropertyChanged(); } }
+
+        public bool IsTrueValue { get => _isTrueValue; set { if (value == _isTrueValue) return;_isTrueValue = value;OnPropertyChanged(); } }
 
         #endregion
 

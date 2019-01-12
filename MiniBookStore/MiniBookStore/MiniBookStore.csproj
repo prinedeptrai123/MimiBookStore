@@ -119,6 +119,9 @@
     <Compile Include="IncreaseBookWindow.xaml.cs">
       <DependentUpon>IncreaseBookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MakeBillWindow.xaml.cs">
+      <DependentUpon>MakeBillWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataTransfer.cs" />
     <Compile Include="Models\Help.cs" />
     <Compile Include="Models\MyClass\CAccount.cs" />
@@ -161,6 +164,7 @@
     <Compile Include="ViewModels\DashboardWindowVM.cs" />
     <Compile Include="ViewModels\DetailsBookWindowVM.cs" />
     <Compile Include="ViewModels\IncreaseBookWindowVM.cs" />
+    <Compile Include="ViewModels\MakeBillWindowVM.cs" />
     <Compile Include="ViewModels\ProductPageVM.cs" />
     <Compile Include="ViewModels\PromotionMenuPageVM.cs" />
     <Compile Include="ViewModels\SellMenuPageVM.cs" />
@@ -205,6 +209,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MakeBillWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProductPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

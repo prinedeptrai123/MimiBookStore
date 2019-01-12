@@ -1,4 +1,5 @@
-﻿using MiniBookStore.Models.MyClass;
+﻿using MiniBookStore.Models;
+using MiniBookStore.Models.MyClass;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,12 +21,18 @@ namespace MiniBookStore.ViewModels
         int NumberPage = 8;
         public bool isSale = false;
 
+        private int _numberProduct;
+        public int NumberProduct { get => _numberProduct; set { if (value == _numberProduct) return; _numberProduct = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region data binding
 
         private ObservableCollection<CBook> _listBook;
         public ObservableCollection<CBook> ListBook { get => _listBook; set { if (value == _listBook) return; _listBook = value; OnPropertyChanged(); } }
+
+        private CBook _listSelectedItem;
+        public CBook ListSelectedItem { get => _listSelectedItem; set { if (value == _listSelectedItem) return; _listSelectedItem = value; OnPropertyChanged(); } }
 
         private ObservableCollection<string> _listAuthor;
         public ObservableCollection<string> ListAuthor { get => _listAuthor; set { if (value == _listAuthor) return; _listAuthor = value; OnPropertyChanged(); } }
@@ -108,6 +115,9 @@ namespace MiniBookStore.ViewModels
         public ICommand PriceSelectionChanged { get; set; }
 
         public ICommand searchCommand { get; set; }
+        public ICommand addProductCommand { get; set; }
+
+        public ICommand makeBillCommand { get; set; }
 
         #endregion
 
@@ -116,6 +126,58 @@ namespace MiniBookStore.ViewModels
             searchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 LoadBook();
+            }
+               );
+
+            makeBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (DataTransfer.ListBookBill.Count > 0)
+                {
+                    MakeBillWindow wd = new MakeBillWindow();
+                    wd.ShowDialog();
+
+                    NumberProduct = DataTransfer.ListBookBill.Count;
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng chọn sách cần mua", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                }
+            }
+               );
+
+            addProductCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (ListSelectedItem != null)
+                {
+                    if(DataTransfer.ListBookBill.Any(x=>x.ID == ListSelectedItem.ID))
+                    {
+                        MessageBox.Show("Sách này đã có trong giỏ hàng", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                    }
+                    else
+                    {
+                        //Tạo mới một sách
+                        CBookBill Book = new CBookBill
+                        {
+                            ID = ListSelectedItem.ID,
+                            Name = ListSelectedItem.Name,
+                            Author = ListSelectedItem.Author,
+                            Theme = ListSelectedItem.Theme,
+                            Type = ListSelectedItem.Type,
+                            Inventory = ListSelectedItem.Inventory - 1,
+                            Image = ListSelectedItem.Image,
+                            OutPrice = ListSelectedItem.OutPrice,
+                            Promotion = ListSelectedItem.Promotion,
+                            OutPricePromotion = ListSelectedItem.OutPricePromotion,
+                            Count = 1,
+                            TotalMoney = ListSelectedItem.OutPricePromotion,
+                            IsTrueValue=true
+                        };
+
+                        //Thêm vào
+                        DataTransfer.ListBookBill.Add(Book);
+                        NumberProduct++;
+                    }                   
+                }
             }
                );
 
@@ -175,6 +237,10 @@ namespace MiniBookStore.ViewModels
 
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                DataTransfer.ListBookBill = new ObservableCollection<CBookBill>();
+               
+                NumberProduct = 0;
+
                 CurrentPage = 1;
                 FilterString = "";
                 ListBook = new ObservableCollection<CBook>(CBook.Ins.ListBook(FilterString, "tất cả", "tất cả", "tất cả", "tất cả", CurrentPage, NumberPage));

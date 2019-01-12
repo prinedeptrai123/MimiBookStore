@@ -46,13 +46,13 @@
                 </TextBlock>
 
 
-            <Button BorderBrush="Red" BorderThickness="2" 
+            <Button BorderBrush="Red" BorderThickness="2" Command="{Binding makeBillCommand}"
                     Margin="0,5,50,0" Background="#3498db" 
                     Height="40" Width="160" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Cart" Foreground="White" Width="25" Height="25"/>
                     <TextBlock Text="Giỏ hàng" Margin="5,0,0,0" Foreground="White" VerticalAlignment="Center" FontSize="15"/>
-                    <TextBlock Text="0" Padding="3,0,3,0" Foreground="Black" FontSize="15"
+                    <TextBlock Text="{Binding NumberProduct}" Padding="3,0,3,0" Foreground="Black" FontSize="15"
                                    Margin="10,0,0,0" Background="Yellow" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
@@ -193,7 +193,20 @@
             <Grid Grid.Row="1">
                 <TextBlock Text="Không tìm thấy sách" HorizontalAlignment="Center" 
                        VerticalAlignment="Top" FontSize="30" FontWeight="Medium" Margin="0,40,0,0" Visibility="{Binding MessTextVisibility}"/>
-                <ListView ItemsSource="{Binding ListBook}" MaxHeight="580" VerticalAlignment="Top" Margin="0,5,0,0">
+                <ListView ItemsSource="{Binding ListBook}" 
+                          MaxHeight="580" VerticalAlignment="Top" 
+                          Margin="0,5,0,0" SelectedItem="{Binding ListSelectedItem}" >
+                    
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Style.Triggers>
+                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                    <Setter Property="IsSelected" Value="True"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="4"/>
@@ -201,14 +214,18 @@
                     </ItemsControl.ItemsPanel>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Height="320" Margin="0,0,0,0" Width="200">
+                            <Grid Height="335" Margin="0,0,0,0" Width="240">
                                 <StackPanel Orientation="Vertical">
 
-                                    <Image Source="{Binding Image}" Height="200" Width="150" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+                                    <Image Source="{Binding Image}" Height="200" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15,15,0,0"/>
 
 
                                     <Grid Margin="20,5,0,0">
-                                        <StackPanel>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
                                             <TextBlock Text="{Binding Name}"
                                                    Margin="0,0,0,0" TextWrapping="WrapWithOverflow" Width="170" HorizontalAlignment="Left" FontWeight="Regular" FontSize="15">
                                             </TextBlock>
@@ -222,7 +239,19 @@
                                                 <TextBlock Text="{Binding Sold,StringFormat='0,0'}" Margin="0,4,0,0"/>
                                             </StackPanel>
 
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Còn: " Margin="0,4,0,0" Foreground="#e74c3c" FontWeight="Medium"/>
+                                                <TextBlock Text="{Binding Inventory,StringFormat='0,0'}" FontWeight="Medium" Foreground="#e74c3c" Margin="0,4,0,0"/>
+                                            </StackPanel>
+
                                         </StackPanel>
+                                        <Button Grid.Column="1" Background="#3498db" BorderBrush="#3498db"
+                                                Command="{Binding Path=DataContext.addProductCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}} }"
+                                                CommandParameter="{Binding}"
+                                                ToolTip="Thêm vào giỏ"
+                                                VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Left">
+                                            <materialDesign:PackIcon Kind="CartPlus" Height="20" Width="20"/>
+                                        </Button>
 
                                     </Grid>
                                 </StackPanel>
