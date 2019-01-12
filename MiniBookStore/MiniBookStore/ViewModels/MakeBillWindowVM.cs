@@ -273,6 +273,25 @@ namespace MiniBookStore.ViewModels
                         //Trừ số lượng trong kho
                         CBook.Ins.decreaseBook(item.ID, item.Count);
                     }
+
+                    MessageBox.Show("Thanh toán thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+
+                    //Trả list về rỗng
+                    ListBook.Clear();
+
+                    ID = 0;
+                    Name = "";
+                    Phone = "";
+                    Email = "";
+                    Address = "";
+                    Code = "";
+                    Promotion = 0;
+
+                    TotalPrice = 0;
+                    lastTotalPrice = 0;
+                    CustomerMoney = "";
+                    ExcessCash = 0;
+
                 }
                 else
                 {
