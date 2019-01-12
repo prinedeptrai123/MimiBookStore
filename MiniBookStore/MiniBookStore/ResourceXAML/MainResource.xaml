@@ -13,4 +13,6 @@
     <viewmodel:SellMenuPageVM x:Key="SellMenuPageVM"></viewmodel:SellMenuPageVM>
     <viewmodel:ProductPageVM x:Key="ProductPageVM"></viewmodel:ProductPageVM>
     <viewmodel:MakeBillWindowVM x:Key="MakeBillWindowVM"></viewmodel:MakeBillWindowVM>
+    <viewmodel:ReportMenuPageVM x:Key="ReportMenuPageVM"></viewmodel:ReportMenuPageVM>
+    <viewmodel:ReportDatePageVM x:Key="ReportDatePageVM"></viewmodel:ReportDatePageVM>
 </ResourceDictionary>

@@ -100,6 +100,7 @@ namespace MiniBookStore.ViewModels
             ChartCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 70 + 3 * 60, 0, 0);
+                FramePage = new ReportMenuPage();
             }
                );
 

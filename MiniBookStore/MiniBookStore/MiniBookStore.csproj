@@ -41,6 +41,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -130,6 +136,7 @@
     <Compile Include="Models\MyClass\CBookBill.cs" />
     <Compile Include="Models\MyClass\CBookInventory.cs" />
     <Compile Include="Models\MyClass\CCustomer.cs" />
+    <Compile Include="Models\MyClass\CDateReport.cs" />
     <Compile Include="Models\MyClass\CDiscoutCode.cs" />
     <Compile Include="Models\MyClass\CEmployee.cs" />
     <Compile Include="Models\MyClass\CEmployee_Role.cs" />
@@ -145,6 +152,12 @@
       <DependentUpon>PromotionMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PromotionToVisibilityConverter.cs" />
+    <Compile Include="ReportDatePage.xaml.cs">
+      <DependentUpon>ReportDatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReportMenuPage.xaml.cs">
+      <DependentUpon>ReportMenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RestoreBoolToVisibilityConverter.cs" />
     <Compile Include="SellMenuPage.xaml.cs">
       <DependentUpon>SellMenuPage.xaml</DependentUpon>
@@ -167,6 +180,8 @@
     <Compile Include="ViewModels\MakeBillWindowVM.cs" />
     <Compile Include="ViewModels\ProductPageVM.cs" />
     <Compile Include="ViewModels\PromotionMenuPageVM.cs" />
+    <Compile Include="ViewModels\ReportDatePageVM.cs" />
+    <Compile Include="ViewModels\ReportMenuPageVM.cs" />
     <Compile Include="ViewModels\SellMenuPageVM.cs" />
     <Compile Include="ViewModels\TypePromotionPageVM.cs" />
     <Page Include="AddNewBookWindow.xaml">
@@ -218,6 +233,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PromotionMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportDatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
