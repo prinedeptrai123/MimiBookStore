@@ -20,11 +20,11 @@ namespace MiniBookStore.Models.MyClass
         /// <summary>
         /// Tổng số lượng sách mua trong đơn hàng này
         /// </summary>
-        public int Count { get => _count; set { if (value == _count) return;_count = value; } }
+        public int Count { get => _count; set { if (value == _count) return;_count = value;OnPropertyChanged(); } }
         /// <summary>
         /// Tổng tiền tương ứng nhân với số lượng sách
         /// </summary>
-        public float TotalMoney { get => _totalMoney; set { if (value == _totalMoney) return; _totalMoney = value; } }
+        public float TotalMoney { get => _totalMoney; set { if (value == _totalMoney) return; _totalMoney = value;OnPropertyChanged(); } }
 
         #endregion
 

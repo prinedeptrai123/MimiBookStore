@@ -37,6 +37,8 @@ namespace MiniBookStore.Models.MyClass
         private float _promotion;
         private string _discountCode;
         private string _type;
+        private float _customerCash;
+        private float _excessCash;
         private List<CBookBill> _listBook;
 
         #endregion
@@ -82,6 +84,16 @@ namespace MiniBookStore.Models.MyClass
         /// Danh sách sách trong hóa đơn
         /// </summary>
         public List<CBookBill> ListBook { get => _listBook; set { if (value == _listBook) return; _listBook = value; } }
+
+        /// <summary>
+        /// Tiền nhận từ khách hàng
+        /// </summary>
+        public float CustomerCash { get => _customerCash; set { if (value == _customerCash) return; _customerCash = value; } }
+
+        /// <summary>
+        /// Tiền thừa trả lại khách hàng
+        /// </summary>
+        public float ExcessCash { get => _excessCash; set { if (value == _excessCash) return; _excessCash = value; } }
 
         #endregion
 
@@ -677,7 +689,228 @@ namespace MiniBookStore.Models.MyClass
             return false;
         }
 
-        
+        /// <summary>
+        /// hàm trả về tất cả các hình thức thanh toán của cửa hàng
+        /// </summary>
+        /// <returns></returns>
+        public List<string> ListBillType()
+        {
+            List<string> List = new List<string>();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Bill_Type.Where(x => x.Exist == true);
+                    if (data.Count() > 0)
+                    {
+                        foreach(var item in data)
+                        {
+                            List.Add(item.Type_Names);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về ID hình thức thanh toán
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <returns></returns>
+        public int IsBillType(string Type)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Bill_Type.Where(x => x.Type_Names.ToLower() == Type.ToLower()).FirstOrDefault();
+                    if (find != null)
+                    {
+                        return find.Type_IDs;
+
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// hàm trả về thông tin code theo ID
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <returns></returns>
+        public CPromotion_Code PromotionOfCode(string Code)
+        {           
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Discount_Code.Find(Code);
+                    if (find != null)
+                    {
+                        CPromotion_Code myCode = new CPromotion_Code
+                        {
+                            ID = find.Code_ID,
+                            Name = find.Code_Name,
+                            Promotion = (float)find.Promotion_Type.Type_Promotion,
+                            BookCount = (int)find.Promotion_Type.Book_Count,
+                            DateBegin = find.Date_Begin,
+                            DateEnd = find.Date_End
+                        };
+
+                        return myCode;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Hàm thêm vào thông tin của 1 bill mới, trả về id bill
+        /// </summary>
+        /// <param name="Bill"></param>
+        /// <returns></returns>
+        public int addnewBill(CBill mBill)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    //Thêm vào thông tin Bill
+                    //tạo mới một Bill
+                    int TypeID = IsBillType(mBill.Type);
+                    if (TypeID == 0)
+                    {
+                        return 0;
+                    }
+
+                    Bill myBill = new Bill
+                    {
+                        Bill_Type = TypeID,
+                        Customer_ID = mBill.CustomerInfo.ID,
+                        Employee_ID = mBill.EmployeeInfo.ID,
+                        Discount_Code = mBill.Promotion == 0 ? null : mBill.DiscountCode,
+                        Sum_Money = mBill.SumMoney,
+                        Total_Money = mBill.TotalMoney,
+                        Excess_Cash = mBill.ExcessCash,
+                        Customer_Cash = mBill.CustomerCash,
+                        Bill_Date = mBill.Date
+                    };
+
+                    //Thêm vào
+                    DB.Bills.Add(myBill);
+
+                    //Lưu thay đổi
+                    DB.SaveChanges();
+
+                    //Tìm id của bill mới tạo
+                    int BillID;
+                    var find = DB.Bills.OrderByDescending(x => x.Bill_Date).FirstOrDefault();
+                    if (find != null)
+                    {
+                        BillID = find.Bill_ID;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                   
+                    //Trả về
+                    return BillID;
+                
+                }
+            }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+            return 0;
+        }
+
+
+
+        public bool addBillDetail(int BillID, CBookBill Book)
+        {
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    //Lấy ra số lượng sách bán đi 
+                    int NumberBook = Book.Count;
+                    //Với mỗi sách lấy ra một List nhập kho của sách đó lấy lần lượt những sách nhập trước
+                    var BookInventory = DB.Book_Inventory.Where(x => x.Book_Count > 0 && x.Book_ID == Book.ID).OrderBy(x => x.Warehouse.Warehouse_Date);
+
+                    foreach (var item in BookInventory)
+                    {
+                        //Kiểm tra xem số lượng của lần nhập đó có đủ để bán không
+                        if (item.Book_Count - NumberBook >= 0)
+                        {
+                            //Trường hợp đủ để bán
+                            //Thêm vào trong chi tiết
+                            Bill_Detail Detail = new Bill_Detail
+                            {
+                                Bill_ID = BillID,
+                                Book_ID = item.Book_ID,
+                                Warehouse_ID = item.Warehouse_ID,
+                                Book_Count = NumberBook,
+                                Book_Price = Book.OutPrice,
+                                Book_Promotion = Book.Promotion
+                            };
+                            //Thêm vào bảng detail
+                            DB.Bill_Detail.Add(Detail);
+                            //Lưu thay đổi
+                            CBookInventory.InsInventory.decreaseInventory(item.Book_ID, item.Warehouse_ID, NumberBook);
+                            //ngắt vòng lặp
+                            break;
+                        }
+                        else
+                        {
+                            //Giảm số lượng của sách cần nhập xuống
+                            NumberBook = NumberBook - item.Book_Count;
+
+                            //Trường hợp không đủ để bán thì bán hết số lượng của lần đó
+                            //Thêm vào trong chi tiết
+                            Bill_Detail Detail = new Bill_Detail
+                            {
+                                Bill_ID = BillID,
+                                Book_ID = item.Book_ID,
+                                Warehouse_ID = item.Warehouse_ID,
+                                Book_Count = item.Book_Count,
+                                Book_Price = Book.OutPrice,
+                                Book_Promotion = Book.Promotion
+                            };
+                            //Thêm vào bảng detail
+                            DB.Bill_Detail.Add(Detail);
+
+                            CBookInventory.InsInventory.decreaseInventory(item.Book_ID, item.Warehouse_ID, item.Book_Count);
+                        }
+                    }
+
+                    DB.SaveChanges();
+
+                    return true;
+                }
+
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
         #endregion
     }
 }

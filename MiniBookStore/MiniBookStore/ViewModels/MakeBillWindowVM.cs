@@ -34,6 +34,69 @@ namespace MiniBookStore.ViewModels
         private string _dateNow;
         public string DateNow { get => _dateNow; set { if (value == _dateNow) return; _dateNow = value; OnPropertyChanged(); } }
 
+        private ObservableCollection<string> _listTypePayment;
+        public ObservableCollection<string> ListTypePayment { get => _listTypePayment; set { if (value == _listTypePayment) return; _listTypePayment = value; OnPropertyChanged(); } }
+
+        private string _listTypePaymentSelectedItem;
+        public string ListTypePaymentSelectedItem { get => _listTypePaymentSelectedItem; set { if (value == _listTypePaymentSelectedItem) return; _listTypePaymentSelectedItem = value; OnPropertyChanged(); } }
+
+        private float _totalPrice;
+        public float TotalPrice { get => _totalPrice; set { if (value == _totalPrice) return; _totalPrice = value; OnPropertyChanged(); } }
+
+        private string _code;
+        public string Code { get => _code; set { if (value == _code) return; _code = value; OnPropertyChanged(); } }
+
+        private float _promotion;
+        public float Promotion { get => _promotion; set { if (value == _promotion) return; _promotion = value; OnPropertyChanged(); } }
+
+        private string _errorMess;
+        public string ErrorMess { get => _errorMess; set { if (value == _errorMess) return; _errorMess = value; OnPropertyChanged(); } }
+
+        private float lastTotalPrice;
+        public float LastTotalPrice { get => lastTotalPrice; set { if (value == lastTotalPrice) return; lastTotalPrice = value; OnPropertyChanged(); } }
+
+        private string _customerMoney;
+        public string CustomerMoney { get => _customerMoney; set { if (value == _customerMoney) return; _customerMoney = value; OnPropertyChanged(); } }
+
+        private float _excessCash;
+        public float ExcessCash { get => _excessCash; set { if (value == _excessCash) return; _excessCash = value; OnPropertyChanged(); } }
+
+        private bool _isMaleChecked;
+        public bool IsMaleChecked { get => _isMaleChecked; set { if (value == _isMaleChecked) return; _isMaleChecked = value; OnPropertyChanged(); } }
+
+        private bool _isFeMaleChecked;
+        public bool IsFeMaleChecked { get => _isFeMaleChecked; set { if (value == _isFeMaleChecked) return; _isFeMaleChecked = value; OnPropertyChanged(); } }
+
+        private bool _isCustomerChecked;
+        public bool IsCustomerChecked { get => _isCustomerChecked; set { if (value == _isCustomerChecked) return; _isCustomerChecked = value; OnPropertyChanged(); } }
+
+        /// <summary>
+        /// Thông tin khách hàng
+        /// </summary>
+        
+        private int _iD;
+        public int ID { get => _iD; set { if (value == _iD) return; _iD = value; OnPropertyChanged(); } }
+
+        private string _name;
+        public string Name { get => _name; set { if (value == _name) return; _name = value; OnPropertyChanged(); } }
+
+        private string _phone;
+        public string Phone { get => _phone; set { if (value == _phone) return; _phone = value; OnPropertyChanged(); } }
+
+        private string _email;
+        public string Email { get => _email; set { if (value == _email) return; _email = value; OnPropertyChanged(); } }
+
+        private string _address;
+        public string Address { get => _address; set { if (value == _address) return; _address = value; OnPropertyChanged(); } }
+
+
+        #endregion
+
+        #region properties binding
+
+        private Visibility _messVisibility;
+        public Visibility MessVisibility { get => _messVisibility; set { if (value == _messVisibility) return; _messVisibility = value; OnPropertyChanged(); } }
+
         #endregion
 
         #region command binding
@@ -42,11 +105,140 @@ namespace MiniBookStore.ViewModels
         public ICommand ListBookSelectionChanged { get; set; }
         public ICommand deleteCommand { get; set; }
         public ICommand editCommand { get; set; }
+        public ICommand CodeTextChangeCommand { get; set; }
+        public ICommand CustomerTextChangeCommand { get; set; }
+
+        public ICommand MaleCheckedCommand { get; set; }
+        public ICommand FeMaleCheckedCommand { get; set; }
+
+        public ICommand PayCommand { get; set; }
 
         #endregion
 
         public MakeBillWindowVM()
         {
+            PayCommand = new RelayCommand<object>((p) => {
+                if (ListBook.Count == 0)
+                {
+                    return false;
+                }
+                if(string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Phone) || string.IsNullOrEmpty(CustomerMoney))
+                {
+                    return false;
+                }
+                if (Help.isFloat(CustomerMoney) == false)
+                {
+                    return false;
+                }
+                if (ExcessCash < 0)
+                {
+                    return false;
+                }
+
+                if (Help.isInt(Phone) == false)
+                {
+                    return false;
+                }
+
+                if (!string.IsNullOrEmpty(Email))
+                {
+                    if (Help.isEmail(Email) == false)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }, (p) =>
+            {
+                //Lấy ID của khách hàng
+                int CustomerID = CCustomer.Ins.isCustomer(Phone);
+                if (CustomerID == 0)
+                {
+                    //Tạo mới một khách hàng
+                    CCustomer myCustomer = new CCustomer
+                    {
+                        Name = Name,
+                        Phone = Phone,
+                        Email = Email,
+                        Address = Address,
+                        Gender = IsFeMaleChecked == true ? "Nữ" : "Nam",
+                    };
+
+                    CustomerID = CCustomer.Ins.addCustomer(myCustomer);
+                }
+
+                //Tạo mới một Bill
+                CBill Bill = new CBill
+                {
+                    EmployeeInfo = new CEmployee { ID = DataTransfer.EmployeeInfo.ID },
+                    CustomerInfo = new CCustomer { ID = CustomerID },
+                    Type = ListTypePaymentSelectedItem,
+                    DiscountCode = Code,
+                    SumMoney = TotalPrice,
+                    TotalMoney = LastTotalPrice,
+                    CustomerCash = float.Parse(CustomerMoney),
+                    ExcessCash = ExcessCash,
+                    Promotion = Promotion / 100,
+                    Date = DateTime.Now,
+                    ListBook = ListBook.ToList()
+                };
+
+                int BillID = CBill.Ins.addnewBill(Bill);
+                //Thanh toán
+                if (BillID != 0)
+                {
+                    //Duyệt trong List và thêm vào lịch sử thanh toán
+                    foreach(var item in ListBook)
+                    {
+                        CBill.Ins.addBillDetail(BillID, item);
+
+                        //Trừ số lượng trong kho
+                        CBook.Ins.decreaseBook(item.ID, item.Count);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Thanh toán thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                
+            }
+               );
+
+            MaleCheckedCommand = new RelayCommand<object>((p) => {               
+                return true;
+            }, (p) =>
+            {
+                if (IsFeMaleChecked == false)
+                {
+                    IsMaleChecked = true;
+                }
+                else
+                {
+                    if (IsMaleChecked == true)
+                    {
+                        IsFeMaleChecked = false;
+                    }
+                }
+                
+            }
+               );
+
+            FeMaleCheckedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (IsMaleChecked == false)
+                {
+                    IsFeMaleChecked = true;
+                }
+                else
+                {
+                    if (IsFeMaleChecked == true)
+                    {
+                        IsMaleChecked = false;
+                    }
+                }               
+            }
+               );
+
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ListBook = DataTransfer.ListBookBill;
@@ -56,6 +248,98 @@ namespace MiniBookStore.ViewModels
                 {
                     CoverImage = ListBook[0].Image;
                 }
+
+                ListTypePayment = new ObservableCollection<string>(CBill.Ins.ListBillType());
+                ListTypePaymentSelectedItem = "Thanh toán trực tiếp";
+
+                TotalPrice = ListBook.Sum(x => x.TotalMoney);
+                LastTotalPrice = ListBook.Sum(x => x.TotalMoney) - ListBook.Sum(x => x.TotalMoney) * Promotion / 100;
+
+                MessVisibility = Visibility.Collapsed;
+
+                ErrorMess = "Mã code không hợp lệ";
+
+                Promotion = 0;
+                ExcessCash = 0;
+
+                IsMaleChecked = true;
+                IsFeMaleChecked = false;
+            }
+               );
+
+            CustomerTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (string.IsNullOrEmpty(CustomerMoney))
+                {
+                    ExcessCash = 0;
+                }
+                else
+                {
+                    if (Help.isFloat(CustomerMoney) == true)
+                    {
+                        ExcessCash = float.Parse(CustomerMoney) - LastTotalPrice;
+                    }
+                }
+                
+            }
+               );
+
+            CodeTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                
+                if (Code == "")
+                {
+                    MessVisibility = Visibility.Collapsed;
+                    Promotion = 0;
+                    LastTotalPrice = ListBook.Sum(x => x.TotalMoney) - ListBook.Sum(x => x.TotalMoney) * Promotion / 100;
+                }
+                else
+                {
+                    CPromotion_Code myCode = CBill.Ins.PromotionOfCode(Code);
+                    if (myCode != null)
+                    {
+                        if(myCode.DateEnd < DateTime.Now)
+                        {
+                            ErrorMess = "Mã này đã hết hạn";
+                            MessVisibility = Visibility.Visible;
+                            Promotion = 0;
+                            LastTotalPrice = ListBook.Sum(x => x.TotalMoney) - ListBook.Sum(x => x.TotalMoney) * Promotion / 100;
+                        }
+                        else
+                        {
+                            if (myCode.BookCount == 0)
+                            {
+                                MessVisibility = Visibility.Collapsed;
+                                Promotion = myCode.Promotion * 100;
+                                LastTotalPrice = ListBook.Sum(x => x.TotalMoney) - ListBook.Sum(x => x.TotalMoney) * Promotion / 100;
+                            }
+                            else
+                            {
+                                if (myCode.BookCount > ListBook.Sum(x => x.Count))
+                                {
+                                    ErrorMess = "Số lượng sách mua không đủ";
+                                    MessVisibility = Visibility.Visible;
+                                    Promotion = 0;
+                                    LastTotalPrice = ListBook.Sum(x => x.TotalMoney) - ListBook.Sum(x => x.TotalMoney) * Promotion / 100;
+                                }
+                                else
+                                {
+                                    MessVisibility = Visibility.Collapsed;
+                                    Promotion = myCode.Promotion * 100;
+                                    LastTotalPrice = ListBook.Sum(x => x.TotalMoney) - ListBook.Sum(x => x.TotalMoney) * Promotion / 100;
+                                }
+                            }
+                        }                          
+                    }
+                    else
+                    {
+                        ErrorMess = "Mã code không hợp lệ";
+                        MessVisibility = Visibility.Visible;
+                        Promotion = 0;
+                        LastTotalPrice = ListBook.Sum(x => x.TotalMoney) - ListBook.Sum(x => x.TotalMoney) * Promotion / 100;
+                    }
+                }
+                
             }
                );
 
@@ -85,6 +369,10 @@ namespace MiniBookStore.ViewModels
                 if (ListBookSelectedItem != null)
                 {
                     ListBookSelectedItem.Inventory = ListBookSelectedItem.Inventory + 1 - ListBookSelectedItem.Count;
+                    //Cập nhật lại tổng tiền
+                    ListBookSelectedItem.TotalMoney = ListBookSelectedItem.OutPricePromotion * ListBookSelectedItem.Count;
+                    TotalPrice = ListBook.Sum(x => x.TotalMoney);
+                    LastTotalPrice = ListBook.Sum(x => x.TotalMoney) - ListBook.Sum(x => x.TotalMoney) * Promotion / 100;
                 }
             }
                );
@@ -95,7 +383,10 @@ namespace MiniBookStore.ViewModels
                 {
                     //Xóa theo index
                     ListBook.RemoveAt(ListBookSelectedIndex);
-                                    
+                    //Cập nhật lại tổng tiền
+                    TotalPrice = ListBook.Sum(x => x.TotalMoney);
+                    LastTotalPrice = ListBook.Sum(x => x.TotalMoney) - ListBook.Sum(x => x.TotalMoney) * Promotion / 100;
+
                 }
             }
                );

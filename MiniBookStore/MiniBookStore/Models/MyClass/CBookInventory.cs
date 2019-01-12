@@ -333,6 +333,39 @@ namespace MiniBookStore.Models.MyClass
             return List;
         }
 
+        /// <summary>
+        /// Hàm trừ đi số lượng của đợt nhập kho
+        /// </summary>
+        /// <param name="BookID"></param>
+        /// <param name="WareHouseID"></param>
+        /// <param name="Number"></param>
+        /// <returns></returns>
+        public bool decreaseInventory(int BookID,int WareHouseID,int Number)
+        {
+            try
+            {             
+                using(var DB = new BookStoreDataEntities())
+                {
+                    //Tìm
+                    var find = DB.Book_Inventory.Where(x => x.Book_ID == BookID && x.Warehouse_ID == WareHouseID).FirstOrDefault();
+                    if (find != null)
+                    {
+                        if (find.Book_Count - Number >= 0)
+                        {
+                            find.Book_Count = find.Book_Count - Number;
+                            DB.SaveChanges();
+                            return true;
+                        }                       
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
         #endregion
     }
 }

@@ -181,7 +181,7 @@
                                     </materialDesign:MaterialDataGridTextColumn>
 
                                     <materialDesign:MaterialDataGridTextColumn                                        
-                                       Binding="{Binding OutPricePromotion,StringFormat='0,0.0'}"     
+                                       Binding="{Binding TotalMoney,StringFormat='0,0.0'}"     
                                        Header="Tổng tiền"
                                        Width="120"
                                        MinWidth="120"
@@ -270,7 +270,7 @@
                                     </StackPanel>
                                     <materialDesign:Card Height="300" Width="400" Margin="20,10,10,0" HorizontalAlignment="Left">
                                         <ListView Height="300" Width="400" Background="Blue"
-                              ItemsSource="{Binding ListBookSearch}" SelectedItem="{Binding ListSearchSelectedItem}">
+                              ItemsSource="{Binding ListCutomer}" SelectedItem="{Binding ListCustomerSelectedItem}">
                                             <ListView.Resources>
                                                 <Style TargetType="{x:Type TextBlock}" x:Key="WrapStyle">
                                                     <Setter Property="TextWrapping" Value="Wrap"/>
@@ -280,7 +280,7 @@
 
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
-                                                    <i:InvokeCommandAction Command="{Binding ListSearchSelectionChanged}"/>
+                                                    <i:InvokeCommandAction Command="{Binding ListCustomerSelectionChanged}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                             <ListView.View>
@@ -345,7 +345,7 @@
 
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Tên: " Style="{StaticResource nameBoldStyle}"/>
-                                                <TextBox Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
+                                                <TextBox Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="TextChanged">
                                                             <i:InvokeCommandAction Command="{Binding CountTextChange}"/>
@@ -359,14 +359,14 @@
                                                 <CheckBox
                                     Style="{StaticResource MaterialDesignCheckBox}" 
                                     FontSize="14" Margin="15,0,0,0" 
-                                    Content="Nam"  FontWeight="Medium"  IsChecked="{Binding IsChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CheckedCommand}">
+                                    Content="Nam"  FontWeight="Medium"  IsChecked="{Binding IsMaleChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding MaleCheckedCommand}">
 
                                                 </CheckBox>
 
                                                 <CheckBox Margin="15,0,0,0"
                                     Style="{StaticResource MaterialDesignCheckBox}" 
                                     FontSize="14"  
-                                    Content="Nữ"  FontWeight="Medium"  IsChecked="{Binding IsChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CheckedCommand}">
+                                    Content="Nữ"  FontWeight="Medium"  IsChecked="{Binding IsFeMaleChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding FeMaleCheckedCommand}">
 
                                                 </CheckBox>
 
@@ -374,7 +374,7 @@
 
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Số điện thoại: " Style="{StaticResource nameBoldStyle}"/>
-                                                <TextBox Text="{Binding InPrice,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
+                                                <TextBox Text="{Binding Phone,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="TextChanged">
                                                             <i:InvokeCommandAction Command="{Binding InPriceTextChange}"/>
@@ -385,18 +385,18 @@
 
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Email: " Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                                <TextBox Text="{Binding TotalBookPrice,StringFormat='0,0.0'}" Style="{StaticResource textboxStyle}" HorizontalAlignment="Center"/>
+                                                <TextBox Text="{Binding Email,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource textboxStyle}" HorizontalAlignment="Center"/>
                                             </StackPanel>
 
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Địa chỉ: " Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                                <TextBox Text="{Binding TotalBookPrice,StringFormat='0,0.0'}" Style="{StaticResource textboxStyle}" HorizontalAlignment="Center"/>
+                                                <TextBox Text="{Binding Address}" Style="{StaticResource textboxStyle}" HorizontalAlignment="Center"/>
                                             </StackPanel>
 
                                             <CheckBox
                                     Style="{StaticResource MaterialDesignCheckBox}" 
                                     FontSize="14" Margin="0,8,0,0" 
-                                    Content="Khách hàng cũ" Foreground="#e74c3c" FontWeight="Medium" FontStyle="Italic" IsChecked="{Binding IsChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CheckedCommand}">
+                                    Content="Khách hàng cũ" Foreground="#e74c3c" FontWeight="Medium" FontStyle="Italic" IsChecked="{Binding IsCustomerChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CustomerCheckedCommand}">
 
                                             </CheckBox>
 
@@ -434,7 +434,8 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Hình thức thanh toán" Margin="0,5,0,0"                                     
                                            Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                    <ComboBox materialDesign:HintAssist.Hint="Thanh toán trực tiếp" Margin="10,0,0,0">
+                                    <ComboBox ItemsSource="{Binding ListTypePayment}" SelectedItem="{Binding ListTypePaymentSelectedItem}"
+                                        materialDesign:HintAssist.Hint="Thanh toán trực tiếp" Margin="10,0,0,0">
                                         
                                     </ComboBox>
                                 </StackPanel>
@@ -442,16 +443,30 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Mã khuyến mãi" Margin="0,5,0,0"                                     
                                            Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                    <TextBox Style="{StaticResource textboxStyle}" VerticalAlignment="Center" Margin="10,2,0,0"
-                                             materialDesign:HintAssist.Hint="Nhập mã khuyến mãi nếu có"/>
+                                    <TextBox Style="{DynamicResource textboxStyle}" VerticalAlignment="Center" Margin="10,2,0,0"
+                                             Text="{Binding Code,UpdateSourceTrigger=PropertyChanged}" Width="130" MinWidth="130"
+                                             materialDesign:HintAssist.Hint="mã ">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding CodeTextChangeCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+
+                                    </TextBox>
+                                    <TextBlock Text="{Binding Promotion}" Style="{StaticResource nameBoldStyle}" 
+                                               Foreground="#e74c3c" Margin="0,5,0,0"/>
+                                    <TextBlock Text="%" Style="{StaticResource nameBoldStyle}" Margin="0,5,0,0"/>
+                                    
                                 </StackPanel>
+
+                                <TextBlock Text="{Binding ErrorMess}" HorizontalAlignment="Center" FontSize="11" Foreground="Red" Visibility="{Binding MessVisibility}"/>
 
                                 <Separator Margin="10,5,10,0" />
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Tổng tiền phải thanh toán" Margin="0,5,0,0"                                     
                                            Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0',FallbackValue=150000}" Margin="10,4,0,0"
+                                    <TextBlock Text="{Binding LastTotalPrice,StringFormat='0,0.0',FallbackValue=150000}" Margin="10,4,0,0"
                                            Style="{StaticResource nameStyle}" VerticalAlignment="Center"/>
                                 </StackPanel>
 
@@ -460,20 +475,27 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Tiền nhận từ khách" Margin="0,5,0,0"                                     
                                            Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                    <TextBox Style="{StaticResource textboxStyle}" VerticalAlignment="Center" Margin="10,2,0,0"
-                                             materialDesign:HintAssist.Hint="5000"/>
+                                    <TextBox Style="{StaticResource textboxStyle}" Text="{Binding CustomerMoney,UpdateSourceTrigger=PropertyChanged}"
+                                             VerticalAlignment="Center" Margin="10,2,0,0"
+                                             materialDesign:HintAssist.Hint="5000">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding CustomerTextChangeCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Tiền thừa" Margin="0,5,0,0"                                     
                                            Style="{StaticResource nameBoldStyle}" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0',FallbackValue=150000}" Margin="10,4,0,0"
+                                    <TextBlock Text="{Binding ExcessCash,StringFormat='0,0.0',FallbackValue=150000}" Margin="10,4,0,0"
                                            Style="{StaticResource nameStyle}" VerticalAlignment="Center"/>
                                 </StackPanel>
 
                                 <Separator Margin="10,5,10,0" />
 
-                                <Button Content="Thanh toán" HorizontalAlignment="Center" Margin="0,15,0,0" Command="{Binding addCommand}"
+                                <Button Content="Thanh toán" HorizontalAlignment="Center" Margin="0,15,0,0" Command="{Binding PayCommand}"
                                         Style="{StaticResource buttonStyle}" Background="#c0392b" BorderBrush="#c0392b" Width="120"/>
                             </StackPanel>
                         </materialDesign:Card>

@@ -14,8 +14,10 @@ namespace MiniBookStore.Models.MyClass
         private string _iD;
         private string _name;
         private string _type;
+        private float _promotion;
         private DateTime _dateBegin;
         private DateTime _dateEnd;
+        private int _bookCount;
         private bool _isExist;
         private bool _istrueValue;
 
@@ -30,6 +32,8 @@ namespace MiniBookStore.Models.MyClass
         public DateTime DateEnd { get => _dateEnd; set { if (value == _dateEnd) return; _dateEnd = value; } }
         public bool IsExist { get => _isExist; set { if (value == _isExist) return; _isExist = value; } }
         public bool IstrueValue { get => _istrueValue; set { if (value == _istrueValue) return; _istrueValue = value; OnPropertyChanged(); } }
+        public int BookCount { get => _bookCount; set { if (value == _bookCount) return; _bookCount = value; OnPropertyChanged(); } }
+        public float Promotion { get => _promotion; set { if (value == _promotion) return; _promotion = value; OnPropertyChanged(); } }
 
         #endregion
     }

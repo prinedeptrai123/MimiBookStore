@@ -8,6 +8,21 @@ namespace MiniBookStore.Models.MyClass
 {
     public class CCustomer:Human
     {
+        private static CCustomer _ins;
+        public static CCustomer Ins
+        {
+            get
+            {
+                if (_ins == null)
+                    _ins = new CCustomer();
+                return _ins;
+            }
+            set
+            {
+                _ins = value;
+            }
+        }
+
         #region private properties
 
         private int _totalBook;
@@ -33,6 +48,72 @@ namespace MiniBookStore.Models.MyClass
         #endregion
 
         #region method
+
+        /// <summary>
+        /// Hàm trả về ID khách hàng theo sdt
+        /// </summary>
+        /// <param name="Phone"></param>
+        /// <returns></returns>
+        public int isCustomer(string Phone)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Customers.Where(x => x.Customer_Phone == Phone).FirstOrDefault();
+                    if (find != null)
+                    {
+                        return find.Customer_ID;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Hàm thêm mới một khách hàng, nếu thêm thành công thì trả về ID ngược lại trả về 0
+        /// </summary>
+        /// <param name="myCustomer"></param>
+        /// <returns></returns>
+        public int addCustomer(CCustomer myCustomer)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    //Tạo mới
+                    Customer newCustomer = new Customer
+                    {
+                        Customer_Name = myCustomer.Name,
+                        Customer_Phone = myCustomer.Phone,
+                        Customer_Email = myCustomer.Email,
+                        Customer_Address = myCustomer.Address,
+                        Customer_Gender = myCustomer.Gender,
+                        Exist = true
+                    };
+
+                    //Thêm vào
+                    DB.Customers.Add(newCustomer);
+
+                    //Lưu thay đổi
+                    DB.SaveChanges();
+
+                    //trả về ID của customer vừa tạo
+                    int ID = isCustomer(myCustomer.Phone);
+                    if (ID != 0)
+                        return ID;
+                }
+            }
+            catch
+            {
+
+            }
+            return 0;
+        }
 
         #endregion
 
