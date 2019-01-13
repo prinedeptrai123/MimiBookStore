@@ -1,4 +1,7 @@
-﻿using MiniBookStore.Models.MyClass;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
+using MiniBookStore.Models.MyClass;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -52,6 +55,9 @@ namespace MiniBookStore.ViewModels
         private ObservableCollection<CBookInventory> _listDetail;
         public ObservableCollection<CBookInventory> ListDetail { get => _listDetail; set { if (value == _listDetail) return; _listDetail = value; OnPropertyChanged(); } }
 
+        private SeriesCollection _seriesCollection;
+        public SeriesCollection SeriesCollection { get => _seriesCollection; set { if (value == _seriesCollection) return; _seriesCollection = value; OnPropertyChanged(); } }
+
         #endregion
 
         public ICommand LoadCommand { get; set; }
@@ -73,6 +79,8 @@ namespace MiniBookStore.ViewModels
                 {
                     WareHouseID = WareHouseSelectedItem.ID;
                     ListDetail = new ObservableCollection<CBookInventory>(CBookInventory.InsInventory.DetailOfWareHouse(WareHouseSelectedItem.ID));
+
+                    LoadChart();
                 }
             }
              );
@@ -181,6 +189,22 @@ namespace MiniBookStore.ViewModels
             for (int i = DateTime.Now.Year - 5; i <= DateTime.Now.Year + 5; i++)
             {
                 ListYear.Add(i.ToString());
+            }
+        }
+
+        public void LoadChart()
+        {
+            SeriesCollection = new SeriesCollection();
+
+            foreach (var item in ListDetail)
+            {
+                var data = new PieSeries
+                {
+                    Title = item.Type,
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(item.WarehouseInventory) },
+                    DataLabels = true
+                };
+                SeriesCollection.Add(data);
             }
         }
     }

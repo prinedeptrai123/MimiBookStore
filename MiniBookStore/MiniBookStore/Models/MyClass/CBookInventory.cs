@@ -389,7 +389,9 @@ namespace MiniBookStore.Models.MyClass
                                 Name = item.Book.Book_Name,
                                 WarehouseInventory = item.Book_Count,
                                 InPrice = (float)item.Book_Price,
-                                TotalPrice = (float)item.Book_Price * item.Book_Count
+                                TotalPrice = (float)item.Book_Price * item.Book_Count,
+                                Type = item.Book.Book_Type1.Type_Names,
+                                Theme = item.Book.Book_Theme1.Theme_Name
                             };
 
                             List.Add(Book);
