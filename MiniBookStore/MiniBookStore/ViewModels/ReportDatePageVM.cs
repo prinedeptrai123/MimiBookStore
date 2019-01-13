@@ -13,17 +13,17 @@ namespace MiniBookStore.ViewModels
     {
         #region data binding
 
-        private ObservableCollection<int> _listMonth;
-        public ObservableCollection<int> ListMonth { get => _listMonth; set { if (value == _listMonth) return; _listMonth = value; OnPropertyChanged(); } }
+        private ObservableCollection<string> _listMonth;
+        public ObservableCollection<string> ListMonth { get => _listMonth; set { if (value == _listMonth) return; _listMonth = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<int> _listYear;
-        public ObservableCollection<int> ListYear { get => _listYear; set { if (value == _listYear) return; _listYear = value; OnPropertyChanged(); } }
+        private ObservableCollection<string> _listYear;
+        public ObservableCollection<string> ListYear { get => _listYear; set { if (value == _listYear) return; _listYear = value; OnPropertyChanged(); } }
 
-        private int _selectedItemMonth;
-        public int SelectedItemMonth { get => _selectedItemMonth; set { if (value == _selectedItemMonth) return;_selectedItemMonth = value;OnPropertyChanged(); } }
+        private string _selectedItemMonth;
+        public string SelectedItemMonth { get => _selectedItemMonth; set { if (value == _selectedItemMonth) return;_selectedItemMonth = value;OnPropertyChanged(); } }
 
-        private int _selectedItemYear;
-        public int SelectedItemYear { get => _selectedItemYear; set { if (value == _selectedItemYear) return; _selectedItemYear = value; OnPropertyChanged(); } }
+        private string _selectedItemYear;
+        public string SelectedItemYear { get => _selectedItemYear; set { if (value == _selectedItemYear) return; _selectedItemYear = value; OnPropertyChanged(); } }
 
         private DateTime _dateEndSelectedDate;
         public DateTime DateEndSelectedDate { get => _dateEndSelectedDate; set { if (value == _dateEndSelectedDate) return; _dateEndSelectedDate = value; OnPropertyChanged(); } }
@@ -51,7 +51,7 @@ namespace MiniBookStore.ViewModels
             {
                 if (DateBeginSelectedDate != null && DateEndSelectedDate != null)
                 {
-                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear, DateBeginSelectedDate, DateEndSelectedDate));
+                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear), DateBeginSelectedDate, DateEndSelectedDate));
                    
                 }
             }
@@ -61,7 +61,7 @@ namespace MiniBookStore.ViewModels
             {
                 if (DateBeginSelectedDate != null && DateEndSelectedDate != null)
                 {
-                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear, DateBeginSelectedDate, DateEndSelectedDate));
+                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear), DateBeginSelectedDate, DateEndSelectedDate));
 
                 }
             }
@@ -69,11 +69,11 @@ namespace MiniBookStore.ViewModels
 
             SelectionChangedMonth = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if(SelectedItemMonth!=0 && SelectedItemYear != 0)
+                if(SelectedItemMonth!=null && SelectedItemYear != null)
                 {
-                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear));
+                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear)));
 
-                    DateTime date = new DateTime(SelectedItemYear, SelectedItemMonth, 1);
+                    DateTime date = new DateTime(int.Parse(SelectedItemYear), int.Parse(SelectedItemMonth), 1);
                     DateBeginSelectedDate = new DateTime(date.Year, date.Month, 1);
                     DateEndSelectedDate = DateBeginSelectedDate.AddMonths(1).AddDays(-1);
                 }
@@ -82,11 +82,11 @@ namespace MiniBookStore.ViewModels
 
             SelectionChangedYear = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (SelectedItemMonth != 0 && SelectedItemYear != 0)
+                if (SelectedItemMonth != null && SelectedItemYear != null)
                 {
-                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear));
+                    ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear)));
 
-                    DateTime date = new DateTime(SelectedItemYear, SelectedItemMonth, 1);
+                    DateTime date = new DateTime(int.Parse(SelectedItemYear), int.Parse(SelectedItemMonth), 1);
                     DateBeginSelectedDate = new DateTime(date.Year, date.Month, 1);
                     DateEndSelectedDate = DateBeginSelectedDate.AddMonths(1).AddDays(-1);
                 }
@@ -94,23 +94,20 @@ namespace MiniBookStore.ViewModels
               );
 
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                ListMonth = new ObservableCollection<int>();
-                ListYear = new ObservableCollection<int>();
-
+            {            
                 CreateMonth();
                 CreateYear();
 
-                SelectedItemMonth = DateTime.Now.Month;
-                SelectedItemYear = DateTime.Now.Year;
+                SelectedItemMonth = DateTime.Now.Month.ToString();
+                SelectedItemYear = DateTime.Now.Year.ToString();
 
                 //https://stackoverflow.com/questions/24245523/getting-the-first-and-last-day-of-a-month-using-a-given-datetime-object
 
-                DateTime date = new DateTime(SelectedItemYear, SelectedItemMonth, 1);
+                DateTime date = new DateTime(int.Parse(SelectedItemYear), int.Parse(SelectedItemMonth), 1);
                 DateBeginSelectedDate = new DateTime(date.Year, date.Month, 1);
                 DateEndSelectedDate = DateBeginSelectedDate.AddMonths(1).AddDays(-1);
 
-                ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(SelectedItemMonth, SelectedItemYear));
+                ListReport = new ObservableCollection<CDateReport>(CDateReport.Ins.DailyReport(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear)));
             }
                );
 
@@ -118,17 +115,19 @@ namespace MiniBookStore.ViewModels
 
         void CreateMonth()
         {
+            ListMonth = new ObservableCollection<string>();
             for (int i = 1; i <= 12; i++)
             {
-                ListMonth.Add(i);
+                ListMonth.Add(i.ToString());
             }                    
         }
 
         void CreateYear()
-        {                         
+        {
+            ListYear = new ObservableCollection<string>();
             for (int i = DateTime.Now.Year - 5; i <= DateTime.Now.Year + 5; i++)
             {
-                ListYear.Add(i);
+                ListYear.Add(i.ToString());
             }          
         }
     }

@@ -13,11 +13,11 @@ namespace MiniBookStore.ViewModels
     {
         #region data binding
 
-        private ObservableCollection<int> _listYear;
-        public ObservableCollection<int> ListYear { get => _listYear; set { if (value == _listYear) return; _listYear = value; OnPropertyChanged(); } }
+        private ObservableCollection<string> _listYear;
+        public ObservableCollection<string> ListYear { get => _listYear; set { if (value == _listYear) return; _listYear = value; OnPropertyChanged(); } }
 
-        private int _selectedItemYear;
-        public int SelectedItemYear { get => _selectedItemYear; set { if (value == _selectedItemYear) return; _selectedItemYear = value; OnPropertyChanged(); } }
+        private string _selectedItemYear;
+        public string SelectedItemYear { get => _selectedItemYear; set { if (value == _selectedItemYear) return; _selectedItemYear = value; OnPropertyChanged(); } }
 
         private ObservableCollection<CMonthReport> _listReport;
         public ObservableCollection<CMonthReport> ListReport { get => _listReport; set { if (value == _listReport) return; _listReport = value; OnPropertyChanged(); } }
@@ -53,11 +53,11 @@ namespace MiniBookStore.ViewModels
         {
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ListYear = new ObservableCollection<int>();
+                
                 CreateYear();
-                SelectedItemYear = DateTime.Now.Year;
+                SelectedItemYear = DateTime.Now.Year.ToString();
 
-                ListReport = new ObservableCollection<CMonthReport>(CMonthReport.Ins.MonthlyReport(SelectedItemYear));
+                ListReport = new ObservableCollection<CMonthReport>(CMonthReport.Ins.MonthlyReport(int.Parse(SelectedItemYear)));
 
                 BookInCount = ListReport.Sum(x => x.BookInCount);
                 BookInPrice = ListReport.Sum(x => x.BookInPrice);
@@ -70,23 +70,27 @@ namespace MiniBookStore.ViewModels
 
             SelectionChangedYear = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ListReport = new ObservableCollection<CMonthReport>(CMonthReport.Ins.MonthlyReport(SelectedItemYear));
+                if (SelectedItemYear != null)
+                {
+                    ListReport = new ObservableCollection<CMonthReport>(CMonthReport.Ins.MonthlyReport(int.Parse(SelectedItemYear)));
 
-                BookInCount = ListReport.Sum(x => x.BookInCount);
-                BookInPrice = ListReport.Sum(x => x.BookInPrice);
-                BookOutCount = ListReport.Sum(x => x.BookOutCount);
-                BookOutPrice = ListReport.Sum(x => x.BookOutPrice);
-                Profit = ListReport.Sum(x => x.Profit);
-                Salary = ListReport.Sum(x => x.Salary);
+                    BookInCount = ListReport.Sum(x => x.BookInCount);
+                    BookInPrice = ListReport.Sum(x => x.BookInPrice);
+                    BookOutCount = ListReport.Sum(x => x.BookOutCount);
+                    BookOutPrice = ListReport.Sum(x => x.BookOutPrice);
+                    Profit = ListReport.Sum(x => x.Profit);
+                    Salary = ListReport.Sum(x => x.Salary);
+                }                
             }
                );
         }
 
         void CreateYear()
         {
+            ListYear = new ObservableCollection<string>();
             for (int i = DateTime.Now.Year - 5; i <= DateTime.Now.Year + 5; i++)
             {
-                ListYear.Add(i);
+                ListYear.Add(i.ToString());
             }
         }
     }
