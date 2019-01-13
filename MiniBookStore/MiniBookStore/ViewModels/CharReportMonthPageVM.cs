@@ -25,7 +25,7 @@ namespace MiniBookStore.ViewModels
         public string[] Labels { get => _labels; set { if (value == _labels) return; _labels = value; OnPropertyChanged(); } }
 
         public Func<double, string> YFormatter { get; set; }
-
+  
         private ObservableCollection<CMonthReport> _listReport;
         public ObservableCollection<CMonthReport> ListReport { get => _listReport; set { if (value == _listReport) return; _listReport = value; OnPropertyChanged(); } }
 

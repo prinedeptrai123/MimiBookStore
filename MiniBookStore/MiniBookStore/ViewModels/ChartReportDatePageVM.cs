@@ -23,6 +23,14 @@ namespace MiniBookStore.ViewModels
 
         public Func<double, string> YFormatter { get; set; }
 
+        private SeriesCollection _bookSeriesCollection;
+        public SeriesCollection BookSeriesCollection { get => _bookSeriesCollection; set { if (value == _bookSeriesCollection) return; _bookSeriesCollection = value; OnPropertyChanged(); } }
+
+        private string[] _bookLabels;
+        public string[] BookLabels { get => _bookLabels; set { if (value == _bookLabels) return; _bookLabels = value; OnPropertyChanged(); } }
+
+        public Func<int, string> BookYFormatter { get; set; }
+
         private ObservableCollection<string> _listMonth;
         public ObservableCollection<string> ListMonth { get => _listMonth; set { if (value == _listMonth) return; _listMonth = value; OnPropertyChanged(); } }
 
@@ -141,9 +149,13 @@ namespace MiniBookStore.ViewModels
         {
             //Lấy ra giá trị của lợi nhuận các tháng trong năm          
             SeriesCollection = new SeriesCollection();
+            BookSeriesCollection = new SeriesCollection();
 
             Labels = new string[31];
+            BookLabels = new string[31];
+
             YFormatter = value => value.ToString("F");
+            BookYFormatter = value => value.ToString("D");
 
             //Đường chứa lợi nhuân
             SeriesCollection.Add(new LineSeries
@@ -164,12 +176,22 @@ namespace MiniBookStore.ViewModels
 
             });
 
+            BookSeriesCollection.Add(new LineSeries
+            {
+                Title = "Sách bán ra",
+                Values = new ChartValues<int>(),
+                LineSmoothness = 0, //0: straight lines, 1: really smooth lines 
+            });
+
             int i = 0;
             foreach(var item in ListReport)
             {
                 SeriesCollection[0].Values.Add((double)item.Profit);
                 SeriesCollection[1].Values.Add((double)item.SumMoney);
                 Labels[i] = item.Date.ToShortDateString();
+
+                BookSeriesCollection[0].Values.Add(item.BookCount);
+                BookLabels[i] = item.Date.ToShortDateString();
                 i++;
             }
             
