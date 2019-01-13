@@ -109,6 +109,21 @@ namespace MiniBookStore.ViewModels
             }
              );
 
+            SelectionChangedMonth = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItemMonth != null && SelectedItemYear != null)
+                {
+                    ListDetail = new ObservableCollection<CBookBill>();
+
+                    DateTime date = new DateTime(int.Parse(SelectedItemYear), int.Parse(SelectedItemMonth), 1);
+                    DateBeginSelectedDate = new DateTime(date.Year, date.Month, 1);
+                    DateEndSelectedDate = DateBeginSelectedDate.AddMonths(1).AddDays(-1);
+
+                    ListBill = new ObservableCollection<CBill>(CBill.Ins.ListBill(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear), CurrentPage, NumberPage));
+                }
+            }
+             );
+
             BillSelectionChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (BillSelectedItem != null)

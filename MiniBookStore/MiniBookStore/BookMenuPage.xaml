@@ -63,7 +63,7 @@
 
                 </Button>
 
-                <Button Content="Lịch sử">
+                <Button Content="Lịch sử" Command="{Binding HistoryCommand}">
                     
                 </Button>
                 

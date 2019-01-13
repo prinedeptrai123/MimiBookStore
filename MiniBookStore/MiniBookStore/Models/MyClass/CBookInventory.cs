@@ -366,6 +366,43 @@ namespace MiniBookStore.Models.MyClass
             return false;
         }
 
+        /// <summary>
+        /// Hàm trả về chi tiết của của mã nhập hàng
+        /// </summary>
+        /// <param name="WareHouseID"></param>
+        /// <returns></returns>
+        public List<CBookInventory> DetailOfWareHouse(int WareHouseID)
+        {
+            List<CBookInventory> List = new List<CBookInventory>();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Warehouse_Detail.Where(x => x.Warehouse_ID == WareHouseID);
+                    if (data.Count() > 0)
+                    {
+                        foreach(var item in data)
+                        {
+                            CBookInventory Book = new CBookInventory
+                            {
+                                ID = item.Book_ID,
+                                Name = item.Book.Book_Name,
+                                WarehouseInventory = item.Book_Count,
+                                InPrice = (float)item.Book_Price,
+                                TotalPrice = (float)item.Book_Price * item.Book_Count
+                            };
+
+                            List.Add(Book);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
         #endregion
     }
 }

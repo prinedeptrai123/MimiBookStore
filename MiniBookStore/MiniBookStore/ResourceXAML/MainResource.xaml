@@ -22,4 +22,5 @@
     <viewmodel:CharReportMonthPageVM x:Key="CharReportMonthPageVM"></viewmodel:CharReportMonthPageVM>
     <viewmodel:ChartReportDatePageVM x:Key="ChartReportDatePageVM"></viewmodel:ChartReportDatePageVM>
     <viewmodel:structureBookPageVM x:Key="structureBookPageVM"></viewmodel:structureBookPageVM>
+    <viewmodel:HistoryWareHousePageVM x:Key="HistoryWareHousePageVM"></viewmodel:HistoryWareHousePageVM>
 </ResourceDictionary>
