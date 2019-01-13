@@ -981,7 +981,7 @@ namespace MiniBookStore.Models.MyClass
                             {
                                 ID = item.Type_IDs,
                                 Name = item.Type_Names,
-                                Count = item.Books.Count,
+                                Count = item.Books.Sum(x=>x.Book_Count),
                                 IsExist = item.Exist,
                                 IsTrueValue=true
                             };
@@ -1031,7 +1031,7 @@ namespace MiniBookStore.Models.MyClass
                             {
                                 ID = item.Theme_ID,
                                 Name = item.Theme_Name,
-                                Count = item.Books.Count,
+                                Count = item.Books.Sum(x=>x.Book_Count),
                                 IsExist = item.Exist,
                                 IsTrueValue=true
                             };

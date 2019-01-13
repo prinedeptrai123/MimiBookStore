@@ -195,13 +195,26 @@ namespace MiniBookStore.ViewModels
         public void LoadChart()
         {
             SeriesCollection = new SeriesCollection();
+            var results = from p in ListDetail
+                          group p.WarehouseInventory by p.Type into g
+                          select new { Type = g.Key, Count = g.ToList() };
+            //foreach (var item in ListDetail)
+            //{
+            //    var data = new PieSeries
+            //    {
+            //        Title = item.Type,
+            //        Values = new ChartValues<ObservableValue> { new ObservableValue(item.WarehouseInventory) },
+            //        DataLabels = true
+            //    };
+            //    SeriesCollection.Add(data);
+            //}
 
-            foreach (var item in ListDetail)
+            foreach (var item in results)
             {
                 var data = new PieSeries
                 {
                     Title = item.Type,
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(item.WarehouseInventory) },
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(item.Count.Sum()) },
                     DataLabels = true
                 };
                 SeriesCollection.Add(data);
