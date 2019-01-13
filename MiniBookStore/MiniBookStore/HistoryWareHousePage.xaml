@@ -278,7 +278,7 @@
                         Header="Tên sách">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" MaxWidth="200" TextWrapping="Wrap"/>
+                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" MinWidth="200" TextWrapping="Wrap"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
