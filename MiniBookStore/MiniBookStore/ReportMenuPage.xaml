@@ -60,6 +60,10 @@
 
                 </Button>
 
+                <Button Content="Biểu đồ" Command="{Binding ChartMonthCommand}">
+
+                </Button>
+
             </StackPanel>
 
             <!-- Thanh ngang-->
