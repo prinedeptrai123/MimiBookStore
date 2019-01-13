@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:MiniBookStore"
       mc:Ignorable="d" 
       
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -20,9 +21,15 @@
       d:DesignHeight="700" d:DesignWidth="1175"
       
       Title="ChartReportMonthPage">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -31,5 +38,45 @@
                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,5,0,5">
                 Biều đồ lợi nhuận các tháng
         </TextBlock>
+
+        <Grid Grid.Row="1" Background="#2980b9" Height="40">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBlock}" x:Key="labelText">
+                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontFamily" Value="Tahoma"/>
+                        <Setter Property="FontWeight" Value="Medium"/>
+                        <Setter Property="Margin" Value="5,0,5,0"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <TextBlock Text="Biều đồ thể hiện lợi nhuận theo tháng trong năm" Style="{StaticResource labelText}"/>
+
+                <ComboBox  SelectedItem="{Binding SelectedItemYear}" 
+                                   ItemsSource="{Binding ListYear}" 
+                                   Foreground="White" FontWeight="Medium" FontFamily="Tahoma"
+                                   Width="auto" Margin="5,0,5,0" FontSize="16">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedYear}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Height="550" Width="1100" HorizontalAlignment="Center">
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Giá trị" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Tháng" Labels="{Binding Labels}" Margin="0,5,0,0" FontSize="14"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+        </Grid>
+        
     </Grid>
 </Page>

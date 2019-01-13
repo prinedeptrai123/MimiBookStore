@@ -113,6 +113,9 @@
       <DependentUpon>BookMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoolToVisibilityConverter.cs" />
+    <Compile Include="ChartReportDatePage.xaml.cs">
+      <DependentUpon>ChartReportDatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ChartReportMonthPage.xaml.cs">
       <DependentUpon>ChartReportMonthPage.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,7 @@
     <Compile Include="DashboardWindow.xaml.cs">
       <DependentUpon>DashboardWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DateModel.cs" />
     <Compile Include="DetailsBookWindow.xaml.cs">
       <DependentUpon>DetailsBookWindow.xaml</DependentUpon>
     </Compile>
@@ -191,6 +195,7 @@
     <Compile Include="ViewModels\BookInfoPageVM.cs" />
     <Compile Include="ViewModels\BookMenuPageVM.cs" />
     <Compile Include="ViewModels\CharReportMonthPageVM.cs" />
+    <Compile Include="ViewModels\ChartReportDatePageVM.cs" />
     <Compile Include="ViewModels\CodePromotionPageVM.cs" />
     <Compile Include="ViewModels\ControlBarVM.cs" />
     <Compile Include="ViewModels\DashboardWindowVM.cs" />
@@ -216,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BookMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChartReportDatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
