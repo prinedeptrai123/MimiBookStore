@@ -186,10 +186,10 @@ namespace MiniBookStore.ViewModels
                     return false;
                 }
 
-                if (CheckTrue2() == false)
-                {
-                    return false;
-                }
+                //if (CheckTrue2() == false)
+                //{
+                //    return false;
+                //}
 
 
                 return true;

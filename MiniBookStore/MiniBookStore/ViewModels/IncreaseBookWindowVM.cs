@@ -17,7 +17,7 @@ namespace MiniBookStore.ViewModels
         #region Global
 
         int currentPage = 1;
-        int NumberPage = 10;
+        int NumberPage = 50;
 
         
 
