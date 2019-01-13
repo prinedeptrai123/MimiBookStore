@@ -59,6 +59,10 @@
 
                 </Button>
 
+                <Button Content="Biểu đồ" Command="{Binding structureCommand}">
+
+                </Button>
+
                 <Button Content="Lịch sử">
                     
                 </Button>

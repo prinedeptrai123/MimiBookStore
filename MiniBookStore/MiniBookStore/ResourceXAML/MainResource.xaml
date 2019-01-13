@@ -21,4 +21,5 @@
     <viewmodel:TypeAndThemePageVM x:Key="TypeAndThemePageVM"></viewmodel:TypeAndThemePageVM>
     <viewmodel:CharReportMonthPageVM x:Key="CharReportMonthPageVM"></viewmodel:CharReportMonthPageVM>
     <viewmodel:ChartReportDatePageVM x:Key="ChartReportDatePageVM"></viewmodel:ChartReportDatePageVM>
+    <viewmodel:structureBookPageVM x:Key="structureBookPageVM"></viewmodel:structureBookPageVM>
 </ResourceDictionary>
