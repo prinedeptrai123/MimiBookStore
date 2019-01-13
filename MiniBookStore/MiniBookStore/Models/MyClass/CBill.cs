@@ -757,6 +757,11 @@ namespace MiniBookStore.Models.MyClass
                     var find = DB.Discount_Code.Find(Code);
                     if (find != null)
                     {
+                        if (find.Exist == false)
+                        {
+                            return null;
+                        }
+
                         CPromotion_Code myCode = new CPromotion_Code
                         {
                             ID = find.Code_ID,
@@ -841,7 +846,12 @@ namespace MiniBookStore.Models.MyClass
         }
 
 
-
+        /// <summary>
+        /// Hàm thêm vào chi tiết hóa đơn
+        /// </summary>
+        /// <param name="BillID"></param>
+        /// <param name="Book"></param>
+        /// <returns></returns>
         public bool addBillDetail(int BillID, CBookBill Book)
         {
             try

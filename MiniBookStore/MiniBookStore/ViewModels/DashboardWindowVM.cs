@@ -125,6 +125,7 @@ namespace MiniBookStore.ViewModels
             ExitCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 70 + 7 * 60, 0, 0);
+                (p as Window)?.Close();
             }
                );
 

@@ -16,7 +16,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Background="{DynamicResource MaterialDesignPaper}"
         Icon="./Images/icon.png"
-        
+        x:Name="Window"
         Title="DashboardWindow" Height="780" Width="1250"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource DashboardWindowVM}" WindowStyle="None">
@@ -123,56 +123,56 @@
                         </StackPanel.Resources>
 
                         <Button ToolTip="Thanh toán" Command="{Binding PayCommand}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="17,0,0,0">
                                 <materialDesign:PackIcon Kind="CartOutline" Height="25" Width="25" Margin="-62,10,0,10"/>
                                 <TextBlock Text="Thanh toán" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                             </StackPanel>
                         </Button>
 
                         <Button ToolTip="Kho sách" Command="{Binding BookCommand}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
                                 <materialDesign:PackIcon Kind="Book" Height="25" Width="25" Margin="-62,10,0,10"/>
                                 <TextBlock Text="Kho sách" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                             </StackPanel>
                         </Button>
 
                         <Button ToolTip="Khuyến mãi" Command="{Binding PromotionCommand}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="19,0,0,0">
                                 <materialDesign:PackIcon Kind="Sale" Height="25" Width="25" Margin="-62,10,0,10"/>
                                 <TextBlock Text="Khuyến mãi" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                             </StackPanel>
                         </Button>
 
                         <Button ToolTip="Thống kê" Command="{Binding ChartCommand}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                                 <materialDesign:PackIcon Kind="ChartPie" Height="25" Width="25" Margin="-62,10,0,10"/>
                                 <TextBlock Text="Thống kê" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                             </StackPanel>
                         </Button>
 
                         <Button ToolTip="Nhân sự" Command="{Binding EmployeeCommand}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="-2,0,0,0">
                                 <materialDesign:PackIcon Kind="Worker" Height="25" Width="25" Margin="-62,10,0,10"/>
                                 <TextBlock Text="Nhân sự" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                             </StackPanel>
                         </Button>
 
                         <Button ToolTip="Khách hàng" Command="{Binding CustomerCommand}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                 <materialDesign:PackIcon Kind="HumanMaleFemale" Height="25" Width="25" Margin="-62,10,0,10"/>
                                 <TextBlock Text="Khách hàng" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                             </StackPanel>
                         </Button>
 
                         <Button ToolTip="Tài khoản" Command="{Binding AccountCommand}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                                 <materialDesign:PackIcon Kind="AccountEdit" Height="25" Width="25" Margin="-62,10,0,10"/>
                                 <TextBlock Text="Tài khoản" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                             </StackPanel>
                         </Button>
 
-                        <Button ToolTip="Thoát" Command="{Binding ExitCommand}">
-                            <StackPanel Orientation="Horizontal">
+                        <Button ToolTip="Thoát" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}">
+                            <StackPanel Orientation="Horizontal" Margin="-19,0,0,0">
                                 <materialDesign:PackIcon Kind="ExitToApp" Height="25" Width="25" Margin="-62,10,0,10"/>
                                 <TextBlock Text="Thoát" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="-5,10,0,10"/>
                             </StackPanel>

@@ -210,43 +210,28 @@
                         </StackPanel>
                     </Grid>
                 </materialDesign:Card>
+              
                 <!--Nút điều hướng trang-->
-                <StackPanel Orientation="Horizontal" 
-                        HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedAccentButton}">
-                            <Setter Property="Height" Value="30"/>
-                            <Setter Property="Width" Value="40"/>
-                            <Setter Property="materialDesign:RippleAssist.IsDisabled" Value="False"/>
-                            <Setter Property="materialDesign:RippleAssist.Feedback" Value="Green"/>
-                            <Setter Property="Margin" Value="2,0,2,0"/>
-                            <Setter Property="BorderBrush" Value="Black"/>
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="BorderThickness" Value="2"/>
-                            <Setter Property="FontSize" Value="11"/>
-                        </Style>
-                    </StackPanel.Resources>
-
-                    <Button Width="45">
-                        <materialDesign:PackIcon Kind="ChevronDoubleLeft" 
-                                             Width="20" HorizontalAlignment="Center" Height="20"/>
+                <StackPanel Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="Trang trước" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Command="{Binding PreviousPageCommand}">
+                        <materialDesign:PackIcon Kind="ArrowLeftThick" />
                     </Button>
-
-                    <Button Content="1">
+                    <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"                   
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Content="{Binding CurrentPage,FallbackValue=1}">
 
                     </Button>
-
-                    <Button Content="2">
-
-                    </Button>
-
-                    <Button Content="3">
-
-                    </Button>
-
-                    <Button Width="45">
-                        <materialDesign:PackIcon Kind="ChevronDoubleRight" 
-                                             Width="20" HorizontalAlignment="Center" Height="20"/>
+                    <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="Trang kế" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Command="{Binding NextPageCommand}">
+                        <materialDesign:PackIcon Kind="ArrowRightThick" />
                     </Button>
                 </StackPanel>
             </StackPanel>

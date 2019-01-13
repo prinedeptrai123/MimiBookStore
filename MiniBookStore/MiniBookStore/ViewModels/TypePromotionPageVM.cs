@@ -15,7 +15,9 @@ namespace MiniBookStore.ViewModels
     {
         #region Global 
 
-        int currentPage = 1;
+        private int _currentPage;
+        public int CurrentPage { get => _currentPage; set { if (value == _currentPage) return; _currentPage = value; OnPropertyChanged(); } }
+
         int NumberPage = 10;
 
         #endregion
@@ -59,14 +61,52 @@ namespace MiniBookStore.ViewModels
         public ICommand restoreCommand { get; set; }
         public ICommand searchCommand { get; set; }
 
+        public ICommand PreviousPageCommand { get; set; }
+        public ICommand NextPageCommand { get; set; }
+
         #endregion
 
         public TypePromotionPageVM()
         {
+            PreviousPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (CurrentPage > 1)
+                {
+                    CurrentPage = CurrentPage - 1;
+
+                    if (FilterString == "")
+                    {
+                        ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, CurrentPage, NumberPage));
+                    }
+                    else
+                    {
+                        ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(FilterString, IsChecked, CurrentPage, NumberPage));
+                    }
+                }
+            }
+              );
+
+            NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                CurrentPage = CurrentPage + 1;
+
+                if (FilterString == "")
+                {
+                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, CurrentPage, NumberPage));
+                }
+                else
+                {
+                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(FilterString, IsChecked, CurrentPage, NumberPage));
+                }
+            }
+              );
+
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                FilterString = "";
+                CurrentPage = 1;
                 IsChecked = false;
-                ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage,NumberPage));
+                ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, CurrentPage, NumberPage));
             }
                );
 
@@ -74,11 +114,11 @@ namespace MiniBookStore.ViewModels
             {
                 if (FilterString == "")
                 {
-                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
+                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, CurrentPage, NumberPage));
                 }
                 else
                 {
-                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(FilterString, IsChecked, currentPage, NumberPage));
+                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(FilterString, IsChecked, CurrentPage, NumberPage));
                 }
 
             }
@@ -86,7 +126,7 @@ namespace MiniBookStore.ViewModels
 
             CheckedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
+                ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, CurrentPage, NumberPage));
 
             }
                );
@@ -98,7 +138,7 @@ namespace MiniBookStore.ViewModels
                     if (CBill.Ins.restorePromotionType(SelectedItem.ID) == true)
                     {
                         MessageBox.Show("Khôi phục thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                        ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
+                        ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, CurrentPage, NumberPage));
                     }
                     else
                     {
@@ -155,7 +195,7 @@ namespace MiniBookStore.ViewModels
                     else
                     {
                         MessageBox.Show("Cập nhật thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                        ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
+                        ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, CurrentPage, NumberPage));
                     }
                 }
             }
@@ -175,7 +215,7 @@ namespace MiniBookStore.ViewModels
                         {
                             MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                             //load lại 
-                            ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
+                            ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, CurrentPage, NumberPage));
                         }
                         else
                         {
@@ -218,7 +258,7 @@ namespace MiniBookStore.ViewModels
                 if (CBill.Ins.addNewPromotionType(Type) == true)
                 {
                     MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, currentPage, NumberPage));
+                    ListType = new ObservableCollection<CPromotion_Type>(CBill.Ins.ListTypeOfPromotion(IsChecked, CurrentPage, NumberPage));
                 }
                 else
                 {

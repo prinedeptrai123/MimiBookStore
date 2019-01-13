@@ -15,7 +15,9 @@ namespace MiniBookStore.ViewModels
 
         #region Global 
 
-        int currentPage = 1;
+        private int _currentPage;
+        public int CurrentPage { get => _currentPage; set { if (value == _currentPage) return; _currentPage = value; OnPropertyChanged(); } }
+
         int NumberPage = 10;
 
         #endregion
@@ -68,24 +70,63 @@ namespace MiniBookStore.ViewModels
         public ICommand editCommand { get; set; }
         public ICommand searchCommand { get; set; }
 
+        public ICommand PreviousPageCommand { get; set; }
+        public ICommand NextPageCommand { get; set; }
+
         #endregion
 
         public CodePromotionPageVM()
         {
+            PreviousPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (CurrentPage > 1)
+                {
+                    CurrentPage = CurrentPage - 1;
+
+                    if (FilterString == "")
+                    {
+                        ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, CurrentPage, NumberPage));
+                    }
+                    else
+                    {
+                        ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(FilterString, IsChecked, CurrentPage, NumberPage));
+                    }
+                }
+            }
+              );
+
+            NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                CurrentPage = CurrentPage + 1;
+
+                if (FilterString == "")
+                {
+                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, CurrentPage, NumberPage));
+                }
+                else
+                {
+                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(FilterString, IsChecked, CurrentPage, NumberPage));
+                }
+            }
+              );
+
             LoadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 IsChecked = false;
-                ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, currentPage, NumberPage));
+                ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, CurrentPage, NumberPage));
                 ListType = new ObservableCollection<string>(CBill.Ins.ListStringTypeOfPromotion());
 
                 DateBegin = DateTime.Now;
                 DateEnd = DateTime.Now;
+
+                FilterString = "";
+                CurrentPage = 1;
             }
               );
 
             CheckedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, currentPage, NumberPage));
+                ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, CurrentPage, NumberPage));
             }
               );
 
@@ -93,11 +134,11 @@ namespace MiniBookStore.ViewModels
             {
                 if (FilterString == "")
                 {
-                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, currentPage, NumberPage));
+                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, CurrentPage, NumberPage));
                 }
                 else
                 {
-                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(FilterString, IsChecked, currentPage, NumberPage));
+                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(FilterString, IsChecked, CurrentPage, NumberPage));
                 }
                 
             }
@@ -143,7 +184,7 @@ namespace MiniBookStore.ViewModels
                     {
                         MessageBox.Show("Cập nhật thất bại", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                         //Trả về thông tin như cũ
-                        ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, currentPage, NumberPage));
+                        ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, CurrentPage, NumberPage));
                     }
                 }
             }
@@ -156,7 +197,7 @@ namespace MiniBookStore.ViewModels
                     if (CBill.Ins.restoreCode(SelectedItem.ID) == true)
                     {
                         MessageBox.Show("Khôi phục thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                        ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, currentPage, NumberPage));
+                        ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, CurrentPage, NumberPage));
                     }
                     else
                     {
@@ -173,7 +214,7 @@ namespace MiniBookStore.ViewModels
                     if (CBill.Ins.deleteCode(SelectedItem.ID) == true)
                     {
                         MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                        ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, currentPage, NumberPage));
+                        ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, CurrentPage, NumberPage));
                     }
                     else
                     {
@@ -221,7 +262,7 @@ namespace MiniBookStore.ViewModels
                 if (CBill.Ins.addNewCode(Code) == true)
                 {
                     MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, currentPage, NumberPage));
+                    ListCode = new ObservableCollection<CPromotion_Code>(CBill.Ins.ListCode(IsChecked, CurrentPage, NumberPage));
                     ID = "";
                     Name = "";
                 }
