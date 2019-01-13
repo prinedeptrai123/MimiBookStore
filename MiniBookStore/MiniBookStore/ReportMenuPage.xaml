@@ -60,7 +60,11 @@
 
                 </Button>
 
-                <Button Content="Biểu đồ" Command="{Binding ChartMonthCommand}">
+                <Button Content="Biểu đồ tháng" Command="{Binding ChartMonthCommand}">
+
+                </Button>
+
+                <Button Content="Biểu đồ ngày" Command="{Binding ChartDateCommand}">
 
                 </Button>
 

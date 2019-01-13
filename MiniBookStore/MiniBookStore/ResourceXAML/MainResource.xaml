@@ -20,4 +20,5 @@
     <viewmodel:HistoryBillPageVM x:Key="HistoryBillPageVM"></viewmodel:HistoryBillPageVM>
     <viewmodel:TypeAndThemePageVM x:Key="TypeAndThemePageVM"></viewmodel:TypeAndThemePageVM>
     <viewmodel:CharReportMonthPageVM x:Key="CharReportMonthPageVM"></viewmodel:CharReportMonthPageVM>
+    <viewmodel:ChartReportDatePageVM x:Key="ChartReportDatePageVM"></viewmodel:ChartReportDatePageVM>
 </ResourceDictionary>

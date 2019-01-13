@@ -35,6 +35,8 @@ namespace MiniBookStore.ViewModels
         public ICommand ReportMonthCommand { get; set; }
         public ICommand ChartMonthCommand { get; set; }
 
+        public ICommand ChartDateCommand { get; set; }
+
         #endregion
 
         public ReportMenuPageVM()
@@ -64,6 +66,13 @@ namespace MiniBookStore.ViewModels
             {
                 GridCursorMargin = new Thickness(10 + 2*170, 0, 0, 0);
                 FramePage = new ChartReportMonthPage();
+            }
+               );
+
+            ChartDateCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(10 + 3 * 170, 0, 0, 0);
+                FramePage = new ChartReportDatePage();
             }
                );
         }

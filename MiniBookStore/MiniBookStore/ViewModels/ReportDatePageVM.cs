@@ -113,6 +113,8 @@ namespace MiniBookStore.ViewModels
 
         }
 
+
+
         void CreateMonth()
         {
             ListMonth = new ObservableCollection<string>();
