@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +42,7 @@ namespace MiniBookStore.Models.MyClass
         private float _customerCash;
         private float _excessCash;
         private List<CBookBill> _listBook;
+        private int _bookCount;
 
         #endregion
 
@@ -94,6 +97,11 @@ namespace MiniBookStore.Models.MyClass
         /// Tiền thừa trả lại khách hàng
         /// </summary>
         public float ExcessCash { get => _excessCash; set { if (value == _excessCash) return; _excessCash = value; } }
+
+        /// <summary>
+        /// Tổng sách trong hóa đơn
+        /// </summary>
+        public int BookCount { get => _bookCount; set { if (value == _bookCount) return; _bookCount = value; } }
 
         #endregion
 
@@ -920,6 +928,146 @@ namespace MiniBookStore.Models.MyClass
 
             }
             return false;
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách hóa đơn thanh toán trong tháng
+        /// </summary>
+        /// <param name="Month"></param>
+        /// <param name="Year"></param>
+        /// <returns></returns>
+        public List<CBill> ListBill(int Month,int Year, int currentPage, int NumberPage)
+        {
+            List<CBill> List = new List<CBill>();
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Bills.Where(x => SqlFunctions.DatePart("year",
+                        x.Bill_Date) == Year && SqlFunctions.DatePart("month", x.Bill_Date) == Month).OrderByDescending(x => x.Bill_Date).ToList().
+                        Skip((currentPage - 1) * NumberPage).Take(NumberPage);
+
+                    if (data.Count() > 0)
+                    {
+                        foreach(var item in data)
+                        {
+                            //Tạo mới hóa đơn
+                            CBill myBill = new CBill
+                            {
+                                ID=item.Bill_ID,
+                                Date = item.Bill_Date,
+                                TotalMoney = (float)item.Total_Money,
+                                CustomerInfo = new CCustomer { Name = item.Customer.Customer_Name },
+                                EmployeeInfo = new CEmployee { Name = item.Employee.Employee_Name },
+                                Promotion = item.Discount_Code == null ? 0 : (float)item.Discount_Code1.Promotion_Type.Type_Promotion,
+                                BookCount = item.Bill_Detail.Sum(x => x.Book_Count),
+                                Type = item.Bill_Type1.Type_Names
+                            };
+
+                            //Thêm
+                            List.Add(myBill);
+                        }
+                    }
+                }
+
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// hàm trả về danh sách hóa đơn thanh toán từ ngày đến ngày
+        /// </summary>
+        /// <param name="DateBegin"></param>
+        /// <param name="DateEnd"></param>
+        /// <param name="currentPage"></param>
+        /// <param name="NumberPage"></param>
+        /// <returns></returns>
+        public List<CBill> ListBill(DateTime DateBegin,DateTime DateEnd, int currentPage, int NumberPage)
+        {
+            List<CBill> List = new List<CBill>();
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Bills.Where(x => EntityFunctions.TruncateTime(x.Bill_Date) >= EntityFunctions.TruncateTime(DateBegin)
+                    && EntityFunctions.TruncateTime(x.Bill_Date) <= EntityFunctions.TruncateTime(DateEnd)).OrderByDescending(x => x.Bill_Date).ToList().
+                        Skip((currentPage - 1) * NumberPage).Take(NumberPage);
+
+                    if (data.Count() > 0)
+                    {
+                        foreach (var item in data)
+                        {
+                            //Tạo mới hóa đơn
+                            CBill myBill = new CBill
+                            {
+                                ID = item.Bill_ID,
+                                Date = item.Bill_Date,
+                                TotalMoney = (float)item.Total_Money,
+                                CustomerInfo = new CCustomer { Name = item.Customer.Customer_Name },
+                                EmployeeInfo = new CEmployee { Name = item.Employee.Employee_Name },
+                                Promotion = item.Discount_Code == null ? 0 : (float)item.Discount_Code1.Promotion_Type.Type_Promotion,
+                                BookCount = item.Bill_Detail.Sum(x => x.Book_Count),
+                                Type = item.Bill_Type1.Type_Names
+                            };
+
+                            //Thêm
+                            List.Add(myBill);
+                        }
+                    }
+                }
+
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// hàm trả về chi tiết của hóa đơn theo ID
+        /// </summary>
+        /// <param name="BillID"></param>
+        /// <returns></returns>
+        public List<CBookBill> BillDetail(int BillID)
+        {
+            List<CBookBill> List = new List<CBookBill>();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Bill_Detail.Where(x => x.Bill_ID == BillID);
+                    if (data.Count() > 0)
+                    {
+                        foreach(var item in data)
+                        {
+                            //Tạo mới
+                            CBookBill Detailt = new CBookBill
+                            {
+                                ID = item.Bill_ID,
+                                Name = item.Book.Book_Name,
+                                OutPrice = (float)item.Book_Price,
+                                Promotion = (float)item.Book_Promotion,
+                                OutPricePromotion = (float)(item.Book_Price - item.Book_Price * item.Book_Promotion),
+                                Count = item.Book_Count,
+                                TotalMoney = item.Book_Count * (float)(item.Book_Price - item.Book_Price * item.Book_Promotion)
+                            };
+
+                            //Thêm vào
+                            List.Add(Detailt);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
         }
         #endregion
     }

@@ -17,4 +17,5 @@
     <viewmodel:ReportDatePageVM x:Key="ReportDatePageVM"></viewmodel:ReportDatePageVM>
     <viewmodel:ReportMonthPageVM x:Key="ReportMonthPageVM"></viewmodel:ReportMonthPageVM>
     <viewmodel:LoginWindowVM x:Key="LoginWindowVM"></viewmodel:LoginWindowVM>
+    <viewmodel:HistoryBillPageVM x:Key="HistoryBillPageVM"></viewmodel:HistoryBillPageVM>
 </ResourceDictionary>

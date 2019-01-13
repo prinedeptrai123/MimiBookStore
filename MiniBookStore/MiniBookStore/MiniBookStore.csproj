@@ -122,6 +122,9 @@
     <Compile Include="DetailsBookWindow.xaml.cs">
       <DependentUpon>DetailsBookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HistoryBillPage.xaml.cs">
+      <DependentUpon>HistoryBillPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IncreaseBookWindow.xaml.cs">
       <DependentUpon>IncreaseBookWindow.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,7 @@
     <Compile Include="ViewModels\ControlBarVM.cs" />
     <Compile Include="ViewModels\DashboardWindowVM.cs" />
     <Compile Include="ViewModels\DetailsBookWindowVM.cs" />
+    <Compile Include="ViewModels\HistoryBillPageVM.cs" />
     <Compile Include="ViewModels\IncreaseBookWindowVM.cs" />
     <Compile Include="ViewModels\LoginWindowVM.cs" />
     <Compile Include="ViewModels\MakeBillWindowVM.cs" />
@@ -214,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DetailsBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HistoryBillPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
