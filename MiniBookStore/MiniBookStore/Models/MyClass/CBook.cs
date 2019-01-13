@@ -961,6 +961,330 @@ namespace MiniBookStore.Models.MyClass
             return List;
         }
 
+        /// <summary>
+        /// Hàm trả về thông tin chi tiết của thể loại
+        /// </summary>
+        /// <returns></returns>
+        public List<CBookType> ListFullType(bool isAll)
+        {
+            List<CBookType> List = new List<CBookType>();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Book_Type;
+                    if (data.Count() > 0)
+                    {
+                        foreach(var item in data)
+                        {
+                            CBookType Type = new CBookType
+                            {
+                                ID = item.Type_IDs,
+                                Name = item.Type_Names,
+                                Count = item.Books.Count,
+                                IsExist = item.Exist,
+                                IsTrueValue=true
+                            };
+
+                            if (isAll == true && item.Exist == false)
+                            {
+                                List.Add(Type);
+                            }
+                            else if (isAll == false && item.Exist == false)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                List.Add(Type);
+                            }                           
+
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về thông tin chi tiết của tất cả chủ đề thuộc thể loại
+        /// </summary>
+        /// <param name="TypeID"></param>
+        /// <returns></returns>
+        public List<CBookTheme> ListFullThemeOfType(bool isAll,int TypeID)
+        {
+            List<CBookTheme> List = new List<CBookTheme>();
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Book_Theme.Where(x => x.Type_IDs == TypeID);
+                    if (data.Count() > 0)
+                    {
+                        foreach(var item in data)
+                        {
+                            CBookTheme Theme = new CBookTheme
+                            {
+                                ID = item.Theme_ID,
+                                Name = item.Theme_Name,
+                                Count = item.Books.Count,
+                                IsExist = item.Exist,
+                                IsTrueValue=true
+                            };
+
+                            if (isAll == true && item.Exist == false)
+                            {
+                                List.Add(Theme);
+                            }
+                            else if (isAll == false && item.Exist == false)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                List.Add(Theme);
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// hàm cập nhật tên mới cho thể loại
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <returns></returns>
+        public bool updateType(CBookType Type)
+        {
+            try
+            {
+                using(var DB =new BookStoreDataEntities())
+                {
+                    //Tìm theo khóa chính
+                    var find = DB.Book_Type.Find(Type.ID);
+                    if (find != null)
+                    {
+                        find.Type_Names = Type.Name;
+                        DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm cập nhật tên cho chủ đề
+        /// </summary>
+        /// <param name="Theme"></param>
+        /// <returns></returns>
+        public bool updateTheme(CBookTheme Theme)
+        {
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    //Tìm theo khóa chính
+                    var find = DB.Book_Theme.Where(x => x.Theme_ID == Theme.ID).FirstOrDefault();
+                    if (find != null)
+                    {
+                        find.Theme_Name = Theme.Name;
+                        DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm xóa loại
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <returns></returns>
+        public bool deleteType(CBookType Type)
+        {
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    //Tìm theo khóa chính
+                    var find = DB.Book_Type.Find(Type.ID);
+                    if (find != null)
+                    {
+                        //Đánh dấu là loại đã bị xóa
+                        find.Exist = false;
+                        DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm đánh dấu chủ đề bị xóa
+        /// </summary>
+        /// <param name="Theme"></param>
+        /// <returns></returns>
+        public bool deleteTheme(CBookTheme Theme)
+        {
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    //Tìm theo khóa chính
+                    var find = DB.Book_Theme.Where(x => x.Theme_ID == Theme.ID).FirstOrDefault();
+                    if (find != null)
+                    {
+                        //Đánh dấu là loại đã bị xóa
+                        find.Exist = false;
+                        DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// hàm khôi  phục lại chủ đề
+        /// </summary>
+        /// <param name="Theme"></param>
+        /// <returns></returns>
+        public bool restoreTheme(CBookTheme Theme)
+        {
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    //Tìm theo khóa chính
+                    var find = DB.Book_Theme.Where(x => x.Theme_ID == Theme.ID).FirstOrDefault();
+                    if (find != null)
+                    {
+                        //Đánh dấu là loại đã bị xóa
+                        find.Exist = true;
+                        DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        public bool addTheme(string Theme,int TypeID)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    //Tạo mới
+                    Book_Theme newTheme = new Book_Theme
+                    {
+                        Type_IDs = TypeID,
+                        Theme_Name = Theme,
+                        Exist = true
+                    };
+
+                    DB.Book_Theme.Add(newTheme);
+                    DB.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm phục hồi lại thể loại
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <returns></returns>
+        public bool restoreType(CBookType Type)
+        {
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    //Tìm theo khóa chính
+                    var find = DB.Book_Type.Find(Type.ID);
+                    if (find != null)
+                    {
+                        //Đánh dấu là loại đã bị xóa
+                        find.Exist = true;
+                        DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// hàm thêm loại mới
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <returns></returns>
+        public bool addType(string Type)
+        {
+            try
+            {
+                using(var DB =new BookStoreDataEntities())
+                {
+                    Book_Type newType = new Book_Type
+                    {
+                        Type_Names = Type,
+                        Exist = true
+                    };
+
+                    DB.Book_Type.Add(newType);
+                    DB.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
         #endregion
     }
 }

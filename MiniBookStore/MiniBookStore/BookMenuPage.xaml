@@ -51,11 +51,11 @@
                     </Style>
                 </StackPanel.Resources>
 
-                <Button Content="Thông tin">
+                <Button Content="Thông tin" Command="{Binding BookInfoCommand}">
 
                 </Button>
 
-                <Button Content="Báo cáo">
+                <Button Content="Thể loại" Command="{Binding TypeAndThemeCommand}">
 
                 </Button>
 

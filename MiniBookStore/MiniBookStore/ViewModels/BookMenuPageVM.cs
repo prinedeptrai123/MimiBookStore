@@ -30,6 +30,8 @@ namespace MiniBookStore.ViewModels
         #region command binding
 
         public ICommand LoadCommand { get; set; }
+        public ICommand TypeAndThemeCommand { get; set; }
+        public ICommand BookInfoCommand { get; set; }
 
         #endregion
 
@@ -44,6 +46,24 @@ namespace MiniBookStore.ViewModels
                 FramePage = new BookInfoPage();
             }
                );
+
+            TypeAndThemeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                //Khởi tạo
+
+                GridCursorMargin = new Thickness(10 +150, 0, 0, 0);
+                FramePage = new TypeAndThemePage();
+            }
+              );
+
+            BookInfoCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                //Khởi tạo
+
+                GridCursorMargin = new Thickness(10, 0, 0, 0);
+                FramePage = new BookInfoPage();
+            }
+              );
 
         }
     }

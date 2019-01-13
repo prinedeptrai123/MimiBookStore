@@ -141,6 +141,8 @@
     <Compile Include="Models\MyClass\CBook.cs" />
     <Compile Include="Models\MyClass\CBookBill.cs" />
     <Compile Include="Models\MyClass\CBookInventory.cs" />
+    <Compile Include="Models\MyClass\CBookTheme.cs" />
+    <Compile Include="Models\MyClass\CBookType.cs" />
     <Compile Include="Models\MyClass\CCustomer.cs" />
     <Compile Include="Models\MyClass\CDateReport.cs" />
     <Compile Include="Models\MyClass\CDiscoutCode.cs" />
@@ -172,6 +174,9 @@
     <Compile Include="SellMenuPage.xaml.cs">
       <DependentUpon>SellMenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TypeAndThemePage.xaml.cs">
+      <DependentUpon>TypeAndThemePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TypePromotionPage.xaml.cs">
       <DependentUpon>TypePromotionPage.xaml</DependentUpon>
     </Compile>
@@ -196,6 +201,7 @@
     <Compile Include="ViewModels\ReportMenuPageVM.cs" />
     <Compile Include="ViewModels\ReportMonthPageVM.cs" />
     <Compile Include="ViewModels\SellMenuPageVM.cs" />
+    <Compile Include="ViewModels\TypeAndThemePageVM.cs" />
     <Compile Include="ViewModels\TypePromotionPageVM.cs" />
     <Page Include="AddNewBookWindow.xaml">
       <SubType>Designer</SubType>
@@ -274,6 +280,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SellMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TypeAndThemePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
