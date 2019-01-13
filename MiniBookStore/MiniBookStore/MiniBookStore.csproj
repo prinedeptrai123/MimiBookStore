@@ -390,6 +390,7 @@
     <Resource Include="Images\icon.png" />
     <Resource Include="Images\Blue.jpg" />
     <Resource Include="Images\WindowBackground.jpg" />
+    <Resource Include="Images\Avatar.png" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>

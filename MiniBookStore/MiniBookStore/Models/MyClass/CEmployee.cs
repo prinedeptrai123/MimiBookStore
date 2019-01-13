@@ -9,6 +9,25 @@ namespace MiniBookStore.Models.MyClass
 {
     public class CEmployee:Human
     {
+        #region design pattern singleton
+
+        private static CEmployee _ins;
+        public static CEmployee Ins
+        {
+            get
+            {
+                if (_ins == null)
+                    _ins = new CEmployee();
+                return _ins;
+            }
+            set
+            {
+                _ins = value;
+            }
+        }
+
+        #endregion
+
         #region private properties
 
         private string _identity;
@@ -55,7 +74,56 @@ namespace MiniBookStore.Models.MyClass
 
         #region method
 
-        
+        /// <summary>
+        /// Hàm trả về thông tin nhân viên theo ID của nhân viên
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public CEmployee EmployeeInFo(int ID)
+        {
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Employees.Find(ID);
+                    if (find != null)
+                    {
+                        BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/" + "./Images/Avatar.png"));
+
+                        //Tạo mới một employee
+                        CEmployee myEmployee = new CEmployee
+                        {
+                            ID = find.Employee_ID,
+                            Name = find.Employee_Name,
+                            Identity = find.Employee_Identity,
+                            DateWork = find.Employee_Date_Work,
+                            SumDate = find.Employee_Sum_Date,
+                            FirstDate = find.Employee_FirstDate,
+                            Address =find.Employee_Address,
+                            Email=find.Employee_Email,
+                            Gender=find.Employee_Gender,
+                            Phone=find.Employee_Phone,
+                            DOB = find.Employee_DOB,
+                            Role = new CEmployee_Role
+                            {
+                                Name = find.Employee_Role1.Role_Name,
+                                Salary = (float)find.Employee_Role1.Role_Salary,
+                                ID = find.Employee_Role1.Role_ID,
+                                Decentralization = find.Employee_Role1.Decentralization.Decentralization_Name
+                            },
+                            Image = find.Employee_Image == null ? image : Help.ByteToImage(find.Employee_Image)
+                        };
+
+                        return myEmployee;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return null;
+        }
 
         #endregion
     }

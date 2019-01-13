@@ -8,6 +8,25 @@ namespace MiniBookStore.Models.MyClass
 {
     public class CAccount
     {
+        #region design pattern singleton
+
+        private static CAccount _ins;
+        public static CAccount Ins
+        {
+            get
+            {
+                if (_ins == null)
+                    _ins = new CAccount();
+                return _ins;
+            }
+            set
+            {
+                _ins = value;
+            }
+        }
+
+        #endregion
+
         #region private properties
 
         private int _iD;
@@ -35,6 +54,35 @@ namespace MiniBookStore.Models.MyClass
         /// Mật khẩu
         /// </summary>
         public string PassWord { get => _passWord; set { if (value == _passWord) return; _passWord = value; } }
+
+        #endregion
+
+        #region method
+        
+        /// <summary>
+        /// Hàm trả về id nhân viên ương ứng với account nếu không có thì trả về 0
+        /// </summary>
+        /// <param name="myAccount"></param>
+        /// <returns></returns>
+        public int  isAccount(CAccount myAccount)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Employee_Account.Where(x => x.Account_User == myAccount.UserName && x.Account_Password == myAccount.PassWord).FirstOrDefault();
+                    if (find != null)
+                    {
+                        return find.Employee_ID;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return 0;
+        }
 
         #endregion
     }
