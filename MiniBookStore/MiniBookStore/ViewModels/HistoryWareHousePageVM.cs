@@ -131,7 +131,9 @@ namespace MiniBookStore.ViewModels
                 if (CurrentPage > 1)
                 {
                     CurrentPage = CurrentPage - 1;
-                    listWareHouse = new ObservableCollection<CWarehouse_History>(CWarehouse_History.Ins.Warehouse_History(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear), CurrentPage, NumberPage));
+                    ListDetail = new ObservableCollection<CBookInventory>();
+
+                    listWareHouse = new ObservableCollection<CWarehouse_History>(CWarehouse_History.Ins.Warehouse_History(DateBeginSelectedDate, DateEndSelectedDate, CurrentPage, NumberPage));
                 }
             }
               );
@@ -139,7 +141,9 @@ namespace MiniBookStore.ViewModels
             NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 CurrentPage = CurrentPage + 1;
-                listWareHouse = new ObservableCollection<CWarehouse_History>(CWarehouse_History.Ins.Warehouse_History(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear), CurrentPage, NumberPage));
+                ListDetail = new ObservableCollection<CBookInventory>();
+
+                listWareHouse = new ObservableCollection<CWarehouse_History>(CWarehouse_History.Ins.Warehouse_History(DateBeginSelectedDate, DateEndSelectedDate, CurrentPage, NumberPage));
             }
               );
 

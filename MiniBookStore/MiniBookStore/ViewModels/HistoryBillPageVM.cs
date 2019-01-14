@@ -139,7 +139,9 @@ namespace MiniBookStore.ViewModels
                 if (CurrentPage > 1)
                 {
                     CurrentPage = CurrentPage - 1;
-                    ListBill = new ObservableCollection<CBill>(CBill.Ins.ListBill(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear), CurrentPage, NumberPage));
+                    ListDetail = new ObservableCollection<CBookBill>();
+
+                    ListBill = new ObservableCollection<CBill>(CBill.Ins.ListBill(DateBeginSelectedDate, DateEndSelectedDate, CurrentPage, NumberPage));
                 }
             }
               );
@@ -147,7 +149,9 @@ namespace MiniBookStore.ViewModels
             NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 CurrentPage = CurrentPage + 1;
-                ListBill = new ObservableCollection<CBill>(CBill.Ins.ListBill(int.Parse(SelectedItemMonth), int.Parse(SelectedItemYear), CurrentPage, NumberPage));
+                ListDetail = new ObservableCollection<CBookBill>();
+
+                ListBill = new ObservableCollection<CBill>(CBill.Ins.ListBill(DateBeginSelectedDate, DateEndSelectedDate, CurrentPage, NumberPage));
             }
               );
 

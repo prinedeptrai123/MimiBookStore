@@ -287,7 +287,7 @@
                                         Header="Số lượng">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding WarehouseInventory}"/>
+                                                <TextBlock Text="{Binding WarehouseInventory,StringFormat='0,0'}"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -296,7 +296,7 @@
                                         Header="Giá nhập">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding InPrice}"/>
+                                                <TextBlock Text="{Binding InPrice,StringFormat='0,0.0'}"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -305,7 +305,7 @@
                                         Header="Tổng tiền">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding TotalPrice}"/>
+                                                <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0'}"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
