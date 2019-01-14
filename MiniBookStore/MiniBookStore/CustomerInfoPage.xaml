@@ -1,0 +1,187 @@
+﻿<Page x:Class="MiniBookStore.CustomerInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MiniBookStore"
+      mc:Ignorable="d" 
+      
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"       
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      Background="{DynamicResource MaterialDesignPaper}"     
+      DataContext="{StaticResource CustomerInfoPageVM}"
+      
+      d:DesignHeight="700" d:DesignWidth="1175"
+      
+      Title="CustomerInfoPage">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Label thông báo-->
+        <TextBlock Grid.Row="0" Style="{DynamicResource MaterialDesignTitleTextBlock}" FontSize="18"
+                       VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,5,0,5">
+                Danh sách khách hàng
+        </TextBlock>
+
+        <StackPanel Grid.Row="1" Margin="0,10,0,0" Width="1100" HorizontalAlignment="Left">
+            <!-- Tìm kiếm khách hàng -->
+
+            <!--Thanh tìm kiếm-->
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <!-- Text box tìm kiếm-->
+                <TextBox Width="400" FontSize="15" Height="35" Padding="10,0,0,0"                              
+                                    materialDesign:HintAssist.Hint="Tên / Số điện thoại" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Nút tìm kiếm-->
+                <Button Background="#0984e3" BorderBrush="{x:Null}" Height="35" Command="{Binding searchCommand}">
+                    <materialDesign:PackIcon Height="30" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Kind="Magnify" Foreground="White"/>
+                </Button>
+            </StackPanel>
+            <materialDesign:Card Height="500" Width="1100" Margin="20,10,10,0" HorizontalAlignment="Left">
+                <ListView Height="500" Width="1100" Background="Blue"
+                              ItemsSource="{Binding ListCustomer}" SelectedItem="{Binding ListCustomerSelectedItem}">
+                    <ListView.Resources>
+                        <Style TargetType="{x:Type TextBlock}" x:Key="WrapStyle">
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="Width" Value="120"/>
+                        </Style>
+                    </ListView.Resources>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding ListCustomerSelectionChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn                                      
+                                                        Header="Mã">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ID}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn                                      
+                                 Header="Tên">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" Style="{StaticResource WrapStyle}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn                                      
+                                                         Header="Giới tính">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Gender}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn                                      
+                                                         Header="Số điện thoại">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Phone}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn                                      
+                                 Header="Địa chỉ">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Address}" Style="{StaticResource WrapStyle}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn                                      
+                                 Header="Email">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Email}" Style="{StaticResource WrapStyle}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn                                      
+                                                         Header="Tổng sách đã mua">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TotalBook,StringFormat='0,0'}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn                                      
+                                                         Header="Tổng tiền đã trả">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TotalMoney,StringFormat='0,0.00'}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn                                      
+                                                         Header="Ngày mua cuối">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding LastTransaction}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+            </materialDesign:Card>
+
+            <StackPanel Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="Trang trước" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Command="{Binding PreviousPageCommand}">
+                    <materialDesign:PackIcon Kind="ArrowLeftThick" />
+                </Button>
+                <Button Margin="5,0,5,0"
+                            ToolTip="Trang hiện tại"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"                   
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Content="{Binding CurrentPage,FallbackValue=1}">
+
+                </Button>
+                <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="Trang kế" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Command="{Binding NextPageCommand}">
+                    <materialDesign:PackIcon Kind="ArrowRightThick" />
+                </Button>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Page>

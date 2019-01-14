@@ -23,4 +23,8 @@
     <viewmodel:ChartReportDatePageVM x:Key="ChartReportDatePageVM"></viewmodel:ChartReportDatePageVM>
     <viewmodel:structureBookPageVM x:Key="structureBookPageVM"></viewmodel:structureBookPageVM>
     <viewmodel:HistoryWareHousePageVM x:Key="HistoryWareHousePageVM"></viewmodel:HistoryWareHousePageVM>
+    <viewmodel:EmployeeInfoPageVM x:Key="EmployeeInfoPageVM"></viewmodel:EmployeeInfoPageVM>
+    <viewmodel:ChangePassWordWindowVM x:Key="ChangePassWordWindowVM"></viewmodel:ChangePassWordWindowVM>
+    <viewmodel:CustomerMenuPageVM x:Key="CustomerMenuPageVM"></viewmodel:CustomerMenuPageVM>
+    <viewmodel:CustomerInfoPageVM x:Key="CustomerInfoPageVM"></viewmodel:CustomerInfoPageVM>
 </ResourceDictionary>

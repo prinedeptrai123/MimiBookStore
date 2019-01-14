@@ -37,6 +37,8 @@ namespace MiniBookStore.Models.MyClass
         private int _dateWork;
         private BitmapImage _image;
         private CEmployee_Role _role;
+        private float _monthSalary;
+        private CAccount _account;
 
         #endregion
 
@@ -70,6 +72,16 @@ namespace MiniBookStore.Models.MyClass
         /// </summary>
         public CEmployee_Role Role { get => _role; set { if (value == _role) return; _role = value; } }
 
+        /// <summary>
+        /// Lương tháng này của nhân viên
+        /// </summary>
+        public float MonthSalary { get => _monthSalary; set { if (value == _monthSalary) return; _monthSalary = value; } }
+
+        /// <summary>
+        /// Thông tin tài khoản của nhân viên
+        /// </summary>
+        public CAccount Account { get => _account; set { if (value == _account) return; _account = value; } }
+
         #endregion
 
         #region method
@@ -99,10 +111,10 @@ namespace MiniBookStore.Models.MyClass
                             DateWork = find.Employee_Date_Work,
                             SumDate = find.Employee_Sum_Date,
                             FirstDate = find.Employee_FirstDate,
-                            Address =find.Employee_Address,
-                            Email=find.Employee_Email,
-                            Gender=find.Employee_Gender,
-                            Phone=find.Employee_Phone,
+                            Address = find.Employee_Address,
+                            Email = find.Employee_Email,
+                            Gender = find.Employee_Gender,
+                            Phone = find.Employee_Phone,
                             DOB = find.Employee_DOB,
                             Role = new CEmployee_Role
                             {
@@ -111,7 +123,9 @@ namespace MiniBookStore.Models.MyClass
                                 ID = find.Employee_Role1.Role_ID,
                                 Decentralization = find.Employee_Role1.Decentralization.Decentralization_Name
                             },
-                            Image = find.Employee_Image == null ? image : Help.ByteToImage(find.Employee_Image)
+                            Image = find.Employee_Image == null ? image : Help.ByteToImage(find.Employee_Image),
+                            MonthSalary = (float)find.Employee_Role1.Role_Salary * find.Employee_Date_Work,
+                            Account = new CAccount { PassWord = find.Employee_Account.Select(x => x.Account_Password).FirstOrDefault() }
                         };
 
                         return myEmployee;

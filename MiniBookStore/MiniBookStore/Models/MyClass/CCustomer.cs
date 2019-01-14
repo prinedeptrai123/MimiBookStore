@@ -26,7 +26,7 @@ namespace MiniBookStore.Models.MyClass
         #region private properties
 
         private int _totalBook;
-        private int _totalMoney;
+        private float _totalMoney;
         private DateTime _lastTransaction;
 
         #endregion
@@ -39,7 +39,7 @@ namespace MiniBookStore.Models.MyClass
         /// <summary>
         /// Tổng tiền đã trả cho cửa hàng
         /// </summary>
-        public int TotalMoney { get => _totalMoney; set { if (value == _totalMoney) return; _totalMoney = value; } }
+        public float TotalMoney { get => _totalMoney; set { if (value == _totalMoney) return; _totalMoney = value; } }
         /// <summary>
         /// Ngày mua hàng cuối cùng
         /// </summary>
@@ -184,6 +184,7 @@ namespace MiniBookStore.Models.MyClass
 
                     foreach (var item in data)
                     {
+                        
                         //Tạo mới một khách hàng
                         CCustomer myCustomer = new CCustomer
                         {
@@ -192,11 +193,118 @@ namespace MiniBookStore.Models.MyClass
                             Address = item.Customer_Address,
                             Phone = item.Customer_Phone,
                             Email = item.Customer_Email,
-                            Gender = item.Customer_Gender
+                            Gender = item.Customer_Gender                        
                         };
 
                         List.Add(myCustomer);
                     }
+                }
+            }
+            catch
+            {
+
+            }
+            
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách khách hàng đầy đủ
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="CurrentPage"></param>
+        /// <param name="NumberPage"></param>
+        /// <returns></returns>
+        public List<CCustomer> ListCustomerFilterName(string Name,int CurrentPage,int NumberPage)
+        {
+            List<CCustomer> List = new List<CCustomer>();
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Customers.ToList().Skip((CurrentPage - 1) * NumberPage).Take(NumberPage).ToList();
+                    if (string.IsNullOrEmpty(Name) || Name == "")
+                    {
+                        //do nothing
+                    }
+                    else
+                    {
+                        data = data.Where(x => x.Customer_Name.ToLower().Contains(Name.ToLower())).ToList();
+                    }
+                    if (data.Count > 0)
+                    {
+                        foreach (var item in data)
+                        {
+                            //Lấy ra tổng sách của khách hàng
+                            int toltalbook = DB.Bill_Detail.Where(x => x.Bill.Customer_ID == item.Customer_ID).Sum(x => x.Book_Count);
+                            //Tạo mới một khách hàng
+                            CCustomer myCustomer = new CCustomer
+                            {
+                                ID = item.Customer_ID,
+                                Name = item.Customer_Name,
+                                Address = item.Customer_Address == null ? "Không có" : item.Customer_Address,
+                                Phone = item.Customer_Phone,
+                                Email = item.Customer_Email == null ? "Không có" : item.Customer_Email,
+                                Gender = item.Customer_Gender,
+                                TotalMoney = (float)item.Bills.Sum(x => x.Total_Money),
+                                TotalBook = toltalbook,
+                                LastTransaction = item.Bills.OrderByDescending(x => x.Bill_Date).Select(x => x.Bill_Date).FirstOrDefault()
+                            };
+
+                            List.Add(myCustomer);
+                        }
+                    }
+                    
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        public List<CCustomer> ListCustomerFilterPhone(string Phone,int CurrentPage,int NumberPage)
+        {
+            List<CCustomer> List = new List<CCustomer>();
+            try
+            {
+                using (var DB = new BookStoreDataEntities())
+                {
+                    var data = DB.Customers.ToList().Skip((CurrentPage - 1) * NumberPage).Take(NumberPage).ToList();
+                    if (string.IsNullOrEmpty(Phone) || Phone == "")
+                    {
+                        //do nothing
+                    }
+                    else
+                    {
+                        data = data.Where(x => x.Customer_Phone.Contains(Phone)).ToList();
+                    }
+
+                    if (data.Count() > 0)
+                    {
+                        foreach (var item in data)
+                        {
+                            //Lấy ra tổng sách của khách hàng
+                            int toltalbook = DB.Bill_Detail.Where(x => x.Bill.Customer_ID == item.Customer_ID).Sum(x => x.Book_Count);
+                            //Tạo mới một khách hàng
+                            CCustomer myCustomer = new CCustomer
+                            {
+                                ID = item.Customer_ID,
+                                Name = item.Customer_Name,
+                                Address = item.Customer_Address == null ? "Không có" : item.Customer_Address,
+                                Phone = item.Customer_Phone,
+                                Email = item.Customer_Email == null ? "Không có" : item.Customer_Email,
+                                Gender = item.Customer_Gender,
+                                TotalMoney = (float)item.Bills.Sum(x => x.Total_Money),
+                                TotalBook = toltalbook,
+                                LastTransaction = item.Bills.OrderByDescending(x => x.Bill_Date).Select(x => x.Bill_Date).FirstOrDefault()
+                            };
+
+                            List.Add(myCustomer);
+                        }
+                    }
+                    
                 }
             }
             catch

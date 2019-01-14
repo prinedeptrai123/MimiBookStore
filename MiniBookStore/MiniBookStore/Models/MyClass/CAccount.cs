@@ -84,6 +84,39 @@ namespace MiniBookStore.Models.MyClass
             return 0;
         }
 
+        /// <summary>
+        /// Hàm thay đổi mật khẩu của nhân viên
+        /// </summary>
+        /// <param name="Employee_Id"></param>
+        /// <param name="newPass"></param>
+        /// <returns></returns>
+        public bool ChangePassword(int Employee_Id, string newPass)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Employee_Account.Where(x => x.Employee_ID == Employee_Id).First();
+                    if (find != null)
+                    {
+                        //Thay đổi
+                        find.Account_Password = Help.Base64Encode(newPass);
+
+                        //Lưu lại
+                        DB.SaveChanges();
+
+                        return true;
+                    }
+                }
+               
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
         #endregion
     }
 }

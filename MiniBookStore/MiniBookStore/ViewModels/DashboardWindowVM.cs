@@ -101,18 +101,21 @@ namespace MiniBookStore.ViewModels
             EmployeeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 70 + 4 * 60, 0, 0);
+                
             }
                );
 
             CustomerCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 70 + 5 * 60, 0, 0);
+                FramePage = new CustomerMenuPage();
             }
                );
 
             AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 70 + 6 * 60, 0, 0);
+                FramePage = new EmployeeInfoPage();
             }
                );
 

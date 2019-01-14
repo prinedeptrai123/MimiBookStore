@@ -113,6 +113,9 @@
       <DependentUpon>BookMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoolToVisibilityConverter.cs" />
+    <Compile Include="ChangePassWordWindow.xaml.cs">
+      <DependentUpon>ChangePassWordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ChartReportDatePage.xaml.cs">
       <DependentUpon>ChartReportDatePage.xaml</DependentUpon>
     </Compile>
@@ -122,12 +125,21 @@
     <Compile Include="CodePromotionPage.xaml.cs">
       <DependentUpon>CodePromotionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomerInfoPage.xaml.cs">
+      <DependentUpon>CustomerInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerMenuPage.xaml.cs">
+      <DependentUpon>CustomerMenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DashboardWindow.xaml.cs">
       <DependentUpon>DashboardWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DateModel.cs" />
     <Compile Include="DetailsBookWindow.xaml.cs">
       <DependentUpon>DetailsBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeInfoPage.xaml.cs">
+      <DependentUpon>EmployeeInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="HistoryBillPage.xaml.cs">
       <DependentUpon>HistoryBillPage.xaml</DependentUpon>
@@ -200,12 +212,16 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookInfoPageVM.cs" />
     <Compile Include="ViewModels\BookMenuPageVM.cs" />
+    <Compile Include="ViewModels\ChangePassWordWindowVM.cs" />
     <Compile Include="ViewModels\CharReportMonthPageVM.cs" />
     <Compile Include="ViewModels\ChartReportDatePageVM.cs" />
     <Compile Include="ViewModels\CodePromotionPageVM.cs" />
     <Compile Include="ViewModels\ControlBarVM.cs" />
+    <Compile Include="ViewModels\CustomerInfoPageVM.cs" />
+    <Compile Include="ViewModels\CustomerMenuPageVM.cs" />
     <Compile Include="ViewModels\DashboardWindowVM.cs" />
     <Compile Include="ViewModels\DetailsBookWindowVM.cs" />
+    <Compile Include="ViewModels\EmployeeInfoPageVM.cs" />
     <Compile Include="ViewModels\HistoryBillPageVM.cs" />
     <Compile Include="ViewModels\HistoryWareHousePageVM.cs" />
     <Compile Include="ViewModels\IncreaseBookWindowVM.cs" />
@@ -232,6 +248,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ChangePassWordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ChartReportDatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,11 +264,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomerInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomerMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DashboardWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DetailsBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
