@@ -80,6 +80,8 @@ namespace MiniBookStore.ViewModels
                     int ID = CAccount.Ins.isAccount(new CAccount { UserName = UserName, PassWord = Help.Base64Encode(PassWord) });
                     if (ID != 0)
                     {
+                        
+                        CEmployee.Ins.CheckIn(ID);
                         //Lấy ra thông tin của nhân viên dùng để sử dụng trong màn hình sau
                         DataTransfer.EmployeeInfo = CEmployee.Ins.EmployeeInFo(ID);
 

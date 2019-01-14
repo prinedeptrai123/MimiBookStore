@@ -19,7 +19,7 @@ namespace MiniBookStore.ViewModels
         private int _currentPage;
         public int CurrentPage { get => _currentPage; set { if (value == _currentPage) return; _currentPage = value; OnPropertyChanged(); } }
 
-        int NumberPage = 8;
+        int NumberPage = 12;
        
 
         #endregion

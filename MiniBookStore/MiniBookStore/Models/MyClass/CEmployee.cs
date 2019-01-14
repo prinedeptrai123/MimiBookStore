@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,6 +139,101 @@ namespace MiniBookStore.Models.MyClass
 
             }
             return null;
+        }
+
+        /// <summary>
+        /// Hàm tăng số ngày làm việc (điểm danh) của nhân viên khi đăng nhập 1, chỉ tính lần đăng nhập đầu tiên trong ngày
+        /// </summary>
+        /// <param name="Employee_Id">Id nhân viên</param>
+        /// <returns></returns>
+        public bool CheckIn(int Employee_Id)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    var find = DB.Employee_Account.Where(x => x.Employee_ID == Employee_Id).First();
+                    if (find != null)
+                    {
+                        //Kiểm tra đã từng đăng nhập chưa
+                        var LastLogin = find.Account_LastLogin;
+
+                        if (LastLogin != null)
+                        {
+                            //Kiểm tra ngày đăng nhập cuối cùng có trùng với ngày hôm này hay không
+
+                            if (LastLogin.Year == DateTime.Now.Year && LastLogin.Month == DateTime.Now.Month && LastLogin.Day == DateTime.Now.Day)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                //Tạo mới một đăng nhập
+                                find.Account_LastLogin = DateTime.Now;
+
+                                //Lưu lại thay đổi
+                                DB.SaveChanges();
+
+                                IncreateDate(Employee_Id);
+                                return true;
+
+                            }
+                        }
+                        else
+                        {
+                            //Tạo mới một đăng nhập
+                            find.Account_LastLogin = DateTime.Now;
+
+                            //Lưu lại thay đổi
+                            DB.SaveChanges();
+
+                            IncreateDate(Employee_Id);
+                            return true;
+                        }
+                    }
+                }
+                
+            }
+            catch
+            {
+                
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm tăng số ngày làm việc
+        /// </summary>
+        /// <param name="EmployeeID"></param>
+        /// <returns></returns>
+        public bool IncreateDate(int EmployeeID)
+        {
+            try
+            {
+                using(var DB = new BookStoreDataEntities())
+                {
+                    //Lấy ra thông tin bên bảng employee_info
+                    var FindInfo = DB.Employees.Where(x => x.Employee_ID == EmployeeID).FirstOrDefault();
+                    if (FindInfo != null)
+                    {
+                        //Thêm ngày làm việc vào
+                        FindInfo.Employee_Sum_Date = FindInfo.Employee_Sum_Date + 1;
+                        FindInfo.Employee_Date_Work = FindInfo.Employee_Date_Work + 1;
+
+                        //Lưu lại thay đổi
+                        DB.SaveChanges();
+
+                        return true;
+
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
         }
 
         #endregion
